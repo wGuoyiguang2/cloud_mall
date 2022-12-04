@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-right">
+								<button class="btn btn-success" onclick="searcher()">查询</button>
+							</div>
+
+							<div class="columns pull-right col-md-2 nopadding">
+								<input id="searchContent" type="text" class="form-control"
+									placeholder="搜索内容" />
+							</div>
+							<div class="columns pull-right">
+								<select id="searchType" name="searchType" class="selectpicker" data-width="fit">
+									<option value="0">商品集ID</option>
+									<option value="1" selected="selected">商品集名称</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div id="toolbar" role="group">
+							<button type="button"
+									class="btn  btn-primary" shiro:haspermission="mall:productcollection:add" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button type="button"
+									class="btn  btn-primary" shiro:haspermission="mall:productcollection:edit" onclick="edit()">
+								<i class="fa fa-edit" aria-hidden="true"></i>修改
+							</button>
+							<button type="button"
+									class="btn btn-primary" shiro:haspermission="mall:productcollection:remove" onclick="remove();">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>删除
+							</button>
+						</div>
+						<table id="productcollectiontb" data-toolbar="#toolbar" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div>
+		<script type="text/javascript">
+            var s_add_h = 'hidden';
+            var s_edit_h = 'hidden';
+            var s_remove_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="mall:productcollection:edit">
+		<script type="text/javascript">
+            s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="mall:productcollection:add">
+		<script type="text/javascript">
+            s_add_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="mall:productcollection:remove">
+		<script type="text/javascript">
+            var s_remove_h = '';
+		</script>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/productcollectionmanager/productcollections.js"></script>
+</body>
+</html>

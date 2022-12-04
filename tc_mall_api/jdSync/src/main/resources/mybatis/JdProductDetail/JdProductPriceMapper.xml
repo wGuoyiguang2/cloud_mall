@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.JdProductPriceDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsync.bean.SellPriceResult">
+		select `skuId`,`jdPrice`,`price` from t_jd_product_price where skuId = #{skuId}
+	</select>
+
+	<select id="getPriceBatch" resultType="com.cibnvideo.jdsync.bean.SellPriceResult">
+		SELECT skuId, price, jdPrice from t_jd_product_price where skuId in
+		<foreach item="sku" index="index" collection="skus"
+				 open="(" separator="," close=")">
+			#{sku}
+		</foreach>
+		ORDER BY
+		FIELD(skuId,
+		<foreach collection="skus" index="index" item="sku" separator=",">
+			#{sku}
+		</foreach>
+		)
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsync.bean.SellPriceResult">
+		select `skuId`,`jdPrice`,`price` from t_jd_product_price
+        <where>  
+		  		  <if test="skuId != null and skuId != ''"> and skuId = #{skuId} </if>
+		  		  <if test="jdPrice != null and jdPrice != ''"> and jdPrice = #{jdPrice} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by skuId desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(*) from t_jd_product_price
+		 <where>  
+		  		  <if test="skuId != null and skuId != ''"> and sku = #{sku} </if>
+		  		  <if test="jdPrice != null and jdPrice != ''"> and jdPrice = #{jdPrice} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		</where>
+	</select>
+
+</mapper>

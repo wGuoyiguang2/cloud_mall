@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.CityDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.City">
+		select `cityid` as `cityId`,`provinceid` as `provinceId`,`name` as `name` from t_jd_address_citys where cityid = #{cityId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.City">
+		select `cityid` as `cityId`,`provinceid` as `provinceId`,`name` as `name`  from t_jd_address_citys
+        <where>  
+        		 <if test="cityId != null and cityId != ''"> and cityid = #{cityId} </if>
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by cityid asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_address_citys
+		 <where>  
+		          <if test="cityId != null and cityId != ''"> and cityid = #{cityId} </if>
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.City">
+		insert into t_jd_address_citys
+		(
+			`cityid`,
+			`provinceid`,
+			`name`
+		)
+		values
+		(
+		    #{cityId}, 
+			#{provinceId}, 
+			#{name}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.City">
+		update t_jd_address_citys 
+		<set>
+		   <if test="cityId != null">`cityid` = #{cityId}, </if>
+			<if test="provinceId != null">`provinceid` = #{provinceId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+		</set>
+		where cityid = #{cityId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_address_citys where cityid = #{cityId}
+	</delete>
+
+	<delete id="removeByProvinceId">
+		delete from t_jd_address_citys where provinceid = #{provinceId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_address_citys where cityid in
+		<foreach item="cityId" collection="cityIds" open="(" separator="," close=")">
+			#{cityId}
+		</foreach>
+	</delete>
+
+</mapper>

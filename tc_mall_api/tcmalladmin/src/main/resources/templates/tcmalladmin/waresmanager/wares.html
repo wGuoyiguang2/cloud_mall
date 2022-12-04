@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							<div class="col-sm-12 m-b-xs">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="sku_search" class="arealabel">&ensp&ensp商品ID:</label>
+										<input id="sku_search" name="sku_search" placeholder="商品ID" class="form-control" type="text"  />
+										<label for="name_search" class="arealabel">&ensp商品名称:</label>
+										<input id="name_search" name="name_search" placeholder="商品名称" class="form-control" type="text"  />
+										<label for="brandName_search" class="arealabel">&ensp品牌:</label>
+										<input id="brandName_search" name="brandName_search" placeholder="品牌" class="form-control" type="text"  />
+										<label for="state_search" class="arealabel">&ensp状态:</label>
+										<select id="state_search" name="state_search" placeholder="请选择" class="selectpicker" data-width="fit">
+											<option value="" selected="selected">全部</option>
+											<option value="1">上架</option>
+											<option value="0">下架</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="col-sm-12 m-b-xs">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="cat0_search" class="arealabel">一级分类:</label>
+										<select id="cat0_search" name="cat0_search" placeholder="请选择" class="selectpicker" data-live-search="true">
+											<option value="">请选择</option>
+											<option th:each="cat:${cat0list}" th:value="${cat.catId}" th:text="${cat.name}"></option>
+										</select>
+										<label for="cat1_search" class="arealabel">&ensp;二级分类:</label>
+										<select id="cat1_search" name="cat1_search" class="selectpicker" data-live-search="true">
+											<option value="">请选择</option>
+										</select>
+										<label for="cat2_search" class="arealabel">&ensp;三级分类:</label>
+										<select id="cat2_search" name="cat2_search" class="selectpicker" data-live-search="true">
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="col-sm-10 m-b-xs">
+								<form class="form-inline" onsubmit="return false">
+									<div class="form-group">
+										<select id="priceType" name="priceType" class="selectpicker" data-width="fit">
+											<option value="0" selected="selected">协议价</option>
+											<option value="1">京东价</option>
+										</select>
+										<label for="price_from" class="arealabel">&ensp;从:</label>
+										<input id="price_from" name="price_from" placeholder="大于" class="form-control" type="text"/>
+										<label for="price_to" class="arealabel">&ensp;到:</label>
+										<input id="price_to" name="price_to" placeholder="小于" class="form-control" type="text"/>
+										<button class="btn btn-primary" onclick="searcher()">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-left">
+								<button type="button" class="btn  btn-primary" onclick="exportFile()">
+									<i class="fa fa-download"></i>导出
+								</button>
+							</div>
+						</div>
+						<table id="producttb" class="col-xs-12" data-toolbar="#toolbar"
+							   data-show-export="true" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/waresmanager/wares.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+	</script>
+</body>
+</html>

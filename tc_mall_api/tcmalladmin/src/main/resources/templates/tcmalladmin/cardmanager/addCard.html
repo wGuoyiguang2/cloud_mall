@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="cardbatchForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">购物卡名称：</label>
+								<div class="col-sm-8">
+									<input id="cardName" name="cardName" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">大客户ID：</label>
+								<div class="col-sm-8">
+									<input id="venderId" name="venderId" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">卡类型：</label>
+								<div class="col-sm-8">
+									<select id="cardType" name="cardType" placeholder="请选择" class="selectpicker" data-live-search="true">
+										<option value="1">实物卡</option>
+										<option value="2">虚拟卡</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">创建方式：</label>
+								<div class="col-sm-8">
+									<select id="createType" name="createType" onchange="cardSelectChange()" placeholder="请选择" class="selectpicker" data-live-search="true">
+										<option value="1">手动创建</option>
+										<option value="2" selected="selected">自动创建</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">是否绑定大客户：</label>
+								<div class="col-sm-8">
+									<select id="bindVender" name="bindVender" onchange="cardSelectChange()" placeholder="请选择" class="selectpicker" data-live-search="true">
+										<option value="0" selected="selected">否</option>
+										<option value="1">是</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="batchDiv" style="display: none;">
+								<label class="col-sm-3 control-label">批次号：</label>
+								<div class="col-sm-8">
+									<input id="batchNo" name="batchNo" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">创建数量：</label>
+								<div class="col-sm-8">
+									<input id="count" name="count" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">单张金额：</label>
+								<div class="col-sm-8">
+									<input id="faceValue" name="faceValue" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="stime" class="col-sm-3 control-label arealabel">开始时间：</label>
+								<div class="col-sm-8">
+									<input id="stime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="etime" class="col-sm-3 control-label arealabel">结束时间：</label>
+								<div class="col-sm-8">
+									<input id="etime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">制卡公司：</label>
+								<div class="col-sm-8">
+									<input id="company" name="company" class="form-control"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+    <style>
+        /* <![CDATA[ */
+        #t { cursor:pointer;border-spacing: 1px;border-collapse: separate;}
+        #t td.ui-selecting { background: #FECA40; }
+        #t td.ui-selected  { background: #F39814; color: white; }
+        /* ]]> */
+    </style>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/cardmanager/addCard.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+redis:
+  token_key: jd_token
+
+jd:
+  username: hqtc2018
+  password: 745404feaba9fb037e01b4a91c6ddbeb
+  app_key: 158a4bf7c7c24adc8f2112b0ad02f82c
+  app_secret: 9e47dda3bdac4d5aa86015e025ad2130
+  url:
+    token: https://kploauth.jd.com/oauth/token
+    api: https://router.jd.com/api
+mail:
+  url: http://jiankong.can-tv.cn:8888/mail.php
+  #多个收件人以逗号隔开
+  user: smc@cibnvideo.com
+  key: d02849169168e5c474e4fe64959ed550
+
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1

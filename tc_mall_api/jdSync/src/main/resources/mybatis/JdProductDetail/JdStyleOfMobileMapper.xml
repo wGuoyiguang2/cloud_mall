@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.JdStyleOfMobileDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsync.bean.StyleOfMobileResult">
+		select `sku`,`jsContent`,`cssContent`, `htmlContent` from t_jd_product_style_mobile where sku = #{sku}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsync.bean.StyleOfMobileResult">
+		select `sku`,`jsContent`,`cssContent`, `htmlContent` from t_jd_product_style_mobile
+        <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="jsContent != null and jsContent != ''"> and jsContent = #{jsContent} </if>
+		  		  <if test="cssContent != null and cssContent != ''"> and cssContent = #{cssContent} </if>
+		  		  <if test="htmlContent != null and htmlContent != ''"> and htmlContent = #{htmlContent} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_style_mobile
+		 <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="jsContent != null and jsContent != ''"> and jsContent = #{jsContent} </if>
+		  		  <if test="cssContent != null and cssContent != ''"> and cssContent = #{cssContent} </if>
+		  		   <if test="htmlContent != null and htmlContent != ''"> and htmlContent = #{htmlContent} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsync.bean.StyleOfMobileResult">
+		insert into t_jd_product_style_mobile
+		(
+			`sku`, 
+			`jsContent`, 
+			`cssContent`,
+			`htmlContent`
+		)
+		values
+		(
+			#{sku}, 
+			#{jsContent}, 
+			#{cssContent},
+			#{htmlContent}
+		)
+	</insert>
+
+</mapper>

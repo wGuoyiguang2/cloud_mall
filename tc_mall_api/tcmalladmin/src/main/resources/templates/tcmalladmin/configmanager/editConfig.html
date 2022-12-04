@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="configForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">键：</label>
+								<div class="col-sm-8">
+									<input id="id" name="id" class="form-control" type="text" th:field="*{bean.id}" style="display: none"/>
+									<input id="key" name="key" style="border: none" class="form-control" type="text" th:field="*{bean.key}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">值：</label>
+								<div class="col-sm-8">
+									<input id="value" name="value" class="form-control" type="text" th:field="*{bean.value}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="type" value="1"  th:checked="${bean.type == 1}"/> 售后
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">是否启用：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="status" value="0"  th:checked="${bean.status == 0}"/> 禁用
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="status" value="1"  th:checked="${bean.status == 1}"/> 启用
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">位置：</label>
+								<div class="col-sm-8">
+									<input id="position" name="position" class="form-control" type="text" th:field="*{bean.position}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/configmanager/editConfig.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.VenderAccountSettlementDao">
+
+	<select id="getAccountInfo" resultType="com.cibnvideo.oms.tcmallcustomer.bean.AccountInfoVo">
+		<!--已结算金额=状态为已结算的扣款（协议价+运费(大客户)-卡支付金额）-状态为已结算的退款（协议价-卡支付金额）
+        未结算金额=状态为未结算的扣款（协议价+运费(大客户)-卡支付金额）-状态为未结算的退款（协议价-卡支付金额）
+        累计消费金额=总的扣款（协议价+运费(大客户)-卡支付金额）-总的退款（协议价-卡支付金额）-->
+        select #{venderId} as venderId,IFNULL((select sum(agree_price+freight-IFNULL(card_price,0)) as suma from t_vender_account_settlement where venderid=#{venderId} and is_settle=0 and type=0),0)
+        -IFNULL((select sum(agree_price-IFNULL(card_price,0)) as sumb from t_vender_account_settlement where venderid=#{venderId} and is_settle=0 and type=1),0) as needPayMoney,
+        IFNULL((select sum(agree_price+freight-IFNULL(card_price,0)) as suma from t_vender_account_settlement where venderid=#{venderId} and is_settle=1 and type=0),0)
+        -IFNULL((select sum(agree_price-IFNULL(card_price,0)) as sumb from t_vender_account_settlement where venderid=#{venderId} and is_settle=1 and type=1),0) as hasPayMoney,
+        IFNULL((select sum(agree_price+freight-IFNULL(card_price,0)) as suma from t_vender_account_settlement where venderid=#{venderId} and type=0),0)
+        -IFNULL((select sum(agree_price-IFNULL(card_price,0)) as sumb from t_vender_account_settlement where venderid=#{venderId} and type=1),0) as sumPayMoney
+	</select>
+	<select id="accountManagerList" resultType="com.cibnvideo.oms.tcmallcustomer.bean.AccountManagerVo">
+		select venderid as venderId,order_sn as orderNo,agree_price as agreePrice,freight,card_price as cardPrice,pay_price as payPrice,`type` as tradeType,is_settle as isSettle,price as orderPrice,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%s') as createTime from t_vender_account_settlement
+		<where>
+
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="orderNo != null and orderNo != ''"> and order_sn = #{orderNo} </if>
+			<if test="isSettle != null and isSettle != ''"> and is_settle = #{isSettle} </if>
+			<if test="startTime != null and startTime != ''"> and ctime &gt;= #{startTime} </if>
+			<if test="endTime != null and endTime != ''"> and ctime &lt; #{endTime} </if>
+		</where>
+		order by ctime desc
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	<select id="countAccountManagerList" resultType="int">
+		select count(1) from t_vender_account_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="orderNo != null and orderNo != ''"> and order_sn = #{orderNo} </if>
+			<if test="isSettle != null and isSettle != ''"> and is_settle = #{isSettle} </if>
+			<if test="startTime != null and startTime != ''"> and ctime &gt;= #{startTime} </if>
+			<if test="endTime != null and endTime != ''"> and ctime &lt; #{endTime} </if>
+		</where>
+	</select>
+	<select id="getAccountListByOrders" resultType="com.cibnvideo.oms.tcmallcustomer.bean.AccountManagerVo">
+		select venderid as venderId,order_sn as orderNo,agree_price as agreePrice,freight,card_price as cardPrice,pay_price as payPrice,`type` as tradeType,is_settle as isSettle,price as orderPrice,ctime as createTime from t_vender_account_settlement where order_sn in
+		<foreach item="orderNo" index="index" collection="orderList"
+				 open="(" separator="," close=")">
+			#{orderNo}
+		</foreach>
+		ORDER BY
+		FIELD(order_sn,
+		<foreach collection="orderList" index="index" item="orderNo" separator=",">
+			#{orderNo}
+		</foreach>
+		)
+	</select>
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderSettlementAccount"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_account_settlement
+		(
+			`venderid`,
+			`type`,
+			`order_sn`,
+			`trade_no`,
+			`agree_price`,
+			`price`,
+			`pay_price`,
+			`card_price`,
+			`freight`,
+			`pay_type`,
+			`is_settle`,
+			`ctime`,
+			`utime`
+		)
+		values
+			(
+				#{venderId},
+				#{type},
+				#{orderSn},
+				#{tradeNo},
+				#{agreePrice},
+				#{price},
+				#{payPrice},
+				#{cardPrice},
+				#{freight},
+				#{payType},
+				#{isSettle},
+				#{ctime},
+				#{utime}
+			)
+	</insert>
+	<update id="settleAccount">
+		update t_vender_account_settlement set is_settle=1,utime=NOW() where venderid=#{venderId} and is_settle=0 and ctime &gt;= #{startTime} and ctime &lt; #{endTime}
+	</update>
+
+	<select id="getVenderAccountList" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderAccountVo">
+		SELECT
+		o.venderId AS venderId,
+		CASE WHEN g.settlementType=2 THEN NULL WHEN g.settlementType=1 THEN IFNULL(a.suma, 0) - IFNULL(b.sumb, 0) END AS needPayMoney,
+		CASE WHEN g.settlementType=2 THEN NULL WHEN g.settlementType=1 THEN IFNULL(c.suma, 0) - IFNULL(d.sumb, 0) END AS hasPaidMoney,
+		CASE WHEN g.settlementType=2 THEN NULL WHEN g.settlementType=1 THEN IFNULL(e.suma, 0) - IFNULL(f.sumb, 0) END AS sumPaidMoney,
+		g.settlementType AS settlementType,
+		h.count AS count
+		FROM
+		(
+		SELECT
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		GROUP BY
+		venderid
+		) o
+		LEFT JOIN (
+		SELECT
+		sum(
+		IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+		) AS suma,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		is_settle = 0
+		AND type = 0
+		GROUP BY
+		venderid
+		) a ON o.venderId = a.venderId
+		LEFT JOIN (
+		SELECT
+		sum(agree_price-IFNULL(card_price,0)) AS sumb,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		is_settle = 0
+		AND type = 1
+		GROUP BY
+		venderid
+		) b ON o.venderId = b.venderId
+		LEFT JOIN (
+		SELECT
+		sum(
+		IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+		) AS suma,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		is_settle = 1
+		AND type = 0
+		GROUP BY
+		venderid
+		) c ON o.venderId = c.venderId
+		LEFT JOIN (
+		SELECT
+		sum(agree_price-IFNULL(card_price,0)) AS sumb,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		is_settle = 1
+		AND type = 1
+		GROUP BY
+		venderid
+		) d ON o.venderId = d.venderId
+		LEFT JOIN (
+		SELECT
+		sum(
+		IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+		) AS suma,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		type = 0
+		GROUP BY
+		venderid
+		) e ON o.venderId = e.venderId
+		LEFT JOIN (
+		SELECT
+		sum(agree_price-IFNULL(card_price,0)) AS sumb,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		WHERE
+		type = 1
+		GROUP BY
+		venderid
+		) f ON o.venderId = f.venderId
+		LEFT JOIN (
+		SELECT
+		s.settlementType AS settlementType,
+		a.venderid AS venderId
+		FROM
+		t_vender_account_settlement a
+		LEFT JOIN t_vender_settlement s ON a.venderid = s.venderid
+		GROUP BY
+		a.venderid
+		) g ON o.venderId = g.venderId
+		LEFT JOIN (
+		SELECT
+		count(1) AS count,
+		venderid AS venderId
+		FROM
+		t_vender_account_settlement
+		GROUP BY
+		venderid
+		) h ON o.venderId = h.venderId
+		<where>
+			<if test="venderId != null and venderId != ''"> and o.venderid = #{venderId} </if>
+		</where>
+	</select>
+	<select id="countVenderAccountList" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			(
+				SELECT
+					venderid AS venderId
+				FROM
+					t_vender_account_settlement
+				GROUP BY
+					venderid
+			) o
+		LEFT JOIN (
+			SELECT
+				sum(
+					IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+				) AS suma,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				is_settle = 0
+			AND type = 0
+			GROUP BY
+				venderid
+		) a ON o.venderId = a.venderId
+		LEFT JOIN (
+			SELECT
+				sum(agree_price-IFNULL(card_price,0)) AS sumb,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				is_settle = 0
+			AND type = 1
+			GROUP BY
+				venderid
+		) b ON o.venderId = b.venderId
+		LEFT JOIN (
+			SELECT
+				sum(
+					IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+				) AS suma,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				is_settle = 1
+			AND type = 0
+			GROUP BY
+				venderid
+		) c ON o.venderId = c.venderId
+		LEFT JOIN (
+			SELECT
+				sum(agree_price-IFNULL(card_price,0)) AS sumb,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				is_settle = 1
+			AND type = 1
+			GROUP BY
+				venderid
+		) d ON o.venderId = d.venderId
+		LEFT JOIN (
+			SELECT
+				sum(
+					IFNULL(agree_price, 0) + IFNULL(freight, 0)-IFNULL(card_price,0)
+				) AS suma,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				type = 0
+			GROUP BY
+				venderid
+		) e ON o.venderId = e.venderId
+		LEFT JOIN (
+			SELECT
+				sum(agree_price-IFNULL(card_price,0)) AS sumb,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			WHERE
+				type = 1
+			GROUP BY
+				venderid
+		) f ON o.venderId = f.venderId
+		LEFT JOIN (
+			SELECT
+				s.settlementType AS settlementType,
+				a.venderid AS venderId
+			FROM
+				t_vender_account_settlement a
+			LEFT JOIN t_vender_settlement s ON a.venderid = s.venderid
+			GROUP BY
+				a.venderid
+		) g ON o.venderId = g.venderId
+		LEFT JOIN (
+			SELECT
+				count(1) AS count,
+				venderid AS venderId
+			FROM
+				t_vender_account_settlement
+			GROUP BY
+				venderid
+		) h ON o.venderId = h.venderId
+		<where>
+			<if test="venderId != null and venderId != ''"> and o.venderid = #{venderId} </if>
+		</where>
+	</select>
+
+	<select id="sumFreightByVenderId" resultType="java.math.BigDecimal">
+		select sum(freight) from t_vender_account_settlement where venderid=#{venderId} and type=0
+	</select>
+</mapper>

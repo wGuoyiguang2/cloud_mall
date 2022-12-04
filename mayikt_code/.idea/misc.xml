@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-pay-plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-job/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-common/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-portal/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-api-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-basics/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-common/meite-shop-common-web-core/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-common/meite-shop-common-core/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-xxl-sso-server/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-pay-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-spike/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-member-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-integral/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-integral/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-web/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-pay-plugin/meite-shop-alipay-plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-job/meite-shop-pay-job/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-goods/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-pay-plugin/meite-shop-unionpay-plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-spike/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-weixin-dto/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-spike-web/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-elk-kafka/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/pom.xml" />
+        <option value="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-product-dto/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

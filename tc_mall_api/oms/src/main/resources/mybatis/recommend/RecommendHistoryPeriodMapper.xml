@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.recommend.dao.RecommendHistoryPeriodDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendHistoryPeriod">
+		select
+			`id`,
+			`venderid` AS venderId,
+			`period`,
+			`ctime`,
+			`utime`
+		from
+			t_layout_recommend_history_period
+		where id = #{id}
+	</select>
+
+	<select id="getByVenderId" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendHistoryPeriod">
+		select
+			`id`,
+			`venderid` AS venderId,
+			`period`,
+			`ctime`,
+			`utime`
+		from
+			t_layout_recommend_history_period
+		where venderid = #{venderId} limit 1
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendHistoryPeriod">
+		select
+		`id`,
+		`venderid` AS venderId,
+		`period`,
+		`ctime`,
+		`utime`
+		from
+		t_layout_recommend_history_period
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null"> and venderid = #{venderId} </if>
+			<if test="period != null"> and period = #{period} </if>
+			<if test="ctime != null and ctime != ''"> and ctime = #{ctime} </if>
+			<if test="utime != null and utime != ''"> and utime = #{utime} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id asc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_layout_recommend_history_period
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null"> and venderid = #{venderId} </if>
+			<if test="period != null"> and period = #{period} </if>
+			<if test="ctime != null and ctime != ''"> and ctime = #{ctime} </if>
+			<if test="utime != null and utime != ''"> and utime = #{utime} </if>
+		</where>
+	</select>
+
+
+	<insert id="save" parameterType="com.cibnvideo.oms.recommend.model.bean.RecommendHistoryPeriod"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into t_layout_recommend_history_period
+		(
+			`venderid`,
+			`period`,
+			`ctime`,
+			`utime`
+		)
+		values
+			(
+				#{venderId},
+				#{period},
+				#{ctime},
+				#{utime}
+			)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.recommend.model.bean.RecommendHistoryPeriod">
+		update t_layout_recommend_history_period
+		<set>
+			<if test="period != null">`period` = #{period}, </if>
+			<if test="utime != null">`utime` = #{utime}</if>
+		</set>
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+		</where>
+	</update>
+
+	<delete id="remove">
+		delete from t_layout_recommend_history_period where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							操作详情
+							<div class="col-sm-12 m-b-xs container">
+								<table  border="1" style="word-break: break-all; word-wrap: break-word" cellspacing="0" th:width="750px" th:height="200px">
+									<tr>
+										<td>操作人</td><td th:text="${bean.operator}"></td>
+										<td>操作时间</td><td th:text="${bean.operateTime}"></td>
+									</tr>
+									<tr>
+										<td>操作</td><td th:text="${bean.operateType}"></td>
+										<td>批次号</td><td th:text="${bean.batchNo}"></td>
+									</tr>
+									<tr>
+										<td>创建时间</td><td th:text="${bean.createTime}"></td>
+										<td>创建规则</td><td th:text="${bean.createType}"></td>
+									</tr>
+									<tr>
+										<td>开始使用时间</td><td th:text="${bean.startTime}"></td>
+										<td>截至使用时间</td><td th:text="${bean.endTime}"></td>
+									</tr>
+									<tr>
+										<td>单张金额</td><td th:text="${bean.faceValue}" id="batchNo"></td>
+										<td>总数量</td><td th:text="${bean.count}"></td>
+									</tr>
+									<tr>
+										<td>总金额</td><td th:text="${bean.sumMoney}"></td>
+										<td>卡类型</td><td th:text="${bean.cardType}"></td>
+									</tr>
+									<tr>
+										<td>制卡公司</td><td th:text="${bean.company}"></td>
+										<td>购物卡</td><td th:text="${bean.cardNos}"></td>
+									</tr>
+									<tr>
+										<td>创建人</td><td th:text="${bean.createUser}"></td>
+										<td>备注</td><td th:text="${bean.intro}"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+</body>
+</html>

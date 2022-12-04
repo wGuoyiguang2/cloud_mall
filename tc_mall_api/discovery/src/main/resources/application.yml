@@ -1,0 +1,15 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: tcmalldiscovery
+  profiles:
+    active: dev
+
+eureka:
+  instance:
+    hostname: discovery-peer1
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-peer2:8761/eureka/

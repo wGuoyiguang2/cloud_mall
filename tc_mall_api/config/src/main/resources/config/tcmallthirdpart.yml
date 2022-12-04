@@ -1,0 +1,19 @@
+service:
+  config:
+    vendorIds: 56
+    perCount: 50
+    syncJDSitePriceCron: 0 0 */4 * * ?
+spring:
+  cloud:
+    stream:
+      bindings:
+        jdSitePriceSink:
+          destination: syncJDSitePrice
+          content-type: application/json
+          group: group-thirdPart
+        jdSitePriceSource:
+          destination: syncJDSitePrice
+          content-type: application/json
+          producer:
+            partitionCount: 1
+

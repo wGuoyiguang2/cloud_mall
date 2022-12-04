@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.JdProductDetailDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.ProductResult">
+		select
+			a.sku,
+			a.name,
+			a.weight,
+			a.imagepath,
+			a.brandname,
+			a.productarea,
+			a.upc,
+			a.saleunit,
+			a.wareqd,
+			a.state,
+			a.category,
+			a.cat0,
+			a.cat1,
+			a.cat2,
+			a.param,
+			a.introduction,
+			a.appintroduce,
+			a.ctime,
+			a.utime,
+			b.jdPrice,
+			b.price
+		from t_jd_product_detail a
+		left join t_jd_product_price b ON a.sku = b.skuId
+		where
+			a.sku = #{sku}
+	</select>
+	
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.ProductResult">
+		select
+			a.sku,
+			a.name,
+			a.weight,
+			a.imagepath,
+			a.brandname,
+			a.productarea,
+			a.upc,
+			a.saleunit,
+			a.wareqd,
+			a.state,
+			a.category,
+			a.cat0,
+			a.cat1,
+			a.cat2,
+			a.param,
+			a.introduction,
+			a.appintroduce,
+			a.ctime,
+			a.utime,
+			b.jdPrice,
+			b.price
+		from t_jd_product_detail a
+		inner join t_jd_product_price b ON a.sku = b.skuId
+        <where>  
+		  		  <if test="sku != null and sku != ''"> and a.sku = #{sku} </if>
+		  		  <if test="name != null and name != ''"> and a.name = #{name} </if>
+		  		  <if test="brandName != null and brandName != ''"> and a.brandName = #{brandName} </if>
+		  		  <if test="productArea != null and productArea != ''"> and a.productArea = #{productArea} </if>
+		  		  <if test="state != null and state != ''"> and a.state = #{state} </if>
+		  		  <if test="category != null and category != ''"> and a.category = #{category} </if>
+		  		  <if test="cat0 != null and cat0 != ''"> and a.cat0 = #{cat0} </if>
+		  		  <if test="cat1 != null and cat1 != ''"> and a.cat1 = #{cat1} </if>
+		  		  <if test="cat2 != null and cat2 != ''"> and a.cat2 = #{cat2} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="listSkus" resultType="long">
+		select sku from t_jd_product_detail limit ${offset},${limit}
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_detail
+		 <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="brandName != null and brandName != ''"> and brandName = #{brandName} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="category != null and category != ''"> and category = #{category} </if>
+		  		  <if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+		  		  <if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+		  		  <if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.ProductResult">
+		insert into t_jd_product_detail
+		(
+			`sku`, 
+			`name`, 
+			`weight`, 
+			`imagePath`,
+			`brandName`,
+			`productArea`, 
+			`upc`, 
+			`saleUnit`, 
+			`wareQD`, 
+			`state`, 
+			`category`, 
+			`cat0`,
+			`cat1`,
+			`cat2`,
+			`param`, 
+			`introduction`, 
+			`appintroduce`
+		)
+		values
+		(
+			#{sku}, 
+			#{name}, 
+			#{weight}, 
+			#{imagePath},
+			#{brandName},
+			#{productArea}, 
+			#{upc}, 
+			#{saleUnit}, 
+			#{wareQD}, 
+			#{state}, 
+			#{category}, 
+			#{cat0}, 
+			#{cat1}, 
+			#{cat2},
+			#{param}, 
+			#{introduction}, 
+			#{appintroduce} 
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.ProductResult">
+		update t_jd_product_detail 
+		<set>
+			`name` = #{name},
+			`weight` = #{weight},
+			`imagepath` = #{imagePath},
+			`brandName` = #{brandName},
+			`productArea` = #{productArea},
+			`upc` = #{upc},
+			`saleUnit` = #{saleUnit},
+			`wareQD` = #{wareQD},
+			`state` = #{state},
+			`category` = #{category},
+			`cat0` = #{cat0},
+		  	`cat1` = #{cat1},
+		  	`cat2` = #{cat2},
+			`param` = #{param},
+			`introduction` = #{introduction},
+			`appintroduce` = #{appintroduce},
+			`utime` = #{utime}
+		</set>
+		where sku = #{sku}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_product_detail where sku = #{sku}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_product_detail where sku in 
+		<foreach item="sku" collection="skus" open="(" separator="," close=")">
+			#{sku}
+		</foreach>
+	</delete>
+
+	<update id="updateState">
+		update t_jd_product_detail set `state` = #{state} where `sku` = #{sku}
+	</update>
+</mapper>

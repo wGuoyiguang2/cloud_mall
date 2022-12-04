@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.JdProductDetailDao">
+	<select id="getProductCtime" resultType="com.cibnvideo.jdsync.bean.ProductCtime">
+		select sku,ctime from t_jd_product_detail where sku in
+		<foreach collection="skus" index="index" item="item"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="getProductInfoBySkus" resultType="com.cibnvideo.jdsync.bean.ProductInfo">
+		select
+			a.sku,
+			a.name,
+			a.imagepath as imagePath,
+            c.videopath as videoPath,
+			a.brandname as brandName,
+			a.state,
+			a.category,
+			b.jdPrice,
+			b.price
+		from
+			t_jd_product_detail a
+		inner join t_jd_product_price b on a.sku = b.skuId
+        left join t_jd_product_detail_video c on a.sku = c.sku
+		where a.sku in
+		<foreach collection="skus" index="index" item="item"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="get" resultType="com.cibnvideo.jdsync.bean.ProductResult">
+		select
+			a.sku,
+			a.name,
+			a.weight,
+			a.imagepath,
+			c.videopath,
+			a.brandname,
+			a.productarea,
+			a.upc,
+			a.saleunit,
+			a.wareqd,
+			a.state,
+			a.category,
+			a.cat0,
+			a.cat1,
+			a.cat2,
+			a.param,
+			a.introduction,
+			a.appintroduce,
+			a.ctime,
+			a.utime,
+			b.jdPrice,
+			b.price
+		from t_jd_product_detail a
+		left join t_jd_product_price b ON a.sku = b.skuId
+		left join t_jd_product_detail_video c ON a.sku = c.sku
+		where
+			a.sku = #{sku}
+	</select>
+
+	<select id="listInfo" resultType="com.cibnvideo.jdsync.bean.ProductInfo">
+		SELECT
+		a.sku,
+		a. NAME,
+		a.imagepath as imagePath,
+        c.videopath as videoPath,
+		a.brandname as brandName,
+		a.state,
+		a.category,
+		b.jdPrice,
+		b.price
+		FROM
+		t_jd_product_detail a
+		inner JOIN t_jd_product_price b ON a.sku = b.skuId
+        left join t_jd_product_detail_video c ON a.sku = c.sku
+		WHERE
+		a.sku in
+		<foreach collection="skuArray" index="index" item="item"
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		ORDER BY
+		FIELD(a.sku,
+		<foreach collection="skuArray" index="index" item="item" separator=",">
+			#{item}
+		</foreach>
+		)
+	</select>
+
+	<select id="getinfo" resultType="com.cibnvideo.jdsync.bean.ProductInfo">
+		select
+            a.sku,
+            a.name,
+            a.imagepath as imagePath,
+            c.videopath as videoPath,
+            a.brandname as brandName,
+            a.state,
+            a.category,
+            b.jdPrice,
+            b.price
+        from
+        t_jd_product_detail a
+        inner join t_jd_product_price b on a.sku = b.skuId
+        left join t_jd_product_detail_video c on a.sku = c.sku
+        where a.sku = #{sku}
+	</select>
+
+	<select id="getBrandNamesByCat2" resultType="java.lang.String">
+		select distinct brandname from t_jd_product_detail
+		<where>
+			<if test="keyword != null and keyword != ''"> and name like CONCAT('%',#{keyword},'%') </if>
+			<if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+			<if test="state !=null and state != ''">and state = #{state}</if>
+			<if test="removedSkus != null and removedSkus.size>0"> and sku not in
+				<foreach item="sku" collection="removedSkus" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="getBrandNamesBySkus" resultType="java.lang.String">
+		select distinct brandname from t_jd_product_detail
+		<where>
+			<if test="skus != null and skus.size>0"> and sku in
+				<foreach item="sku" collection="skus" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			and state=1
+		</where>
+	</select>
+	
+	<select id="list" resultType="com.cibnvideo.jdsync.bean.ProductResult">
+		select
+			a.sku,
+			a.name,
+			a.weight,
+			a.imagepath,
+			c.videopath,
+			a.brandname,
+			a.productarea,
+			a.upc,
+			a.saleunit,
+			a.wareqd,
+			a.state,
+			a.category,
+			a.cat0,
+			a.cat1,
+			a.cat2,
+			a.param,
+			a.introduction,
+			a.appintroduce,
+			a.ctime,
+			a.utime,
+			b.jdPrice,
+			b.price
+		from t_jd_product_detail a
+		inner join t_jd_product_price b ON a.sku = b.skuId
+		left join t_jd_product_detail_video c ON a.sku = c.sku
+        <where>  
+		  		  <if test="sku != null and sku != ''"> and a.sku = #{sku} </if>
+		  		  <if test="name != null and name != ''"> and a.name = #{name} </if>
+		  		  <if test="brandName != null and brandName != ''"> and a.brandName = #{brandName} </if>
+		  		  <if test="productArea != null and productArea != ''"> and a.productArea = #{productArea} </if>
+		  		  <if test="state != null and state != ''"> and a.state = #{state} </if>
+		  		  <if test="category != null and category != ''"> and a.category = #{category} </if>
+		  		  <if test="cat0 != null and cat0 != ''"> and a.cat0 = #{cat0} </if>
+		  		  <if test="cat1 != null and cat1 != ''"> and a.cat1 = #{cat1} </if>
+		  		  <if test="cat2 != null and cat2 != ''"> and a.cat2 = #{cat2} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+	<select id="listinfo" resultType="com.cibnvideo.jdsync.bean.ProductInfo">
+		select
+          a.sku,
+          a.name,
+          a.imagepath as imagePath,
+          c.videopath as videoPath,
+          a.brandname as brandName,
+          a.state,
+          a.category,
+          b.jdPrice,
+          b.price
+        from
+          t_jd_product_detail a
+        inner join t_jd_product_price b on a.sku = b.skuId
+        left join t_jd_product_detail_video c on a.sku = c.sku
+        <where>  
+			<if test="sku != null and sku != ''"> and a.sku = #{sku} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="brandName != null and brandName != ''"> and brandName = #{brandName} </if>
+			<if test="state != null and state != ''"> and state = #{state} </if>
+			<if test="category != null and category != ''"> and category = #{category} </if>
+			<if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by a.sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="searchinfo" resultType="com.cibnvideo.jdsync.bean.ProductInfo">
+		select
+          a.sku,
+          a.name,
+          a.imagepath as imagePath,
+          c.videopath as videoPath,
+          a.brandname as brandName,
+          a.state,
+          a.category,
+          b.jdPrice,
+          b.price
+        from
+          t_jd_product_detail a
+        inner join t_jd_product_price b on a.sku = b.skuId
+        left join t_jd_product_detail_video c on a.sku = c.sku
+		<where>
+			<if test="sku != null and sku != ''"> and a.sku = #{sku} </if>
+			<if test="name != null and name != ''"> and name like CONCAT('%',#{name},'%') </if>
+			<if test="brandName != null and brandName != ''"> and brandName like CONCAT('%',#{brandName},'%')</if>
+			<if test="state != null and state != ''"> and state = #{state} </if>
+			<if test="category != null and category != ''"> and category = #{category} </if>
+			<if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+			<if test="priceStart != null and priceStart != ''"> and price &gt;= #{priceStart} </if>
+			<if test="priceEnd != null and priceEnd != ''"> and price &lt;= #{priceEnd} </if>
+			<if test="jdPriceStart != null and jdPriceStart != ''"> and jdPrice &gt;= #{jdPriceStart} </if>
+			<if test="jdPriceEnd != null and jdPriceEnd != ''"> and jdPrice &lt;= #{jdPriceEnd} </if>
+			<if test="notin != null and notin.size>0"> and a.sku not in
+				<foreach item="sku" collection="notin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="isin != null and isin.size>0"> and a.sku in
+				<foreach item="sku" collection="isin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by a.sku desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+	<select id="getProductPcStyle" resultType="com.cibnvideo.jdsync.bean.ProductResult">
+		select `sku`  from t_jd_product_detail
+        <where>  
+		  		  introduction like '%skudesign="100010"%'
+		 </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+	<select id="getProductMobileStyle" resultType="com.cibnvideo.jdsync.bean.ProductResult">
+		select `sku`  from t_jd_product_detail
+        <where>  
+		  		  introduction like '%skudesign="100011"%'
+		 </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_detail
+		 <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="brandName != null and brandName != ''"> and brandName = #{brandName} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		  <if test="category != null and category != ''"> and category = #{category} </if>
+		  		  <if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+		  		  <if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+		  		  <if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+		  		</where>
+	</select>
+
+	<select id="searchcount" resultType="int">
+		select count(a.sku) from t_jd_product_detail as a inner join t_jd_product_price as b on a.sku = b.skuId
+		<where>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+			<if test="name != null and name != ''"> and name like CONCAT('%',#{name},'%') </if>
+			<if test="brandName != null and brandName != ''"> and brandName like CONCAT('%',#{brandName},'%') </if>
+			<if test="state != null and state != ''"> and state = #{state} </if>
+			<if test="category != null and category != ''"> and category = #{category} </if>
+			<if test="cat0 != null and cat0 != ''"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null and cat1 != ''"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null and cat2 != ''"> and cat2 = #{cat2} </if>
+			<if test="priceStart != null and priceStart != ''"> and price &gt;= #{priceStart} </if>
+			<if test="priceEnd != null and priceEnd != ''"> and price &lt;= #{priceEnd} </if>
+			<if test="jdPriceStart != null and jdPriceStart != ''"> and jdPrice &gt;= #{jdPriceStart} </if>
+			<if test="jdPriceEnd != null and jdPriceEnd != ''"> and jdPrice &lt;= #{jdPriceEnd} </if>
+			<if test="notin != null and notin.size > 0"> and sku not in
+				<foreach item="sku" collection="notin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="isin != null and isin.size>0"> and sku in
+				<foreach item="sku" collection="isin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="getSalesManagerProductDetail" resultType="com.cibnvideo.jdsync.bean.SalesManagerProductDetailVo">
+		select d.brandname as brandName,GROUP_CONCAT(c.`name` SEPARATOR '-') as category from t_jd_product_detail d left join t_jd_product_category c on c.catId=d.cat0 or c.catId=d.cat1 or c.catId=d.cat2 where d.sku=#{sku}
+	</select>
+	<select id="listSalesManager" resultType="com.cibnvideo.jdsync.bean.SalesManagerVo">
+		SELECT
+			d.sku AS productId,
+			d.brandname AS brandName,
+			GROUP_CONCAT(c.`name` SEPARATOR '-') AS category
+		FROM
+			t_jd_product_detail d
+		LEFT JOIN t_jd_product_category c ON c.catId = d.cat0
+		OR c.catId = d.cat1
+		OR c.catId = d.cat2
+		<where>
+			<if test="category != null and category != ''"> and c.`name` like '%${category}%' </if>
+			<if test="brandName != null and brandName != ''"> and brandName like '%${brandName}%' </if>
+		</where>
+		GROUP BY
+			d.sku
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="getProductForEs" resultType="com.cibnvideo.jdsync.bean.ProductEsBean">
+		select
+		a.sku,
+		a.name,
+		a.imagepath,
+		a.brandname,
+		a.category as cate,
+		concat_ws(';',c.name, d.name, e.name) as catename,
+		a.cat0,
+		c.name as cat0name,
+		a.cat1,
+		d.name as cat1name,
+		a.cat2,
+		e.name as cat2name,
+		b.jdPrice as jdprice,
+		0 as price,
+		a.ctime,
+		a.utime,
+		a.state,
+		0 as sales
+		from
+		t_jd_product_detail a
+		inner join t_jd_product_price b on a.sku = b.skuId
+		left join t_jd_product_category c on a.cat0 = c.catId and c.catClass=0
+		left join t_jd_product_category d on a.cat1 = d.catId and d.catClass=1
+		left join t_jd_product_category e on a.cat2=e.catId and e.catClass=2
+		where a.sku = #{sku}
+	</select>
+
+	<select id="listProductForEs" resultType="com.cibnvideo.jdsync.bean.ProductEsBean">
+		select
+			a.sku,
+			a.name,
+			a.imagepath,
+			a.brandname,
+			a.category as cate,
+			concat_ws(';',c.name, d.name, e.name) as catename,
+			a.cat0,
+			c.name as cat0name,
+			a.cat1,
+			d.name as cat1name,
+			a.cat2,
+			e.name as cat2name,
+			b.jdPrice as jdprice,
+			0 as price,
+			a.ctime,
+			a.utime,
+			a.state,
+			0 as sales
+		from
+			t_jd_product_detail a
+		inner join t_jd_product_price b on a.sku = b.skuId
+		left join t_jd_product_category c on a.cat0 = c.catId and c.catClass=0
+		left join t_jd_product_category d on a.cat1 = d.catId and d.catClass=1
+		left join t_jd_product_category e on a.cat2=e.catId and e.catClass=2
+		<where>
+			<if test="sku != null"> and a.sku = #{sku} </if>
+			<if test="name != null and name != ''"> and a.name like CONCAT('%',#{name},'%') </if>
+			<if test="brandName != null and brandName != ''"> and a.brandName like CONCAT('%',#{brandName},'%')</if>
+			<if test="state != null"> and a.state = #{state} </if>
+			<if test="category != null and category != ''"> and a.category = #{category} </if>
+			<if test="cat0 != null"> and a.cat0 = #{cat0} </if>
+			<if test="cat1 != null"> and a.cat1 = #{cat1} </if>
+			<if test="cat2 != null"> and a.cat2 = #{cat2} </if>
+			<if test="notin != null and notin.size>0"> and a.sku not in
+				<foreach item="sku" collection="notin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="isin != null and isin.size>0"> and a.sku in
+				<foreach item="sku" collection="isin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by a.sku desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="countProductForEs" resultType="int">
+		select
+		count(*)
+		from
+		t_jd_product_detail a
+		inner join t_jd_product_price b on a.sku = b.skuId
+		left join t_jd_product_category c on a.cat0 = c.catId and c.catClass=0
+		left join t_jd_product_category d on a.cat1 = d.catId and d.catClass=1
+		left join t_jd_product_category e on a.cat2=e.catId and e.catClass=2
+		<where>
+			<if test="sku != null"> and a.sku = #{sku} </if>
+			<if test="name != null and name != ''"> and a.name like CONCAT('%',#{name},'%') </if>
+			<if test="brandName != null and brandName != ''"> and a.brandName like CONCAT('%',#{brandName},'%')</if>
+			<if test="state != null"> and a.state = #{state} </if>
+			<if test="category != null and category != ''"> and a.category = #{category} </if>
+			<if test="cat0 != null"> and a.cat0 = #{cat0} </if>
+			<if test="cat1 != null"> and a.cat1 = #{cat1} </if>
+			<if test="cat2 != null"> and a.cat2 = #{cat2} </if>
+			<if test="notin != null and notin.size>0"> and a.sku not in
+				<foreach item="sku" collection="notin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="isin != null and isin.size>0"> and a.sku in
+				<foreach item="sku" collection="isin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<select id="getProductVideo" resultType="com.cibnvideo.jdsync.bean.ProductVideo">
+		select `sku`, `videopath` as `videoPath` from t_jd_product_detail_video where sku=#{sku}
+	</select>
+	<insert id="saveProductVideo">
+		insert into t_jd_product_detail_video
+		(
+			`sku`,
+			`videopath`
+		)
+		values
+			(
+				#{sku},
+				#{videoPath}
+			)
+	</insert>
+
+	<update id="updateProductVideo">
+		update t_jd_product_detail_video set `videopath`=#{videoPath} where sku = #{sku}
+	</update>
+
+	<select id="productDetailList" resultType="com.cibnvideo.jdsync.bean.ProductSynchronizationBean">
+		select
+            a.sku,
+            a.name,
+            a.brandname brandName,
+            a.category,
+            a.imagepath imagePath,
+            c.videopath videoPath,
+            b.jdPrice,
+            a.cat0,
+            a.cat1,
+            a.cat2,
+            a.weight,
+            a.productarea productArea,
+            a.upc,
+            a.saleunit saleUnit,
+            d.wareQD,
+            a.introduction,
+            a.appintroduce,
+            a.param,
+            d.propCode,
+            d.service,
+            d.wReadMe,
+            d.shouhou,
+            d.wdis,
+            e.jsContent,
+            e.cssContent,
+            e.htmlContent
+		from t_jd_product_detail a
+		left join t_jd_product_price b ON a.sku = b.skuId
+		left join t_jd_product_detail_video c ON a.sku = c.sku
+		left join t_jd_product_picture_pc d ON a.sku=d.sku
+		left join t_jd_product_style_pc e ON a.sku=e.sku
+		where a.sku in (${skus})
+	</select>
+
+	<select id="getSkus" resultType="String">
+		select GROUP_CONCAT(sku) from
+		(select sku from t_jd_product_detail
+			<where>
+				<if test="state != null"> and state = #{state} </if>
+			</where>
+			<if test="offset != null and limit != null">
+				limit ${offset}, ${limit}
+			</if>
+		) a
+	</select>
+</mapper>

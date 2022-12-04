@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3973672d-223f-4b39-a26f-7de30756bfcf" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/.project" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/target/classes/META-INF/maven/com.mayikt/meite-shop-basics-springcloud-eureka/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/target/classes/META-INF/maven/com.mayikt/meite-shop-basics-springcloud-eureka/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/.project" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/java/com/mayikt/AppGateWay.java" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/java/com/mayikt/AppGateWay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/META-INF/maven/com.mayikt/meite-shop-basics-springcloud-zuul/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/META-INF/maven/com.mayikt/meite-shop-basics-springcloud-zuul/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/com/mayikt/AppGateWay$DocumentationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/com/mayikt/AppGateWay$DocumentationConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/com/mayikt/AppGateWay.class" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/classes/com/mayikt/AppGateWay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-basics/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-basics/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-portal/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-portal/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/src/main/java/com/mayikt/member/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/src/main/java/com/mayikt/member/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-member/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-member/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-member/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/classes/com/mayikt/member/MemberService.class" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/classes/com/mayikt/member/MemberService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/src/main/java/com/mayikt/weixin/entity/AppEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/src/main/java/com/mayikt/weixin/service/WeiXinAppService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-weixin/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-weixin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-api-weixin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/classes/com/mayikt/weixin/entity/AppEntity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/classes/com/mayikt/weixin/service/WeiXinAppService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/src/main/java/com/mayikt/member/AppMember.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/src/main/java/com/mayikt/member/feign/WeiXinAppServiceFeign.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/src/main/java/com/mayikt/member/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/src/main/java/com/mayikt/member/service/impl/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-member/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-member/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-member/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/META-INF/maven/com.mayikt/meite-shop-service-member/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/com/mayikt/member/AppMember.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/com/mayikt/member/feign/WeiXinAppServiceFeign.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/com/mayikt/member/service/impl/MemberServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/classes/com/mayikt/member/service/impl/MemberServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/.classpath" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/src/main/java/com/mayikt/AppWeixin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/src/main/java/com/mayikt/weixin/service/impl/WeiXinAppServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-weixin/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-weixin/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-weixin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/META-INF/maven/com.mayikt/meite-shop-service-weixin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/com/mayikt/AppWeixin.class" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/com/mayikt/AppWeixin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/classes/com/mayikt/weixin/service/impl/WeiXinAppServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/meite-shop-service-impl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/meite-shop-service-impl/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-spike-web/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-weixin/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-spike/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-job/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-pay-plugin/meite-shop-unionpay-plugin/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-member/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-pay-dto/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-spike/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-goods/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-weixin/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-xxl-sso-server/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-job/meite-shop-pay-job/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-portal/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-common/meite-shop-common-core/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-web/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-elk-kafka/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-member-dto/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-product-dto/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-integral/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-basics/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-integral/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-member/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-auth/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-pay-plugin/meite-shop-alipay-plugin/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-common/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-pay-plugin/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-common/meite-shop-common-web-core/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-weixin-dto/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/target/" />
+    <ignored path="$PROJECT_DIR$/meite-shop-api-dto/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="ProductSearchServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/api/service/impl/ProductSearchServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="25" column="99" selection-start-line="25" selection-start-column="99" selection-end-line="25" selection-end-column="99" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductSearchService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-goods/src/main/java/com/mayikt/product/api/service/ProductSearchService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="382">
+              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseResponse.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/meite-shop-common/meite-shop-common-core/src/main/java/com/mayikt/base/BaseResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="1" lean-forward="true" selection-end-line="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductDto.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-product-dto/src/main/java/com/mayikt/member/output/dto/ProductDto.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/es/entity/ProductEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductReposiory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/es/reposiory/ProductReposiory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="6" column="74" lean-forward="true" selection-start-line="6" selection-start-column="74" selection-end-line="6" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppProduct.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/AppProduct.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="76" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>app-mayikt-weixin</find>
+      <find>modify_exchange_name</find>
+      <find>cratePayToken</find>
+      <find>app-mayikt-auth</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PayMentTransacService.java" />
+        <option value="$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/api/service/impl/ProductSearchServiceImpl.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="es" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="es" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="meite-shop-parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mayikt_code" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-impl" type="462c0819:PsiDirectoryNode" />
+              <item name="meite-shop-service-goods" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mayikt" type="462c0819:PsiDirectoryNode" />
+              <item name="product" type="462c0819:PsiDirectoryNode" />
+              <item name="es" type="462c0819:PsiDirectoryNode" />
+              <item name="reposiory" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="SpikeC&#9;PSI&#9;JAVA://com.mayikt.spike.service.impl.SpikeCommodityServiceImpl&#10;Spike&#9;PSI&#9;JAVA://com.mayikt.AppSpike" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-product-dto/pom.xml" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3973672d-223f-4b39-a26f-7de30756bfcf" name="Default" comment="" />
+      <created>1582702950530</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582702950530</updated>
+      <workItem from="1582702961236" duration="227000" />
+      <workItem from="1582703525443" duration="119000" />
+      <workItem from="1582703780550" duration="13430000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="13776000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="RestServices" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Redis Servers" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.39788198" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="MyBatis Log" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27458397" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info id="Web" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="bottom" id="Spring" order="0" />
+      <window_info id="Image Layers" order="4" />
+      <window_info anchor="bottom" id="Run" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Redis Servers" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.18003026" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Java Enterprise" order="1" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="right" id="Maven Projects" order="7" visible="true" weight="0.39788198" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="3" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="right" id="Database" order="8" />
+      <window_info anchor="bottom" id="Message" order="2" />
+      <window_info id="Web" order="0" side_tool="true" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="right" id="RestServices" order="11" />
+      <window_info anchor="bottom" id="MyBatis Log" order="13" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
+      <window_info anchor="right" id="Bean Validation" order="0" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-spike-web/src/main/java/com/mayikt/spike/web/SpikeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PayMentTransacService.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/src/main/java/com/mayikt/pay/PayWeb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/src/main/java/com/mayikt/pay/feign/PaymentChannelFeign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/src/main/java/com/mayikt/pay/feign/PayMentTransacInfoFeign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-common/meite-shop-common-web-core/src/main/java/com/mayikt/web/base/BaseWebController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/src/main/java/com/mayikt/pay/feign/PayContextFeign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="6" column="2" selection-start-line="6" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/AppPay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/strategy/impl/AliPayStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PaymentContextCompensationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#794#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PayContextService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PaymentChannelService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PayMentTransacInfoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-pay/src/main/java/com/mayikt/pay/service/PayMentTransacTokenService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/factory/StrategyFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/strategy/PayStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/service/impl/PayContextServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="45" column="38" lean-forward="true" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/mapper/entity/PaymentChannelEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-434">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/service/impl/PaymentContextCompensationServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <folding>
+            <element signature="e#0#1756#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/service/impl/PaymentChannelServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/service/impl/PayMentTransacInfoServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-214">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/service/impl/PayMentTransacTokenServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="43" column="26" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-pay/src/main/java/com/mayikt/pay/mapper/entity/PaymentTransactionEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/java/com/mayikt/auth/mapper/entity/MeiteAppInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-portal/meite-shop-portal-pay-web/src/main/java/com/mayikt/pay/controller/PayController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="75" column="68" lean-forward="true" selection-start-line="75" selection-start-column="68" selection-end-line="75" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/java/com/mayikt/auth/utils/Guid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-412">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/java/com/mayikt/AppAuth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="18" column="26" lean-forward="true" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/java/com/mayikt/zuul/feign/AuthorizationServiceFeign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/java/com/mayikt/AppGateWay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="41" selection-start-line="41" selection-end-line="41" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-eureka/src/main/java/com/mayikt/app/AppEureka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-springcloud-zuul/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-xxl-sso-server/src/main/java/com/xxl/sso/server/XxlSsoServerApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-basics/meite-shop-basics-xxl-sso-server/src/main/java/com/xxl/sso/server/controller/WebController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-71">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-job/meite-shop-pay-job/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-job/meite-shop-pay-job/src/main/java/com/mayikt/pay/job/job/handler/PayJobHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-job/meite-shop-pay-job/src/main/java/com/mayikt/pay/job/AppPayJob.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-auth/src/main/java/com/mayikt/auth/service/api/AuthorizationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="27" column="48" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/java/com/mayikt/auth/mapper/AppInfoMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-auth/src/main/java/com/mayikt/auth/service/api/impl/AuthorizationServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="16" column="94" selection-start-line="16" selection-start-column="94" selection-end-line="16" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-elasticsearch/3.0.6.RELEASE/spring-data-elasticsearch-3.0.6.RELEASE-sources.jar!/org/springframework/data/elasticsearch/repository/ElasticsearchRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#1503#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/AppProduct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/es/reposiory/ProductReposiory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="6" column="74" lean-forward="true" selection-start-line="6" selection-start-column="74" selection-end-line="6" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/es/entity/ProductEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-api-dto/meite-shop-api-product-dto/src/main/java/com/mayikt/member/output/dto/ProductDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-impl/meite-shop-service-goods/src/main/java/com/mayikt/product/api/service/impl/ProductSearchServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="25" column="99" selection-start-line="25" selection-start-column="99" selection-end-line="25" selection-end-column="99" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-service-api/meite-shop-service-api-goods/src/main/java/com/mayikt/product/api/service/ProductSearchService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meite-shop-common/meite-shop-common-core/src/main/java/com/mayikt/base/BaseResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" lean-forward="true" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.FreeFreightDao">
+    <select id="listManagerFreeFreight" resultType="com.cibnvideo.oms.tcmallcustomer.bean.FreeFreightBean">
+        select id,venderid,price,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%s') as ctime,DATE_FORMAT(utime,'%Y-%m-%d %H:%i:%s') as utime from t_free_freight where venderid=#{venderId} limit 1
+    </select>
+    <select id="countManagerFreeFreight" resultType="int">
+        select count(1) from t_free_freight where venderid=#{venderId}
+    </select>
+    <select id="getById" resultType="com.cibnvideo.oms.tcmallcustomer.bean.FreeFreightBean">
+        select id,venderid,price,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%s') as ctime,DATE_FORMAT(utime,'%Y-%m-%d %H:%i:%s') as utime from t_free_freight where id=#{id}
+    </select>
+    <insert id="addFreeFreight">
+        insert into t_free_freight
+        <set>
+            <if test="venderId != null and venderId!=''">venderId=#{venderId},</if>
+            <if test="price != null and price!=''">price=#{price},</if>
+            ctime=NOW(),utime=NOW()
+        </set>
+    </insert>
+    <update id="updateManagerFreeFreight">
+        update t_free_freight
+        <set>
+            <if test="price != null and price!=''">price=#{price},</if>
+            utime=NOW()
+        </set>
+        where venderId=#{venderId}
+    </update>
+    <select id="getByVenderId" resultType="java.lang.Double">
+        select price from t_free_freight where venderId=#{venderId}
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<table id="producttb" class="col-xs-12" data-toolbar="#toolbar"
+							   data-show-export="true" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/operationmanager/contactus.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+
+	<div>
+		<script type="text/javascript">
+            var s_edit_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="mall:contactus:edit">
+		<script type="text/javascript">
+            s_edit_h = '';
+		</script>
+	</div>
+</body>
+</html>

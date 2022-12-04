@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.recommend.dao.RecommendDao">
+
+    <select id="get" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendBean">
+		select
+		  `id`,
+		  `venderid` AS venderId,
+		  `name`,
+		  `subname` AS `subName`,
+		  `ctype`,
+		  `image`,
+		  `action_code` AS `action`,
+		  `action_param` AS `actionParam`,
+		  `position`,
+		  `status`,
+		  `layout`,
+		  `layout_id` AS `layoutId`,
+		  `ctime`,
+		  `utime`
+		from
+		  t_layout_recommend
+		where id = #{id}
+</select>
+    <select id="getbyposition" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendBean">
+		select
+		  `id`,
+		  `venderid` AS venderId,
+		  `name`,
+		  `subname` AS `subName`,
+		  `ctype`,
+		  `image`,
+		  `action_code` AS `action`,
+		  `action_param` AS `actionParam`,
+		  `position`,
+		  `status`,
+		  `layout`,
+		  `layout_id` AS `layoutId`,
+		  `ctime`,
+		  `utime`
+		from
+		  t_layout_recommend
+		where venderid = #{venderId} and layout_id = #{layoutId} and position = #{position}
+</select>
+
+    <select id="list" resultType="com.cibnvideo.oms.recommend.model.bean.RecommendBean">
+        select
+        `id`,
+        `venderid` AS venderId,
+        `name`,
+        `subname` AS `subName`,
+        `ctype`,
+        `image`,
+        `action_code` AS `action`,
+        `action_param` AS `actionParam`,
+        `position`,
+        `status`,
+        `layout`,
+        `layout_id` AS `layoutId`,
+        `ctime`,
+        `utime`
+        from
+        t_layout_recommend
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="venderId != null and venderId != ''">and venderid = #{venderId}</if>
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test="subName != null and subName != ''">and subname = #{subName}</if>
+            <if test="ctype != null and ctype != ''">and ctype = #{ctype}</if>
+            <if test="image != null and image != ''">and image = #{image}</if>
+            <if test="action != null and action != ''">and action_code = #{action}</if>
+            <if test="actionParam != null and actionParam != ''">and action_param = #{actionParam}</if>
+            <if test="position != null and position != ''">and position = #{position}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="layout != null and layout != ''">and layout = #{layout}</if>
+            <if test="layoutId != null and layoutId != ''">and layout_id = #{layoutId}</if>
+            <if test="ctime != null and ctime != ''">and ctime = #{ctime}</if>
+            <if test="utime != null and utime != ''">and utime = #{utime}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_layout_recommend
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="venderId != null and venderId != ''">and venderid = #{venderId}</if>
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test="subName != null and subName != ''">and subname = #{subName}</if>
+            <if test="ctype != null and ctype != ''">and ctype = #{ctype}</if>
+            <if test="image != null and image != ''">and image = #{image}</if>
+            <if test="action != null and action != ''">and action_code = #{action}</if>
+            <if test="actionParam != null and actionParam != ''">and action_param = #{actionParam}</if>
+            <if test="position != null and position != ''">and position = #{position}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="layout != null and layout != ''">and layout = #{layout}</if>
+            <if test="layoutId != null and layoutId != ''">and layout_id = #{layoutId}</if>
+            <if test="ctime != null and ctime != ''">and ctime = #{ctime}</if>
+            <if test="utime != null and utime != ''">and utime = #{utime}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.cibnvideo.oms.recommend.model.bean.RecommendBean"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into t_layout_recommend
+		(
+		`venderid`,
+		`name`,
+		`subname`,
+		`ctype`,
+		`image`,
+		`action_code`,
+		`action_param`,
+		`position`,
+		`status`,
+		`layout`,
+		`layout_id`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{name},
+		#{subName},
+		#{ctype},
+		#{image},
+		#{action},
+		#{actionParam},
+		#{position},
+		#{status},
+		#{layout},
+		#{layoutId},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.cibnvideo.oms.recommend.model.bean.RecommendBean">
+        update t_layout_recommend
+        <set>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="subName != null">`subname` = #{subName},</if>
+            <if test="ctype != null">`ctype` = #{ctype},</if>
+            <if test="image != null">`image` = #{image},</if>
+            <if test="action != null">`action_code` = #{action},</if>
+            <if test="actionParam != null">`action_param` = #{actionParam},</if>
+            <if test="position != null">`position` = #{position},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="layout != null">`layout` = #{layout},</if>
+            <if test="layoutId != null">`layout_id` = #{layoutId},</if>
+            <if test="utime != null">`utime` = #{utime}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from t_layout_recommend where id = #{id}
+</delete>
+
+    <delete id="removeByLayoutId">
+		delete from t_layout_recommend where layout_id = #{layoutId}
+    </delete>
+</mapper>

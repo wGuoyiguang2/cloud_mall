@@ -1,0 +1,1711 @@
+bms_api
+
+A:声明
+wanghaoyang
+
+B:接口列表
+    1:下单接口
+    5:根据订单号查询订单信息
+    6:生成支付二维码接口
+    8:根据京东订单号和某类商品id获取交易信息
+    17:查询用户订单列表
+    18:查询商品库存信息
+    19:取消订单
+    21:查询商品运费
+    23:轮询订单是否支付
+    25:查询商品销量
+    //26:退款给用户(接口不再使用)
+    //27:退款给商户(接口不再使用)
+    31:绑定购物卡
+    32:获取我的所有购物卡
+    33:获取购物卡的使用记录
+    34:微信小程序生成预支付id
+    35:通过卡密查询购物卡信息
+    36:删除订单接口
+    37:根据JD订单号,商品编号获取售后服务类型
+    38:根据JD订单号获取售后列表
+    39:查询大客户余额(针对二级平台)
+    40:下单(针对二级平台)
+    41:支付成功回调((针对二级平台))
+    42:退款给用户重试
+    43:退款给大客户重试
+    44:同步退款状态
+
+
+C:接口说明
+
+一、下单
+1、请求地址: http://{ip}:9005/v1/bms/pay/order
+2、请求方式  POST(json)
+3、是否需要登陆 是
+4、请求参数
+"userId": 3                                     用户id（必填）
+"venderId": 31                                  商家id（必填）
+"provinceId": 1                                 省份id（必填）
+"cityId": 72                                    市id（必填）
+"countyId": 2819                               区/县(必填)
+"townId": 0                                     乡/镇（必填若无传0）
+"detail": "安贞街道安定路39号长新大厦13层1301室"      详细地址(必填)
+"name": "来庆闯"                                 收件人姓名(必填)
+"phone": "13716765761"                          收件人电话(必填)
+"productIds": ["6082327", "100401", "108364"]   商品id（必填(和products二选一),不建议再使用此参数,使用products替换）
+"products":{"6082327":3}                        商品id和商品数量(必填(和products二选一),第一版只能传入一种商品)
+"invoice":1                                     是否开票
+请求实例(json)
+{
+	"userId": 3,
+	"venderId": 56,
+	"provinceId": 1,
+	"cityId": 72,
+	"countyId": 2819,
+	"townId": 0,
+	"name": "来庆闯",
+	"phone": "13716765761",
+	"invoice":1,
+	"detail": "安贞街道安定路39号长新大厦13层1301室",
+	"productIds": ["1139788"]
+}
+5、返回值说明
+"orderSn": "2018070518424945724245924"          平台订单号
+"totalFee": 4009.80                             此单总金额
+"totalProduct": 8                               次单购买商品数量
+"feight": 8                                     运费
+"jdTradeNo": "77547944966"                      京东订单号
+返回实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "orderSn": "20180714165228241035",
+        "totalFee": 12.5,
+        "totalProduct": 1,
+        "userId": 3,
+        "venderId": 56,
+        "jdTradeNo": "77547944966",
+        "feight": 8,
+        "orderPrice": 4.5
+    }
+}
+库存不足时返回(data为库存不足的商品id)
+{
+    "error": 10028,
+    "msg": "商品库存不足:[5838174, 5914783]",
+    "data": [
+        5838174,
+        5914783
+    ]
+}
+
+二、开发票
+1、请求地址: http://{ip}:9005/v1/invoice/add
+2、请求方式  POST(json)
+3、是否需要登陆 是
+4、请求参数kai
+{
+"orderno": "20180705212705",           #订单号码（只有在冲红时才填写）
+"kptype": "1",                         #开票类型:1,正票;2,红票（必填）
+"address": "辽宁 抚顺  清苑县",           #购方地址（企业要填,个人可为空）
+"phone": "13716765761",                #购房手机（开票成功会短信提醒购方，必填）
+"taxnum": "110101TRDX8RQU1",           #购方税号（企业要填,个人可为空）
+"buyername": "个人",                    #购方名称（必填）
+"account": "12347568910",              #银行账号（企业要填,个人可为空）
+"fpdm": "",                            #对应蓝票发票代码（红票必填,不满12 位请左补 0）
+"fphm": "",                            #对应蓝票发票号码（红票必填,不满8位请左补 0）
+"detail": [                            #电子发票明细
+    {
+        "goodsname": "篮球",            #商品名称（必填）
+        "spec": "2L",                  #规格型号（可为空）
+        "unit": "个",                   #单位（可为空）
+        "num": "1",                     #数量,冲红时项目数量为负数（必填）
+        "price": "19.99",               #单价,冲红时项目单价为正数（必填）
+        "spbm": "1090511030000000000"   #商品编码（必填）
+        "taxrate": "0.16"               #税率（必填）
+    },
+    {
+        "goodsname": "打气筒",
+        "spec": "1L",
+        "unit": "只",
+        "num": "1",
+        "price": "20",
+        "spbm": "1090511030000000000"
+        "taxrate": "0.16"
+   }
+ ]
+}
+
+5、返回值说明
+{"error":0,
+ "msg":"ok",
+ "data":{
+      "status": "0000",                                  状态
+      "message": "同步成功",                               描述
+      "fpqqlsh":"20160913122204858003"                   发票请求流水号
+   }
+}
+
+三、开票结果查询
+1、请求地址: http://{ip}:9005/v1/invoice/getResult
+2、请求方式  POST(json)
+3、是否需要登陆 是
+4、请求参数
+{
+"fpqqlsh"    :["20170104160449979446"]  发票请求流水号（必填）
+}
+
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "result": "success",                            请求结果
+        "list": [                                       发票信息列表
+            {
+                "c_status": "2",                        开票状态
+                "c_fpdm": "140110940000",               发票代码
+                "c_bhsje": 34.18,                       不含税金额
+                "c_kprq": 1499323194000,                开票日期
+                "c_orderno": "170706143124000001",      订单编号
+                "c_invoiceid": "20170104160449979446",  发票主键
+                "c_msg": "已开票",                       开票信息,成功或者失败的信息
+                "c_fpqqlsh": "20170104160449979446",    发票请求流水号
+                "c_buyername": "个人",                   购方名称
+                "c_fphm": "10029353",                   发票号码
+                "c_resultmsg": "",                      结果信息
+                "c_url": ""http: //115.236.64.125/group1/M00/02/7F/wKjScFld2MuAeyGNAABthVYUd_I169.pdf",   发票 pdf 地址
+                "c_jym": "51495731132005812717",                    校验码
+                "c_jpg_url": "nnfpdev.jss.com.cn/BiwYGxBx-dWd_Y1",  发票详情地址
+                "c_hjse": 5.81,                                     合计税额
+                "c_taxnum": "110101TRDX8RQU1",                      购方税号
+                "c_invoice_line": "电子增值税普通发票"                 发票类型
+            }
+        ]
+    }
+}
+
+四、根据订单号查询发票请求流水号接口
+1、请求地址: http://{ip}:9005/v1/invoice/getFpqqlsh
+2、请求方式  POST(json)
+3、是否需要登陆 是
+4、请求参数
+{
+"orderno"    :["20170104160449979446"]            订单编号（必填）
+ }
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "result": "success",                            请求结果
+        "list": [                                       发票信息列表
+            {
+                "c_status": "2",                        开票状态
+                "c_fpdm": "140110940000",               发票代码
+                "c_bhsje": 34.18,                       不含税金额
+                "c_kprq": 1502162824000,                开票日期
+                "c_orderno": "20170104160449979446",    订单编号
+                "c_invoiceid": "17080811182101000553",  发票主键
+                "c_msg": "已开票",                       开票信息,成功或者失败的信息
+                "c_fpqqlsh": "17080811182101000553",    发票请求流水号
+                "c_buyername": "个人",                   购方名称
+                "c_fphm": "10034359",                   发票号码
+                "c_resultmsg": "",                      结果信息
+                "c_url": "https: //invtest.jss.com.cn/group1/M00/02/DB/wKjScVmJLS2AI02EAABtb",   发票 pdf 地址
+                "c_jym": "78723515160109056401",                    校验码
+                "c_jpg_url": "nnfpdev.jss.com.cn/uIwBZQBx-e3Maup",  发票详情地址
+                "c_hjse": 2.90,                                     合计税额
+                "c_taxnum": "110101TRDX8RQU1",                      购方税号
+                "c_invoice_line": "电子增值税普通发票"                 发票类型
+            }
+        ]
+    }
+}
+
+五、根据订单号查询订单详情
+1、请求地址: http://{ip}:9005/v1/bms/order/detail
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+"orderSn":"2018070518424945724245924"           平台订单号
+5、返回值说明
+"payStatus": 0                                  支付状态(0:未支付1:以支付)
+"ctime": "2018-07-05 18:42:49.0"                下单时间
+"price": 4009.80                                应付金额
+"payPrice": null                                实际支付金额(未支付时为空)
+"child_trade_no": "78259883277"                 京东(子)订单号
+"order_state": 1                                子订单状态(订单状态 1:待支付|2:已取消|3:待收货|4:拒收|5:已完成)
+返回实例
+{
+	"error": 0,
+	"msg": "ok",
+	"data": {
+		"userId": 161568,
+		"venderId": 56,
+		"orderSn": "20180810113856617260",
+		"payStatus": 1,
+		"addTime": "2018-08-10 11:38:56",
+		"price": 0.7,
+		"payPrice": 0.7,
+		"name": "来庆闯",
+		"phone": "13716765761",
+		"provinceId": 1,
+		"cityId": 72,
+        "countyId": 2819,
+        "townId": 0,
+		"address": "北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+		"payType": 1,
+		"freight": 0,
+		"jdTradeNo": "78259883277",
+		"orderState": 3,
+		"qrCode": "http://172.16.11.228/static/tcmall_h5/afterService.html?mac=1231412333",
+		"product": [{
+				"agree_price": 33,
+				"price": 0.1,
+				"imagePath": "http://img13.360buyimg.com/n0/jfs/t18277/205/1056515568/118250/4192726a/5ab9b418Na4d38b36.jpg",
+				"product_id": 5255424,
+				"name": "旺旺 旺仔牛奶（6罐）+o泡果奶 儿童牛奶早餐奶（原味2罐）组合装 245ml*8",
+				"count": 3,
+				"order_state": 1,
+				"child_trade_no": "78259883277"
+			},
+			{
+				"agree_price": 14.3,
+				"price": 0.1,
+				"imagePath": "http://img13.360buyimg.com/n0/jfs/t11635/351/1983906495/71312/448a904c/5a0d3dd7N9bc50112.jpg",
+				"product_id": 5378771,
+				"name": "【京东自有品牌】八享时巴旦木160g（奶香味） 坚果炒货 休闲零食",
+				"count": 4,
+				"order_state": 1,
+				"child_trade_no": "78259883277"
+			}
+		]
+	}
+}
+
+六、请求生成二维码接口
+1、请求地址: http://{ip}:9005/v1/bms/pay/qrcode
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+"userId": 3                                                 用户id（必填）
+"venderId": 31                                              商家id（必填）
+"orderSn": "2018070714413932673254142"                      平台订单号（必填）
+"payType":1                                                 支付类型(必填1:微信2:支付宝)
+"cardNo": "2018092118412756jq2z,2018092118094756rhrq"       购物卡号(按顺序;多张用","隔开;可为空,为空则认为是二维码支付)
+5、返回值说明
+返回实例
+(如果购物卡不够支付当前订单时返回)
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "wxQrCode": "weixin://wxpay/bizpayurl?pr=nCHcmUF",
+        "aliQrCode": "https://qr.alipay.com/bax07581dugwilnjmjrg201b",
+        "faceValue": "57.10"
+    }
+}
+(如果购物卡足够支付当前订单时返回)
+{
+    "error": 0,
+    "msg": "购物卡全额支付成功",
+    "data": {
+        "wxQrCode": "",
+        "aliQrCode": "",
+        "faceValue": "0"
+    }
+}
+
+七、校验某订单中某商品是否可以提交售后服务
+1、请求地址: http://{ip}:9005/v1/afterSale/isCan
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'jdOrderId'   : 80478051183,               京东订单号（必填）
+'skuId'       : 216132                     京东商品编号（必填）
+5、返回值说明{
+{
+    "error":0,
+    "msg":"ok",
+    "data":{
+        "code":"0",
+        "resultCode":"0",
+        "success":true,         #是否可申请售后
+        "resultMessage":null,
+        "result":1              #可提交售后数量
+    }
+}
+
+八:根据京东订单号和某类商品id获取交易信息
+1、请求地址: http://{ip}:{port}/v1/bms/order/product
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+"tradeNo": "105838633575"                       京东订单号（必填）
+"sku": 6082327                                  商品id（必填）
+5、返回值说明
+orderSn:平台订单号
+tradeNo:京东订单号
+totalPrice：此单总价
+receiver:收货人
+phone：收货人电话
+provinceId：省id
+cityId:市id
+countryId:区县
+townId:乡镇
+detail:具体收货地址
+productName：商品名称
+productId：商品Id
+productSize:商品数量
+productPrice：商品单价
+返回实例
+{
+	"error": 0,
+	"msg": "ok",
+	"data": {
+		"orderSn": "20180712151439837359",
+		"tradeNo": "151439837359",
+		"totalPrice": 38.00,
+		"receiver": "来哥",
+		"phone": "13716765761",
+		"provinceId": 21,
+		"cityId": 1898,
+		"countryId": 1899,
+		"townId": 26691,
+		"detail": "湾龙背村 3组",
+		"productName": "利众 楚天贡米5kg 赛亚出品",
+		"productId": 6082327,
+		"productSize": 1,
+		"productPrice": 38.00
+	}
+}
+
+九、校验某订单中某商品是否可以提交售后服务
+1、请求地址: http://{ip}:9005/v1/afterSale/isCan
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId'   : 40245152920,               京东订单号（必填）
+'skuId'       : 800032                     京东商品编号（必填）
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "success": true,
+        "resultMessage": null,
+        "resultCode": "0",
+        "result": 1                        可提交售后数量
+    }
+}
+
+十、售后服务主页面信息展示
+1、请求地址: http://{ip}:9005/v1/afterSale/view
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId'   : 77535223529,               京东订单号（必填）
+'skuId'       : 1003077                     京东商品编号（必填）
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "serviceType": [                             #服务类型  退货(10)、换货(20)、维修(30)
+              {
+              "code": "30",
+              "name": "维修"
+             }
+	    ],
+	    "orderInfo": {                               #订单信息
+            "jdOrderId": 77535223529,                #京东订单号
+            "skuId": 1003077,                        #商品编号
+            "name": "来庆闯",                         #收件人
+            "phone":13716765761,
+            "provinceId": 1,
+            "cityId": 72,
+            "countyId": 2819,
+            "townId": 0,
+            "detail": "长新大厦",                      #具体收货地址
+            "provinceName": "北京",
+            "cityName": "朝阳区",
+            "countyName": "三环到四环之间",
+            "townName": ""
+        },
+        "productReturnType": [                        #商品退回方式  上门取件(4)、客户发货(40)、客户送货(7)
+	    {
+             "code": "7",
+             "name": "客户送货"
+            },
+            {
+              "code": "40",
+              "name": "客户发货"
+            }
+        ]
+    }
+}
+
+
+十一、根据客户账号和订单号分页查询服务单概要信息
+1、请求地址: http://{ip}:9005/v1/afterSale/getServiceListPage
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId'   : 40215143944,               京东订单号（必填）
+'pageIndex'   : 1                          页码（必填）
+'pageSize'    : 10                         每页记录数（必填）
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0",
+        "result": {
+            "serviceInfoList": [
+                {
+                    "afsServiceId": 262367527,                      服务单号
+                    "customerExpect": 10,                           服务类型码   退货(10)、换货(20)、维修(30)
+                    "customerExpectName": "退货",                   服务类型名
+                    "afsApplyTime": "2016-11-30 10:56:11",          服务单申请时间
+                    "orderId": 45794690848,                         订单号
+                    "wareId": 102818,                               商品编号
+                    "wareName": "耳机 带线控耳麦 网吧专用 黑色",     商品名称
+                    "afsServiceStep": 21,       服务单环节          申请阶段(10),审核不通过(20),客服审核(21),商家审核(22),京东收货(31),商家收货(32), 京东处理(33),商家处理(34), 用户确认(40),完成(50), 取消 60);
+                    "afsServiceStepName": "客服审核",               服务单环节名称  申请阶段,客服审核,商家审核,京东收货,商家收货, 京东处理,商家处理, 用户确认,完成, 取消;
+                    "cancel": 0                                     是否可取消 0代表否，1代表是
+                },
+                {
+                    "afsServiceId": 262169107,
+                    "customerExpect": 10,
+                    "customerExpectName": "退货",
+                    "afsApplyTime": "2016-11-29 14:56:46",
+                    "orderId": 45794690848,
+                    "wareId": 102818,
+                    "wareName": "声丽（SENICC）ST-808 头戴式电脑耳机 带线控耳麦 网吧专用 黑色",
+                    "afsServiceStep": 60,
+                    "afsServiceStepName": "取消",
+                    "cancel": 0
+                }
+            ],
+            "totalNum": 2,          总记录数
+            "pageSize": 10,         每页记录数
+            "pageNum": 1,           总页数
+            "pageIndex": 1          当前页数
+        },
+        "code": "0"
+    }
+}
+
+十二、根据服务单号查询服务单明细信息
+1、请求地址: http://{ip}:9005/v1/afterSale/getServiceDetail
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+{
+  "afsServiceId":100011597,         服务单号（必填）
+  "appendInfoSteps":[1,2,4,5]       获取信息模块
+}
+注：不设置数据表示只获取服务单主信息、商品明细以及客户信息；1、代表增加获取售后地址信息 2、代表增加获取客户发货信息3、代表增加获取退款明细 4、 增加获取跟踪信息 5.获取允许的操作信息
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data":{
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0",
+        "result": {
+            "afsServiceId": 100011597,                      #服务单号
+            "customerExpect": 10,                           #服务类型码  退货(10)、换货(20)、维修(30)
+            "afsApplyTime": "2012-09-22 08:25:03",          #服务单申请时间 格式为yyyy-MM-dd HH:mm:ss
+            "orderId": 323088097,                           #订单号
+            "isHasInvoice": 1,                              #是不是有发票  0没有 1有
+            "isNeedDetectionReport": 0,                     #是不是有检测报告 0没有 1有
+            "isHasPackage": 1,                              #是不是有包装 0没有 1有
+            "questionPic": "",                              #上传图片访问地址
+            "afsServiceStep": 50,                           #服务单环节  申请阶段(10),审核不通过(20),客服审核(21),商家审核(22),京东收货(31),商家收货(32), 京东处理(33),商家处理(34), 用户确认(40),完成(50), 取消(60);
+
+            "afsServiceStepName": "完成",                   #服务单环节名称
+            "approveNotes": "如情况属实我们可以为您办理",    #审核意见
+            "questionDesc": "鞋码大一码",                   #问题描述
+            "approvedResult": 33,                           #审核结果 直赔积分(11), 直赔余额(12), 直赔优惠卷(13), 直赔京豆 (14), 直赔商品 (21), 上门换新 (22),自营取件(31),客户送货(32),客户发货 (33),闪电退款      (34), 虚拟退款 (35),大家电检测 (80),大家电安装(81),大家电移机 (82),大家电维修(83),大家电其它 (84);
+
+            "approvedResultName": "客户发货",               #审核结果名称
+            "processResult": 23,                            #处理结果 返修换新(23),退货(40), 换良(50),原返60),病单 (71),出检 (72),维修(73),强制关单 (80),线下换新(90)
+
+            "processResultName": "换新",                    #处理结果名称
+            "serviceCustomerInfoDTO": {                     #客户信息
+                "customerPin": "啊啊啊嘟嘟脸",               #客户京东账号
+                "customerName": "董慈应",                    #用户昵称
+                "customerContactName": "董慈应",             #服务单联系人
+                "customerTel": null,                         #联系电话
+                "customerMobilePhone": "13868757840",        #手机号
+                "customerEmail": "434435146@qq.com",         #邮箱
+                "customerPostcode": null                     #邮编
+            },
+            "serviceAftersalesAddressInfoDTO": null,         #售后地址信息
+            "serviceExpressInfoDTO": null,                   #客户发货信息
+            "serviceFinanceDetailInfoDTOs": null,            #退款明细
+            "serviceTrackInfoDTOs": [                        #服务单追踪信息
+                {
+                    "afsServiceId": 100011597,               #服务单号
+                    "title": "预处理环节",                   #追踪标题
+                    "context": "您的服务单已申请成功，京东售后审核中",  #追踪内容
+                    "createDate": "2012-09-22 08:24:59",     #提交时间
+                    "createName": "系统",                    #操作人昵称
+                    "createPin": "afs system"                #操作人账号
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "请将商品寄回京东卖家",
+                    "context": "您的服务单已审核客户发货，请将商品寄回京东卖家",
+                    "createDate": "2012-09-22 12:14:03",
+                    "createName": "名鞋库网络科技有限公司",
+                    "createPin": "mxk_007"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "商品京东卖家已收到",
+                    "context": "您的服务单100011597的商品已收到",
+                    "createDate": "2012-09-28 09:43:58",
+                    "createName": "mxk_007",
+                    "createPin": "mxk_007"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "返修换新订单生成",
+                    "context": "您的服务单已生成新订单，订单号332383204",
+                    "createDate": "2012-09-28 16:33:54",
+                    "createName": "jd_mxkyd",
+                    "createPin": "jd_mxkyd"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "返修换新完成",
+                    "context": "您的服务单100011597京东商城操作已完成，如有疑问请留言反馈，谢谢~",
+                    "createDate": "2012-10-18 20:35:50",
+                    "createName": "jd_mxkyd",
+                    "createPin": "jd_mxkyd"
+                }
+            ],
+            "serviceDetailInfoDTOs": [
+                {
+                    "wareId": 1008253646,
+                    "wareName": "NIKE COURT TOUR 耐克 板鞋 男鞋 458673-101 白+黑 40",
+                    "wareBrand": "Nike耐克",
+                    "afsDetailType": 10,
+                    "wareDescribe": null
+                },
+                {
+                    "wareId": 1008253646,
+                    "wareName": "NIKE COURT TOUR 耐克 板鞋 男鞋 458673-101 白+黑 40",
+                    "wareBrand": "Nike耐克",
+                    "afsDetailType": 30,
+                    "wareDescribe": null
+                }
+            ],
+            "allowOperations": null,
+            "expectPickwareType": null
+        },
+        "code": "0"
+    }
+}
+
+十三、取消服务单/客户放弃
+1、请求地址: http://{ip}:9005/v1/afterSale/cancelService
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+{
+  "serviceIdList":[11,12],           服务单号集合（必填）
+  "approveNotes":"审核意见"           审核意见（必填）
+}
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data": true
+}
+
+十四、填写客户发运信息
+1、请求地址: http://{ip}:9005/v1/afterSale/addSendSku
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+"afsServiceId"   :10000,                 服务单号（必填）
+"freightMoney"   :1.00,                  运费（必填）
+"expressCompany" :"发运公司",              发运公司（必填）
+"deliverDate"    :"20171010",            发货日期（必填）
+"expressCode"    :"货运单号"               货运单号（必填）
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data":{
+        "success": false,
+        "resultMessage": "客户填写发运信息失败：根据该服务单号（100013559）不存在原始运费信息获取！",
+        "resultCode": "0",
+        "result": null
+    }
+}
+
+十五、申请售后服务（退货、换货、维修）
+1、请求地址: http://{ip}:9005/v1/afterSale/applyAfterSale
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+{
+    "jdOrderId": 48407489852,                 #订单号(必填)
+    "customerExpect": 30,                     #客户预期（退货(10)、换货(20)、维修(30)）(必填)
+    "questionDesc": "123",                    #产品问题描述(可为空)
+    "asCustomerDto": {                        #客户信息实体
+        "customerContactName": "yhj",         #联系人(必填)
+        "customerTel": "13901234567",         #手机号(必填)
+    },
+    "asPickwareDto": {                        #取件信息实体，即原商品如何返回京东或者卖家，如果不为上门取件方式，默认设置订单中省市县镇信息
+        "pickwareType": 40,                   #取件方式 4上门取件 7客户送货 40客户发货
+        "pickwareProvince": 1,                #取件省
+        "pickwareCity": 72,                   #取件市
+        "pickwareCounty": 2839,               #取件县
+        "pickwareVillage": 0,                 #取件乡镇
+        "pickwareAddress": "test"             #取件街道地址
+    },
+    "asReturnwareDto": {                      #返件信息实体，即商品如何返回客户手中
+        "returnwareType": 10,                 #返件方式 自营配送(10),第三方配送(20);换、修这两种情况必填（默认值）
+        "returnwareProvince": 2839,           #返件省  换、修这两种情况必填
+        "returnwareCity": 72,                 #返件市
+        "returnwareCounty": 1,                #返件县
+        "returnwareVillage": 0,               #返件乡镇
+        "returnwareAddress": "111"            #返件街道地址 换、修这两种情况必填
+    },
+    "asDetailDto": {                          #申请单明细
+        "skuId": 1545857,                     #商品编号(必填)
+        "skuNum": 1                           #申请数量(必填)
+    }
+}
+5、返回值说明{
+{
+    "error": 0,
+    "msg": "ok",
+    "data":true
+}
+
+十六、查询配送信息
+1、请求地址: http://{ip}:9010/v1/order/track
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+"jdOrderId": 2302507708                                    #京东订单号
+5、返回值说明
+"error": 0,
+"msg": "ok",
+"data": {
+    "trackStat": {                                   #物流状态: 1 生成订单  2 等待发货   3 运输中   4 已完成
+                "jdTrackState": "4",
+                "jdOTrackStateDesc": "已完成"
+         },
+    "orderTrack": [
+        {
+            "msgTime": "2018-07-13 22:06:54",        #日期
+            "content": "您提交了订单，请等待系统确认",    #内容信息
+            "operator": "客户"                        #操作人
+        },
+        {
+            "msgTime": "2018-07-13 22:27:53",
+            "content": "您的订单已经进入京东北京62号仓准备出库",
+            "operator": "系统"
+        },
+        {
+            "msgTime": "2018-07-13 22:27:54",
+            "content": "您的订单预计7月14日送达您手中",
+            "operator": "系统"
+        },
+        {
+            "msgTime": "2018-07-13 22:46:29",
+            "content": "您的订单已经打印完毕",
+            "operator": "lixiangxiang"
+        },
+        {
+            "msgTime": "2018-07-13 22:46:37",
+            "content": "您的订单已经拣货完成",
+            "operator": "李祥祥"
+        },
+        {
+            "msgTime": "2018-07-13 23:05:08",
+            "content": "扫描员已经扫描",
+            "operator": "陈朋虎"
+        },
+        {
+            "msgTime": "2018-07-13 23:05:08",
+            "content": "打包成功",
+            "operator": "京东打包员"
+        },
+        {
+            "msgTime": "2018-07-13 23:55:44",
+            "content": "您的订单在京东【北京通州分拣中心】分拣完成",
+            "operator": "谷亚震"
+        },
+        {
+            "msgTime": "2018-07-13 23:55:49",
+            "content": "您的订单在京东【北京通州分拣中心】发货完成，准备送往京东【北京胜古站】",
+            "operator": "谷亚震"
+        },
+        {
+            "msgTime": "2018-07-14 09:17:52",
+            "content": "您的订单已到达【北京胜古站】",
+            "operator": "靳丽军"
+        },
+        {
+            "msgTime": "2018-07-14 09:54:06",
+            "content": "您的订单正在配送途中，请您准备签收（配送员：贺来朝，电话：18611269556），感谢您的耐心等待。",
+            "operator": "贺来朝"
+        },
+        {
+            "msgTime": "2018-07-14 13:34:55",
+            "content": "您的订单已由本人签收（已在配送员处采用无纸化方式签收本订单）。感谢您在京东购物，欢迎再次光临。",
+            "operator": "贺来朝"
+        }
+    ],
+    "orderStat": {
+        "jdOrderId":2302507708
+        "jdOrderState": "19",                            #订单状态
+        "jdOrderStateDesc": "已完成"
+    }
+  }
+}
+
+
+十七、查询用户订单列表
+1、请求地址: http://{ip}:9005/v1/bms/order/list
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+"userId":3                                      用户id(必填)
+"page":1                                        第几页
+"size":3                                        每页多少个
+"orderState":0                                  订单状态(0:全部|1:待支付|2:已取消|3:待收货|4:已完成|5:售后中|6:售后完成)
+5、返回结果
+ctime:下单时间
+order_sn:平台订单号
+trade_no:京东订单号
+name:收件人
+product：商品信息
+order_state:订单状态
+{
+	"error": 0,
+	"msg": "ok",
+	"data": {
+		"currentState": 1,
+		"info": [{
+				"id": 704,
+				"venderid": 56,
+				"user_id": 161568,
+				"order_sn": "20180810134742143161",
+				"trade_no": "78260780393",
+				"price": 0.7,
+				"pay_price": 0,
+				"agree_price": 156.2,
+				"pay_status": 0,
+				"order_state": 1,
+				"ctime": "2018-08-10 13:47:43",
+				"utime": null,
+				"freight": 0,
+				"pay_type": -1,
+				"pay_order_sn": "",
+				"invoice": 0,
+				"product": [{
+						"agree_price": 33,
+						"price": 0.1,
+						"imagePath": "http://img13.360buyimg.com/n0/jfs/t18277/205/1056515568/118250/4192726a/5ab9b418Na4d38b36.jpg",
+						"product_id": 5255424,
+						"name": "旺旺 旺仔牛奶（6罐）+o泡果奶 儿童牛奶早餐奶（原味2罐）组合装 245ml*8",
+						"count": 3,
+						"order_state": 1,
+						"child_trade_no": ""
+					},
+					{
+						"agree_price": 14.3,
+						"price": 0.1,
+						"imagePath": "http://img13.360buyimg.com/n0/jfs/t11635/351/1983906495/71312/448a904c/5a0d3dd7N9bc50112.jpg",
+						"product_id": 5378771,
+						"name": "【京东自有品牌】八享时巴旦木160g（奶香味） 坚果炒货 休闲零食",
+						"count": 4,
+						"order_state": 1,
+						"child_trade_no": ""
+					}
+				],
+				"name": "来庆闯"
+			},
+			{
+				"id": 702,
+				"venderid": 56,
+				"user_id": 161568,
+				"order_sn": "20180810113855266514",
+				"trade_no": "78258555520",
+				"price": 0.7,
+				"pay_price": 0,
+				"agree_price": 156.2,
+				"pay_status": 0,
+				"order_state": 1,
+				"ctime": "2018-08-10 11:38:55",
+				"utime": null,
+				"freight": 0,
+				"pay_type": -1,
+				"pay_order_sn": "",
+				"invoice": 0,
+				"product": [{
+						"agree_price": 33,
+						"price": 0.1,
+						"imagePath": "http://img13.360buyimg.com/n0/jfs/t18277/205/1056515568/118250/4192726a/5ab9b418Na4d38b36.jpg",
+						"product_id": 5255424,
+						"name": "旺旺 旺仔牛奶（6罐）+o泡果奶 儿童牛奶早餐奶（原味2罐）组合装 245ml*8",
+						"count": 3,
+						"order_state": 1,
+						"child_trade_no": ""
+					},
+					{
+						"agree_price": 14.3,
+						"price": 0.1,
+						"imagePath": "http://img13.360buyimg.com/n0/jfs/t11635/351/1983906495/71312/448a904c/5a0d3dd7N9bc50112.jpg",
+						"product_id": 5378771,
+						"name": "【京东自有品牌】八享时巴旦木160g（奶香味） 坚果炒货 休闲零食",
+						"count": 4,
+						"order_state": 1,
+						"child_trade_no": ""
+					}
+				],
+				"name": "来庆闯"
+			}
+		]
+	}
+}
+
+十八、查询商品库存信息
+1、请求地址: http://{ip}:9005/v1/bms/stock/detail
+2、请求方式  POST(json)
+3、是否需要登陆 否
+4、请求参数
+"provinceId":3                                  省id(必填)
+"cityId":1                                      市id(必填)
+"countyId":3                                    区县id(必填)
+"townId:0                                       乡镇id(必填,若无填0)
+"productIds":123455                             产品id(必填)
+请求参数实例
+{
+	"provinceId": 1,
+	"cityId": 72,
+	"countyId": 2819,
+	"townId": 0,
+	"productIds": {
+		"1139788": 2,
+		"6082327": 3,
+		"100401": 5
+	}
+}
+5、返回结果
+"stockStateDesc":"有货"                           库存状态描述(33:有货 现货-下单立即发货;39:有货 在途-正在内部配货，预计2~6天到达本仓库;40:有货 可配货-下单后从有货仓库配货;36:预订;34:无货)
+"stockStateId":34                                库存状态编号 33,39,40,36,34(具体含义见stockStateDesc)
+"remainNum": -1                                  库存数量(返回-1，代表未知（数量大于50返回都是-1）)
+返回结果实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "areaId": "1_72_2819_0",
+            "skuId": 1139788,
+            "stockStateId": 33,
+            "stockStateDesc": "有货",
+            "remainNum": -1
+        },
+        {
+            "areaId": "1_72_2819_0",
+            "skuId": 6082327,
+            "stockStateId": 34,
+            "stockStateDesc": "无货",
+            "remainNum": -1
+        },
+        {
+            "areaId": "1_72_2819_0",
+            "skuId": 100401,
+            "stockStateId": 33,
+            "stockStateDesc": "有货",
+            "remainNum": -1
+        }
+    ]
+}
+
+十九、取消订单
+1、请求地址: http://{ip}:9005/v1/bms/order/cancel
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+"orderSn":"20180719112020823114"                            平台订单号(必填)
+5、返回结果
+result:                                                     操作结果(true取消成功|false取消失败)
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "result": false
+    }
+}
+
+二十、电子发票(简化版)
+1、请求地址: http://{ip}:9003/v1/invoice/save
+2、请求方式  post
+3、是否需要登陆 是
+4、请求参数
+"orderSn":"20180714165228241035",              #平台订单号（必填）
+"invoiceHead":"来庆闯",                         #发票抬头（蓝票时 必填）
+"kptype":"1",                                  #发票类型（1 蓝票  2红票）必填
+"email":"laiqingchuang@cibnvideo.com",         #邮箱
+"phone":"13716765761",                         #手机（蓝票时 必填）
+"taxnum":"123456"                              #纳税人识别号(6-20位字符)
+
+5、返回示例
+{
+"error":0,
+"msg":"ok",
+"data":"同步成功"
+}
+
+
+二十一、查询商品运费
+1、请求地址: http://{ip}:9005/v1/bms/order/freight
+2、请求方式  POST(json)
+3、是否需要登陆 是
+4、请求参数
+url参数venderId:56                    大客户id
+body参数
+{
+	"provinceId": 1,
+	"cityId": 72,
+	"countyId": 2819,
+	"townId": 0,
+	"productIds": {
+		"1139788": 1,
+		"1634093": 1
+	}
+}
+5、返回结果
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "freight": 8,
+        "baseFreight": 8,
+        "remoteRegionFreight": 0,
+        "remoteSku": "[]",
+        "priceDifference": 38.49                                        #距大客户设置的包邮价格的差价
+    }
+}
+
+二十二、获取售后二维码地址
+1、请求地址: http://{ip}:9005/v1/afterSale/qrcode
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId':'3',              #京东订单号
+'skuId':'1',                  #商品编号
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": "http://www.baidu.com?hqtc=kB84xKvDPdCZvKWNHmd5CrqJz195ziPSueO0sv02oVzIuufir/FjIoOzf6VxNKuzu4e/qwfXY27VZc+XKaDXig==&jdOrderId=3&skuId=1"
+}
+
+二十三、轮询订单是否支付
+1、请求地址: http://{ip}:9005/v1/bms/pay/scan
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+'orderSn':'20180720173825305844'                    #平台订单号
+5、返回值说明
+result:1                                            #订单是否支付(0:未支付|1:已支付)
+返回实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "result": 1
+    }
+}
+
+二十四、申请售后原因
+1、请求地址: http://{ip}:9005/v1/afterSale/reason
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+'venderId': 56                                      #大客户id
+5、返回值说明
+返回实例
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    {
+      "key": "2",
+      "value": "操作有误(商品，地址等选错)"
+    },
+    {
+      "key": "1",
+      "value": "重复下单/误下单"
+    },
+    {
+      "key": "3",
+      "value": "其他渠道价格更低"
+    },
+    {
+      "key": "5",
+      "value": "订单不能按预计时间送达"
+    },
+    {
+      "key": "4",
+      "value": "该商品降价了"
+    }
+  ]
+}
+
+
+二十五、查询商品销量
+1、请求地址: http://{ip}:9005/v1/bms/product/volume
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"products": "6082327,104852,5255424"                                 #商品Id(必填)
+"venderId": 56                                                       #大客户id(非必填,默认0)
+"resultType":0                                                       #返回类型(非必填,默认0,0返回list,1返回map)
+5、返回值说明
+返回实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "total": 3,
+            "productId": 104852
+        },
+        {
+            "total": 26,
+            "productId": 5255424
+        },
+        {
+            "total": 108,
+            "productId": 6082327
+        },
+        {
+            "productId": 1231,
+            "total": 0
+        },
+        {
+            "productId": 2,
+            "total": 0
+        }
+    ]
+}
+或
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "104852": 0,
+        "5255424": 49,
+        "6082327": 2
+    }
+}
+
+二十六、退款给用户
+1、请求地址: http://{ip}:9005/v1/bms/order/refund/user
+2、请求方式  POST(json)
+3、是否需要登陆 否
+4、请求参数
+"orderSn": "20180728152520505667"                               #品台订单号
+"venderId": 56                                                  #大客户id
+"refundReason": "不想买了"                                        #退款理由
+"products":                                                     #退款的商品(商品id:商品数量)
+请求实例
+{
+	"orderSn": "20180728152520505667",
+	"venderId": 56,
+	"refundReason": "不想买了",
+	"products": {
+		"770105": 1,
+		"456325": 6
+	}
+}
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "transaction_id": "4200000170201808064547965769",
+        "nonce_str": "x5Zxi1QfoWS6vRDv",
+        "out_refund_no": "20180807182247100000148299",
+        "sign": "BD62B7E82FBC043980447D24180EC2D7",
+        "return_msg": "OK",
+        "mch_id": "1494654882",
+        "refund_id": "50000107362018080705522998926",
+        "cash_fee": "6",
+        "out_trade_no": "20180806152259100000123794",
+        "coupon_refund_fee": "0",
+        "refund_channel": "",
+        "appid": "wx29456cf46919a12e",
+        "refund_fee": "1",
+        "total_fee": "6",
+        "result_code": "SUCCESS",
+        "coupon_refund_count": "0",
+        "cash_refund_fee": "1",
+        "return_code": "SUCCESS"
+    }
+}
+
+
+二十七、退款给大客户
+1、请求地址: http://{ip}:9005/v1/bms/order/refund/vender
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"orderSn": "20180728152520505667"                               #品台订单号
+"venderId": 56                                                  #大客户id
+"refundReason": "不想买了"                                        #退款理由
+"products":                                                     #退款的商品(商品id:商品数量)
+请求实例
+{
+	"orderSn": "20180807100245576051",
+	"venderId": 56,
+	"refundReason": "不想买了",
+	"products": {
+		"5378771": 3,
+		"5255424": 3
+	}
+}
+5、返回值说明
+"data": 141.9                           #本次退款给大客户的金额
+返回参数实例
+{
+    "error": 0,
+    "msg": "OK",
+    "data": 141.9
+}
+
+二十八、根据订单号获取售后列表
+1、请求地址: http://{ip}:9005/v1/afterSale/listByOrderSn
+2、请求方式  get
+3、是否需要登陆 是
+4、请求参数
+'orderSn':'20180713145331532955'               #平台订单号（必填）
+'type'   :'1'                                  #类型 1售后中 2已完成 3已取消 (为空时查询的全部)
+5、返回示例
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    {
+      "orderSn": "20180713145331532955",        #平台订单号
+      "childTradeNo": "77665639015",            #子订单号
+      "serviceNo": 4,                           #服务单号
+      "name": "来庆闯",                          #联系人
+      "phone": "13716765761",                   #手机
+      "productId": 1634093,                     #商品编号
+      "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+      "price": 4.40,                            #价格
+      "count": 1,                               #数量
+      "serviceType": 10,                        #服务类型 10:退货|20:换货|30:维修
+      "reason": "审核意见",                       #售后原因
+      "backType": 4,                             #退回方式 4:上门取件|40:客户发货|7:客户送货
+      "returnType": 10,                          #返件方式 10:自营配送|20:第三方配送
+      "backAddr": "北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+      "returnAddr": "北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+      "status": 10,                             #售后状态 10:申请阶段|20:审核不通过|21:客服审核|22:商家审核|31:京东收货|32:商家收货|33:京东处理|34:商家处理|40:用户确认|50:完成|60:取消|100:申请售后失败
+      "remarks": "您的服务单已取消",
+      "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg",
+      "ctime": 1533281799000,
+      "utime": 1533535322000,
+    }
+  ]
+}
+
+二十九、根据用户id获取售后列表
+1、请求地址: http://{ip}:9005/v1/afterSale/listByUserId
+2、请求方式  get
+3、是否需要登陆 是
+4、请求参数
+'userId':'3'                                  #用户id(必填)
+'pageNum':'1'                                 #页数(可为空)
+'pageSize':5                                  #单页条数(可为空)
+5、返回示例
+{
+  "error": 0,
+  "msg": "ok",
+  "data": {
+    "dataList": [
+      {
+        "orderSn": "20180713145331532955",    #平台订单号
+        "childTradeNo": "77665639015",        #子订单号
+        "serviceNo": 456220429,               #服务单号
+        "name": "来庆闯",                      #联系人
+        "productId": 1634093,                 #商品id
+        "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+        "price": 4.40,                        #价格
+        "count": 1,                           #数量
+        "serviceType": 10,                    #服务类型 10:退货|20:换货|30:维修
+        "status": 50,                         #售后状态 10:申请阶段|20:审核不通过|21:客服审核|22:商家审核|31:京东收货|32:商家收货|33:京东处理|34:商家处理|40:用户确认|50:完成|60:取消|100:申请售后失败
+        "ctime": 1531464812000,               #下单时间
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg"
+      },
+      {
+        "orderSn": "20180713145331532955",
+        "childTradeNo": "77665639015",
+        "serviceNo": 456220429,
+        "name": "来庆闯",
+        "productId": 1634093,
+        "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+        "price": 4.40,
+        "count": 1,
+        "serviceType": 10,
+        "status": 50,
+        "ctime": 1531464812000,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg"
+      },
+      {
+        "orderSn": "20180713145331532955",
+        "childTradeNo": "77665639015",
+        "serviceNo": 456220429,
+        "name": "来庆闯",
+        "productId": 1634093,
+        "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+        "price": 4.40,
+        "count": 1,
+        "serviceType": 10,
+        "status": 50,
+        "ctime": 1531464812000,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg"
+      },
+      {
+        "orderSn": "20180713145331532955",
+        "childTradeNo": "77665639015",
+        "serviceNo": 456220429,
+        "name": "来庆闯",
+        "productId": 1634093,
+        "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+        "price": 4.40,
+        "count": 1,
+        "serviceType": 10,
+        "status": 50,
+        "ctime": 1531464812000,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg"
+      },
+      {
+        "orderSn": "20180713145331532955",
+        "childTradeNo": "77665639015",
+        "serviceNo": 456220429,
+        "name": "来庆闯",
+        "productId": 1634093,
+        "productName": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+        "price": 4.40,
+        "count": 1,
+        "serviceType": 10,
+        "status": 50,
+        "ctime": 1531464812000,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t1291/67/384624943/115408/bc68079c/556ec7c9Nfd8cf1d0.jpg"
+      }
+    ],
+    "totalRows": 27
+  }
+}
+
+三十、发起退款
+1、请求地址: http://{ip}:9005/v1/bms/order/refund
+2、请求方式  POST(json)
+3、是否需要登陆 否
+4、请求参数
+"orderSn": "20180728152520505667"                               #品台订单号
+"venderId": 56                                                  #大客户id
+"refundReason": "不想买了"                                        #退款理由
+"products":                                                     #退款的商品(商品id:商品数量)
+"eventId": "sdfaewfaefawefaefaef"                               #事件唯一ID(长度小于33)
+请求实例
+{
+	"orderSn": "20180728152520505667",
+	"venderId": 56,
+	"refundReason": "不想买了",
+	"eventId": "0eb03be7d5c64fd75445f34dc5bf6fbb"
+	"products": {
+		"770105": 1,
+		"456325": 6
+	}
+}
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "发起退款成功",
+    "data": null
+}
+
+
+三十一、绑定购物卡
+1、请求地址: http://{ip}:9005/v1/bms/card/bind
+2、请求方式  POST
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+"passWord": "20180728152520505667"                               #购物卡密码
+请求实例
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "cardNo": "20190920115622123654",                               #卡号
+        "expireTime": "2019-09-20 12:00:00",                            #过期时间
+        "faceValue": 100,                                               #面值
+        "balance": 50.56,                                               #余额
+        "cardState": 1                                                  #卡状态(0未激活|1已激活|2已暂停|3已废弃)只有1是可用状态
+    }
+}
+
+三十二、获取我的购物卡
+1、请求地址: http://{ip}:9005/v1/bms/card
+2、请求方式  GET
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+             "cardNo": "20190920115622123654",                               #卡号
+             "expireTime": "2019-09-20 12:00:00",                            #过期时间
+             "faceValue": 100,                                               #面值
+             "balance": 50.56,                                               #余额
+             "cardState": 1,                                                 #卡状态(0未激活|1已激活|2已暂停|3已废弃)只有1是可用状态
+             "etime": 1541559571,                                            #过期时间戳
+             "serverTime": 1541559000                                        #服务器时间戳
+         },
+        {
+            "cardNo": "20190920115622123655",
+            "expireTime": "2019-09-20 00:00:00.0",
+            "faceValue": 100,
+            "balance": 60,
+            "cardState": 1,
+            "etime": 1541559571,
+            "serverTime": 1541559000
+        }
+    ]
+}
+
+三十三、获取购物卡的使用记录
+1、请求地址: http://{ip}:9005/v1/bms/card/record
+2、请求方式  GET
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+"cardNo":"20190920115622123659"                                             #卡号(必填)
+"page":"1"                                                                  #页码
+"size":"10"                                                                 #每页的数量(最多50)
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "operateType": 1,                                               #操作类型：1绑定|2购物|3退款
+            "orderSn": null,                                                #订单号
+            "refundNo": null,                                               #退款单号
+            "useFee": 100,                                                  #操作金额
+            "ctime": "2018-09-20 17:54:03"                                  #操作时间
+        }
+    ]
+}
+
+三十四、微信小程序生成预支付id
+1、请求地址: http://{ip}:9005/v1/bms/pay/multiple/auth
+2、请求方式  POST
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+"userId":  161573                                           #用户id
+"orderSn":"20180927191446653195"                            #订单id
+"payType":"3"                                               #支付类型(小程序固定传3)
+"venderId":"56"                                             #大客户id
+"userCode":"071zuYsk1d4cDl0P4Pwk1EwWsk1zuYsP"               #微信兑换用户的code
+"cardNo": "2018092118412756jq2z,2018092118094756rhrq"       #购物卡号(按顺序;多张用","隔开;可为空,为空则认为是二维码支付)
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "timeStamp": "1541059454",
+        "nonce_str": "4SeyZP7ErfiSHXWf",
+        "appid": "wx604d33e3e93bd77e",
+        "sign": "47FBC43B6718799C235F5FA0BE7BD2B7",
+        "mch_id": "1515569481",
+        "prepay_id": "wx0116050021004379fa5117a02704865882",
+        "faceValue": "6.80"
+    }
+}
+
+三十五、通过卡密查询购物卡信息
+1、请求地址: http://{ip}:9005/v1/bms/card/info
+2、请求方式  POST
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+"passWord":"071zuYsk1d4cDl0P4Pwk1EwWsk1zuYsP"               #购物卡密
+5、返回值说明
+返回参数实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "cardNo": "201809261212225639l5",
+        "expireTime": "2018-10-07 12:10:53",
+        "faceValue": 1000,
+        "balance": 1000,
+        "cardState": 1
+    }
+}
+{
+    "error": 10033,
+    "msg": "未查找到对应购物卡",
+    "data": null
+}
+{
+    "error": 10034,
+    "msg": "购物卡已被绑定",
+    "data": null
+}
+
+三十六、删除订单接口
+1、请求地址: http://{ip}:9005/v1/bms/order/delete
+2、请求方式  POST
+3、是否需要登陆 是(携带cookie)
+4、请求参数
+"orderSn":"20181015110717607134,20181015110353753866,20181015110149537725"               #平台订单号(多个用","隔开)
+5、返回值说明
+返回参数实例
+成功
+{
+    "error": 0,
+    "msg": "ok",
+    "data": null
+}
+失败
+{
+    "error": 10018,
+    "msg": "删除订单失败，请重试",
+    "data": null
+}
+
+三十七、根据JD订单号,商品编号获取售后服务类型
+1、请求地址: http://{ip}:9005/v1/vender/afterSale/service
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId': 77665639015           #京东订单号（必填）
+'skuId'    : 1634093               #商品编号（必填）
+5、返回示例
+{
+    "error":0,
+    "msg":"ok",
+    "data":[
+        {
+            "code":"30",
+            "name":"维修"           #服务类型  退货(10)、换货(20)、维修(30)
+        }
+    ]
+}
+
+三十八、根据JD订单号获取售后列表
+1、请求地址: http://{ip}:9005/v1/vender/afterSale/list
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'jdOrderId': 78046675437           #京东订单号（必填）
+'type'    : 2                      #类型 1售后中 2已完成 3已取消 (非必填,为空时查询的全部)
+5、返回示例
+{
+    "error":0,
+    "msg":"ok",
+    "data":[
+        {
+            "jdOrderId":78046675437,         #JD订单号
+            "serviceNo":5,                   #服务单号
+            "name":"来庆闯",                  #联系人
+            "phone":"13716765761",           #手机
+            "productId":5776133,             #商品编号
+            "productName":"中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+            "price":4.4,                     #价格
+            "count":1,                       #数量
+            "serviceType":20,                #服务类型 10:退货|20:换货|30:维修
+            "reason":"审核意见",               #售后原因
+            "backType":4,                    #退回方式 4:上门取件|40:客户发货|7:客户送货
+            "returnType":10,                 #返件方式 10:自营配送|20:第三方配送
+            "backAddr":"北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+            "returnAddr":"北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+            "status":50,                      #售后状态 10:申请阶段|20:审核不通过|21:客服审核|22:商家审核|31:京东收货|32:商家收货|33:京东处理|34:商家处理|40:用户确认|50:完成|60:取消
+            "remarks":"您的服务单已取消",        #描述
+            "imagePath":"http://img13.360buyimg.com/n0/jfs/t12193/345/551914552/198225/c56cbd8c/5a0e90f8N25b8ad25.jpg",
+            "ctime":"2018-08-03 15:41:03",
+            "utime":"2018-09-13 18:20:51"
+        },
+        {
+            "jdOrderId":78046675437,
+            "serviceNo":4,
+            "name":"来庆闯",
+            "phone":"13716765761",
+            "productId":5776133,
+            "productName":"中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+            "price":4.4,
+            "count":1,
+            "serviceType":10,
+            "reason":"审核意见",
+            "backType":4,
+            "returnType":10,
+            "backAddr":"北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+            "returnAddr":"北京朝阳区三环到四环之间安贞街道安定路39号长新大厦13层1301室",
+            "status":50,
+            "remarks":"您的服务单已取消",
+            "imagePath":"http://img13.360buyimg.com/n0/jfs/t12193/345/551914552/198225/c56cbd8c/5a0e90f8N25b8ad25.jpg",
+            "ctime":"2018-08-03 15:36:39",
+            "utime":"2018-09-13 18:20:51"
+        }
+    ]
+}
+
+三十九、查询大客户余额(针对二级平台)
+1、请求地址: http://{ip}:9005/v1/bms/vender/balance
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'                                          #大客户id
+'userName'                                          #用户名(一级平台分配)
+'passWord'                                          #密码(一级平台分配)
+5、返回示例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "balance": 100475.2,
+        "venderId": 229
+    }
+}
+
+四十、下单(针对二级平台)
+1、请求地址: http://{ip}:9005/v1/bms/vender/order
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'                                          #大客户id
+'userName'                                          #用户名(一级平台分配)
+'passWord'                                          #密码(一级平台分配)
+#----------以上部分以表单形式传参，以下部分以body形式传参
+"venderId": 31                                  商家id（必填）
+"provinceId": 1                                 省份id（必填）
+"cityId": 72                                    市id（必填）
+"countyId": 2819                               区/县(必填)
+"townId": 0                                     乡/镇（必填若无传0）
+"detail": "安贞街道安定路39号长新大厦13层1301室"      详细地址(必填)
+"name": "来庆闯"                                 收件人姓名(必填)
+"phone": "13716765761"                          收件人电话(必填)
+"productIds": ["6082327", "100401", "108364"]   商品id（必填(和products二选一),不建议再使用此参数,使用products替换）
+"products":{"6082327":3}                        商品id和商品数量(必填(和products二选一),第一版只能传入一种商品)
+"invoice":1                                     是否开票
+请求实例(json)
+{
+	"venderId": 56,
+	"provinceId": 1,
+	"cityId": 72,
+	"countyId": 2819,
+	"townId": 0,
+	"name": "来庆闯",
+	"phone": "13716765761",
+	"invoice":1,
+	"detail": "安贞街道安定路39号长新大厦13层1301室",
+	"productIds": ["1139788"]
+}
+5、返回值说明
+"orderSn": "2018070518424945724245924"          平台订单号
+"totalFee": 4009.80                             此单总金额
+"totalProduct": 8                               次单购买商品数量
+"feight": 8                                     运费
+"jdTradeNo": "77547944966"                      京东订单号
+返回实例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "orderSn": "20180714165228241035",
+        "totalFee": 12.5,
+        "totalProduct": 1,
+        "userId": 3,
+        "venderId": 56,
+        "jdTradeNo": "77547944966",
+        "feight": 8,
+        "orderPrice": 4.5
+    }
+}
+
+四十一、支付成功回调(针对二级平台)
+1、请求地址: http://{ip}:9005/v1/bms/vender/order/notify
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'                                          #大客户id
+'userName'                                          #用户名(一级平台分配)
+'passWord'                                          #密码(一级平台分配)
+'orderSn'                                           #一级平台订单号
+'totalFee'                                          #支付金额(单位：分)
+'outTradeNo'                                        #第三方支付单号(不大于32个字符)
+'payType'                                           #支付方式(1:微信|2:支付宝)
+5、返回示例
+{
+    "error": 0,
+    "msg": "订单通知成功",
+    "data": null
+}
+
+四十二、退款给用户重试
+1、请求地址: http://{ip}:9005/v1/bms/order/refund/retry/user
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'orderSn'                                           #一级平台订单号
+'eventId'                                           #退款批次号(unq_id)
+5、返回示例
+{
+    "error": 0,
+    "msg": "退款成功",
+    "data": null
+}
+
+四十三、退款给大客户重试
+1、请求地址: http://{ip}:9005/v1/bms/order/refund/retry/vender
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'orderSn'                                           #一级平台订单号
+'eventId'                                           #退款批次号(unq_id)
+5、返回示例
+{
+    "error": 0,
+    "msg": "退款成功",
+    "data": null
+}
+
+四十四、同步退款状态
+1、请求地址: http://{ip}:9005/v1/bms/order/refund/state
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'orderSn'                                           #一级平台订单号
+'eventId'                                           #退款批次号(unq_id)
+5、返回示例
+{
+    "error": 0,
+    "msg": "退款已经成功",
+    "data": null
+}

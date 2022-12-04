@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.VenderSettlementDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderSettlement">
+		select `venderId`,`pricePercent`,`settlementType`,`settlementAccount`,`settlementPeriod`, `balance` from t_vender_settlement where venderId = #{venderId}
+	</select>
+
+	<select id="balanceGet" resultType="decimal">
+		select `balance` from t_vender_settlement where venderId = #{venderId}
+	</select>
+
+	<select id="pricePercentGet" resultType="decimal">
+		select `pricePercent` from t_vender_settlement where venderId = #{venderId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderSettlement">
+		select  `venderId`,`pricePercent`,`settlementType`,`settlementAccount`,`settlementPeriod`, `balance`  from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+			<if test="settlementType != null and settlementType != ''"> and settlementType = #{settlementType} </if>
+			<if test="settlementAccount != null and settlementAccount != ''"> and settlementAccount = #{settlementAccount} </if>
+			<if test="settlementPeriod != null and settlementPeriod != ''"> and settlementPeriod = #{settlementPeriod} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by venderId desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+			<if test="settlementType != null and settlementType != ''"> and settlementType = #{settlementType} </if>
+			<if test="settlementAccount != null and settlementAccount != ''"> and settlementAccount = #{settlementAccount} </if>
+			<if test="settlementPeriod != null and settlementPeriod != ''"> and settlementPeriod = #{settlementPeriod} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderSettlement"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_settlement
+		(
+		`venderId`,
+		`pricePercent`,
+		`settlementType`,
+		`settlementAccount`,
+		`settlementPeriod`,
+		`balance`
+		)
+		values
+		(
+		#{venderId},
+		#{pricePercent},
+		#{settlementType},
+		#{settlementAccount},
+		#{settlementPeriod},
+		#{balance}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderSettlement">
+		update t_vender_settlement
+		<set>
+			<if test="pricePercent != null">`pricePercent` = #{pricePercent}, </if>
+			<if test="settlementType != null">`settlementType` = #{settlementType}, </if>
+			<if test="settlementAccount != null">`settlementAccount` = #{settlementAccount}, </if>
+			<if test="settlementPeriod != null">`settlementPeriod` = #{settlementPeriod}</if>
+		</set>
+		where venderId = #{venderId}
+	</update>
+
+	<update id="balanceAdd">
+		update t_vender_settlement set balance = balance + #{value} where venderId = #{venderId}
+	</update>
+
+	<update id="balanceReduce">
+		update t_vender_settlement set balance = balance - #{value} where venderId = #{venderId}
+	</update>
+
+	<delete id="remove">
+		delete from t_vender_settlement where venderId = #{venderId}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_settlement where venderId in
+		<foreach item="venderId" collection="array" open="(" separator=","
+			close=")">
+			#{venderIds}
+		</foreach>
+	</delete>
+
+	<select id="listVenderOrderManagerVo" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderOrderManagerVo">
+		select  `venderid` as venderId,`pricePercent` as pricePercent,`settlementType` as payType,`balance` as accountBalance  from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+		</where>
+				order by venderid
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	<select id="countVenderOrderManagerVo" resultType="int">
+		select  count(1)  from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+		</where>
+	</select>
+
+
+	<select id="listVenderInvoiceManager" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderInvoiceManagerVo">
+		select  `venderid` as venderId,`pricePercent` as pricePercent  from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+		</where>
+		order by venderid
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	<select id="countVenderInvoiceManager" resultType="int">
+		select  count(1)  from t_vender_settlement
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="pricePercent != null and pricePercent != ''"> and pricePercent = #{pricePercent} </if>
+		</where>
+	</select>
+	<select id="listVenderId" resultType="int">
+		select  distinct(venderid)  from t_vender_settlement;
+	</select>
+</mapper>

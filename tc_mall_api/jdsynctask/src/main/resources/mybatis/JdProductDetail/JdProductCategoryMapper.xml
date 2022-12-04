@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.JdProductCategoryDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		select `catId`,`parentId`,`name`, `catClass`, `state` from t_jd_product_category where catId = #{catId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		select `catId`,`parentId`,`name`, `catClass`, `state` from t_jd_product_category
+        <where>  
+		  		  <if test="catId != null and catId != ''"> and catId = #{catId} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="catClass != null and catClass != ''"> and catClass = #{catClass} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by catId asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset},${limit}
+		</if>
+	</select>
+
+	<select id="listByCatIds" resultType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		select `catId`,`parentId`,`name`, `catClass`, `state` from t_jd_product_category where catId IN
+		<foreach item="catId" index="index" collection="catIds"
+				 open="(" separator="," close=")">
+			#{catId}
+		</foreach>
+		ORDER BY
+		FIELD(catId,
+		<foreach collection="catIds" index="index" item="catId" separator=",">
+			#{catId}
+		</foreach>
+		)
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_category
+		 <where>  
+		  		  <if test="catId != null and catId != ''"> and catId = #{catId} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="catClass != null and catClass != ''"> and catClass = #{catClass} </if>
+		  		  <if test="state != null and state != ''"> and state = #{state} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		insert into t_jd_product_category
+		(
+			`catId`, 
+			`parentId`, 
+			`name`,
+			`catClass`,
+			`state`
+		)
+		values
+		(
+			#{catId}, 
+			#{parentId}, 
+			#{name}, 
+			#{catClass},
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		update t_jd_product_category 
+		<set>
+			<if test="parentId != null">`parentId` = #{parentId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="catClass != null">`catClass` = #{catClass}, </if>
+			<if test="state != null">`state` = #{state}, </if>
+		</set>
+		where catId = #{catId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_product_category where catId = #{catId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_product_category where catId in 
+		<foreach item="catId" collection="catIds" open="(" separator="," close=")">
+			#{catId}
+		</foreach>
+	</delete>
+
+    <select id="searchcount" resultType="int">
+        SELECT count(distinct a.catId, a.parentId, a.name, a.catClass, a.state) as total
+        FROM
+        t_jd_product_category a
+        INNER JOIN
+        t_jd_product_detail b ON
+        <choose>
+            <when test='catClass != null and catClass != "" and catClass=="1"'>
+                a.catId = b.cat1
+            </when>
+            <when test='catClass != null and catClass != "" and catClass=="2"'>
+                a.catId = b.cat2
+            </when>
+            <otherwise>
+                a.catId = b.cat0
+            </otherwise>
+        </choose>
+        <where>
+            <if test="catId != null and catId != ''"> and a.catId = #{catId} </if>
+            <if test="parentId != null and parentId != ''"> and a.parentId = #{parentId} </if>
+            <if test="name != null and name != ''"> and a.name = #{name} </if>
+            <if test="catClass != null and catClass != ''"> and a.catClass = #{catClass} </if>
+            <if test="state != null and state != ''"> and a.state = #{state} and a.state = #{state} </if>
+            <if test="notin != null and notin.size>0"> and b.sku not in
+                <foreach item="sku" collection="notin" open="(" separator="," close=")">
+                    #{sku}
+                </foreach>
+            </if>
+            <if test="isin != null and isin.size>0"> and b.sku in
+                <foreach item="sku" collection="isin" open="(" separator="," close=")">
+                    #{sku}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+	<select id="searchinfo" resultType="com.cibnvideo.jdsynctask.model.CategoryResultInfo">
+		SELECT DISTINCT
+		a.catId, a.parentId, a.name, a.catClass, a.state
+		FROM
+		t_jd_product_category a
+		INNER JOIN
+		t_jd_product_detail b ON
+        <choose>
+            <when test='catClass != null and catClass != "" and catClass=="1"'>
+                a.catId = b.cat1
+            </when>
+            <when test='catClass != null and catClass != "" and catClass=="2"'>
+                a.catId = b.cat2
+            </when>
+            <otherwise>
+                a.catId = b.cat0
+            </otherwise>
+        </choose>
+		<where>
+			<if test="catId != null and catId != ''"> and a.catId = #{catId} </if>
+			<if test="parentId != null and parentId != ''"> and a.parentId = #{parentId} </if>
+			<if test="name != null and name != ''"> and a.name = #{name} </if>
+			<if test="catClass != null and catClass != ''"> and a.catClass = #{catClass} </if>
+            <if test="state != null and state != ''"> and a.state = #{state} and a.state = #{state} </if>
+			<if test="notin != null and notin.size>0"> and b.sku not in
+				<foreach item="sku" collection="notin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="isin != null and isin.size>0"> and b.sku in
+				<foreach item="sku" collection="isin" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by catId asc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset},${limit}
+		</if>
+	</select>
+
+</mapper>

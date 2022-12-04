@@ -1,0 +1,145 @@
+一、搜索接口
+1、请求地址: http://{ip}:9008/v1/search/fuzzysearch
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'  : 56        客户id（必填）
+'keyword'   : 苹果       关键字（非必填）
+'brandName' : apple     品牌（非必填）
+'cat0'      : 652       一级分类id（非必填）
+'cat1'      : 1584      二级分类id（非必填）
+'cat2'      : 2675      三级分类id（非必填）
+'collectionId': 2       商品集id（非必填）
+'pageNum'   : 1         页数（默认第一页）
+'pageSize'  : 20        每页条数（默认20条）
+'isNew'     : 1         按新品（0升序|1降序）
+'isSales'   : 1         按销量（0升序|1降序）
+'isPrice'   : 1         按价格（0升序|1降序）
+5、返回值说明:
+{
+  "error": 0,
+  "msg": "ok",
+  "data": {
+    "total": 536,
+    "dataList": [
+      {
+        "sku": 5378771,
+        "name": "【京东自有品牌】八享时巴旦木160g（奶香味） 坚果炒货 休闲零食",
+        "brandName": "八享时（Favor8time）",
+        "jdPrice": 16.9,
+        "price": 0.1,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t11635/351/1983906495/71312/448a904c/5a0d3dd7N9bc50112.jpg",
+        "state": 1
+      },
+      {
+        "sku": 5255424,
+        "name": "旺旺 旺仔牛奶（6罐）+o泡果奶 儿童牛奶早餐奶（原味2罐）组合装 245ml*8",
+        "brandName": "旺旺",
+        "jdPrice": 32,
+        "price": 0.1,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t18277/205/1056515568/118250/4192726a/5ab9b418Na4d38b36.jpg",
+        "state": 1
+      },
+      {
+        "sku": 5114060,
+        "name": "佳佰  塑料家用经济型 一次性抽取式保鲜袋大号50只装",
+        "brandName": "佳佰",
+        "jdPrice": 3.5,
+        "price": 1.6,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t19018/3/2435144712/170793/dd29f37/5af3b504N12b85a0a.jpg",
+        "state": 1
+      }
+    ]
+  }
+}
+
+二、获取分类id列表接口
+1、请求地址: http://{ip}:9008/v1/search/catelist
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'  : 56        客户id（必填）
+'catClass'  : 1         分类类型 0:一级分类 1:二级分类 2:三级分类（必填,默认一级分类）
+'parentId'  : 652       父分类ID（默认为空,catClass为一级分类时 父分类id为0）
+5、返回值说明:
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    1320,
+    670,
+    737,
+    652,
+    16750,
+    1620,
+    6994
+  ]
+}
+
+三、根据sku搜索接口
+1、请求地址: http://{ip}:9008/v1/search/skus
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'  : 56        客户id（必填）
+'skus'      : 5424929,5181440   商品sku（多个sku以逗号分隔）
+'state'     : 1         上下架状态(0下架|1上架),不传默认全部(非必填)
+'brandName' : "全部"     品牌名称，默认全部(非必填)
+'pageNum'   : 1         页数（默认第一页）
+'pageSize'  : 20        每页条数（默认20条）
+5、返回值说明:
+{
+  "error": 0,
+  "msg": "ok",
+  "data": {
+    "total": 3,
+    "dataList": [
+      {
+        "sku": 5424929,
+        "name": "小米 红米5A 全网通版 2GB+16GB 铂银灰 移动联通电信4G手机 双卡双待",
+        "brandName": "小米（MI）",
+        "jdPrice": 599.9,
+        "price": 608.6,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t10852/167/1677379129/172748/12c006d/59e45c2cN73ba0b81.jpg",
+        "state": 1
+      },
+      {
+        "sku": 5181440,
+        "name": "荣耀 畅玩6A 2GB+16GB 银色 全网通4G手机 双卡双待",
+        "brandName": "华为（HUAWEI）",
+        "jdPrice": 799,
+        "price": 623.2,
+        "imagePath": "http://img13.360buyimg.com/n0/jfs/t5896/201/1142484998/298275/3503339a/5923eea9N9823dcdb.jpg",
+        "state": 1
+      }
+    ]
+  }
+}
+
+四、根据分类id获取品牌接口
+1、请求地址: http://{ip}:9008/v1/search/brandlist
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'venderId'  : 56        客户id（必填）
+'cat0'      : 9987      一级分类id
+'cat1'      : 653       二级分类id
+'cat2'      : 655       三级分类id
+'collectionId': 2       商品集id（非必填）
+'limit'     : 50        返回品牌的最大值
+5、返回值说明:
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    "华为（HUAWEI）",
+    "Apple",
+    "小米（MI）",
+    "vivo",
+    "美图（meitu）",
+    "OPPO",
+    "飞利浦（PHILIPS）",
+    "黑莓（BlackBerry）",
+    "酷派（Coolpad）"
+  ]
+}

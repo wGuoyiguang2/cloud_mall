@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="layoutForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">标题：</label>
+								<div class="col-sm-8">
+									<input name="id" class="form-control" type="text" th:field="*{layout.id}" style="display: none"/>
+                                    <input name="venderId" class="form-control" type="text" th:field="*{layout.venderId}" style="display: none"/>
+                                    <input name="parentId" class="form-control" type="text" th:field="*{layout.parentId}" style="display: none"/>
+									<input id="title" name="title" class="form-control" type="text" th:field="*{layout.title}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">模板：</label>
+								<div class="col-sm-8">
+									<select id="templateId" name="templateId" placeholder="请选择" class="selectpicker">
+										<option th:each="template:${templatelist}" th:value="${template.id}" th:text="${template.name}" th:selected="${template.id == layout.templateId}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">位置：</label>
+								<div class="col-sm-8">
+									<input id="position" name="position" style="display: inline-block" type="text" th:field="*{layout.position}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">是否显示标题：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="showTitle" value="true" th:checked="${layout.showTitle}"/> 显示
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="showTitle" value="false" th:checked="${not layout.showTitle}"/> 隐藏
+									</label>
+								</div>
+							</div>
+							<div class="form-group" th:style="'display:' + @{(${layout.parentId != 0} ? 'none' : 'block')} + ''">
+								<label class="col-sm-3 control-label">共享：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="share" value="0" th:checked="${layout.share == 0}"/> 私有
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="share" value="1" th:checked="${layout.share == 1}"/> 共享
+									</label>
+								</div>
+							</div>
+							<div class="form-group" th:style="'display:' + @{(${layout.parentId == 0} ? 'none' : 'block')} + ''">
+								<label class="col-sm-3 control-label">自动同步：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="autoSync" value="0" th:checked="${layout.autoSync == 0}"/> 否
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="autoSync" value="1" th:checked="${layout.autoSync == 1}"/> 是
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">是否启用：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="status" value="0" th:checked="${layout.status == 0}"/> 禁用
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="status" value="1" th:checked="${layout.status == 1}"/> 启用
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/layoutmanager/edit.js">
+	</script>
+</body>
+</html>

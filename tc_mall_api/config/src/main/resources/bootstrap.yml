@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: tcmallconfig
+  profiles:
+    active: native
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/

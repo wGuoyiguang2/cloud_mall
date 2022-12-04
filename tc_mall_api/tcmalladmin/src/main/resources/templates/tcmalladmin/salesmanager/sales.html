@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		已销售商品总金额：<span th:text="${bean.salesAmount}"></span>
+		&ensp&ensp盈利金额(总盈利金额=总支付金额-总协议价-总运费)：<span th:text="${bean.gainsAmount}"></span>
+		&ensp&ensp总运费：<span th:text="${bean.sumFreight}"></span>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							<div class="col-sm-12 m-b-xs container">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="productId" class="arealabel">商品ID:</label>
+										<input id="productId" name="productId" class="form-control" type="text"  />
+										<label for="productName" class="arealabel">商品名称:</label>
+										<input id="productName" name="productName" class="form-control" type="text"  />
+										<!--<label for="brandName" class="arealabel">所属品牌:</label>
+										<input id="brandName" name="brandName" class="form-control" type="text"  />-->
+										<button type="button" class="btn btn-primary" onclick="searcher()">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+										<!--
+										<label for="category" class="arealabel">所属分类:</label>
+										<input id="category" name="category" class="form-control" type="text"  />
+										<button type="button" disabled="disabled" class="btn btn-primary" onclick="searcher(2)">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+										<label for="productStatus" class="arealabel">&ensp&ensp商品状态:</label>
+										<select id="productStatus" name="productStatus" placeholder="请选择" class="selectpicker" data-width="fit">
+											<option value="">全部</option>
+											<option value="1">上架</option>
+											<option value="0">下架</option>
+										</select>
+										<button type="button" disabled="disabled" class="btn btn-primary" onclick="searcher(3)">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>-->
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+					<div class="ibox-content">
+						<table id="salestb" class="col-xs-12" data-toolbar="#toolbar"
+							   data-show-export="true" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/salesmanager/sales.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+</body>
+</html>

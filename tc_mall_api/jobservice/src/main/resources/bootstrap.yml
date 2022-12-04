@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: tcmalljobservice
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod,db
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/

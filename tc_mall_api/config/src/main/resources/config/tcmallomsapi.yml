@@ -1,0 +1,24 @@
+spring:
+  config:
+    afterSaleType: 1
+    hotSearchLimit: 8
+    jdFreeFreightPrice: 99
+    defaultPricePercent: 1.5
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: oms
+          content-type: application/json
+          producer:
+            partitionCount: 1
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*Mapper.xml
+  typeAliasesPackage: com.cibnvideo.tcmallcustomer.bean

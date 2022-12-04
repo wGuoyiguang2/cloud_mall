@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.VenderPaymentDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderPayment">
+		select `venderId`,`payType`,`appId`,`mchId`,`publicKey`,`privateKey`, `status` from t_vender_payment where venderId = #{venderId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.VenderPayment">
+		select  `venderId`,`payType`,`appId`,`mchId`,`publicKey`,`privateKey` from t_vender_payment
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="payType != null and payType != ''"> and payType = #{payType} </if>
+			<if test="appId != null and appId != ''"> and appId = #{appId} </if>
+			<if test="mchId != null and mchId != ''"> and mchId = #{mchId} </if>
+			<if test="publicKey != null and publicKey != ''"> and publicKey = #{publicKey} </if>
+			<if test="privateKey != null and privateKey != ''"> and privateKey = #{privateKey} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by venderId desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_payment
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="payType != null and payType != ''"> and payType = #{payType} </if>
+			<if test="appId != null and appId != ''"> and appId = #{appId} </if>
+			<if test="mchId != null and mchId != ''"> and mchId = #{mchId} </if>
+			<if test="publicKey != null and publicKey != ''"> and publicKey = #{publicKey} </if>
+			<if test="privateKey != null and privateKey != ''"> and privateKey = #{privateKey} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderPayment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_payment
+		(
+		`venderId`,
+		`payType`,
+		`appId`,
+		`mchId`,
+		`publicKey`,
+		`privateKey`,
+		`status`
+		)
+		values
+		(
+		#{venderId},
+		#{payType},
+		#{appId},
+		#{mchId},
+		#{publicKey},
+		#{privateKey},
+		#{status}
+		)
+	</insert>
+
+	<insert id="batchSave" parameterType="java.util.List">
+		insert into t_vender_payment
+		(
+		`venderId`,
+		`payType`,
+		`appId`,
+		`mchId`,
+		`publicKey`,
+		`privateKey`,
+		`status`
+		)
+		values
+		<foreach item="item" index="index" collection="list" separator=",">
+			(#{item.venderId},#{item.payType},#{item.appId},#{item.mchId},#{item.publicKey},#{item.privateKey},#{item.status})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderPayment">
+		update t_vender_payment
+		<set>
+			<if test="payType != null">`payType` = #{payType}, </if>
+			<if test="appId != null">`appId` = #{appId}, </if>
+			<if test="mchId != null">`mchId` = #{mchId}, </if>
+			<if test="publicKey != null">`publicKey` = #{publicKey}, </if>
+			<if test="privateKey != null">`privateKey` = #{privateKey},</if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where venderId = #{venderId} and payType = #{payType}
+	</update>
+
+	<delete id="remove" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.VenderPayment">
+		delete from t_vender_payment where venderId = #{venderId} and payType = #{payType}
+	</delete>
+</mapper>

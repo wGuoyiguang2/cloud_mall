@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.common.dao.VenderDao">
+
+	<select id="get" resultType="com.cibnvideo.common.entity.Vender">
+		select `venderId`,`parentId`,`name`,`orderNum`,`delFlag` from sys_vender where venderId = #{venderId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.common.entity.Vender">
+		select `venderId`,`parentId`,`name`,`orderNum`,`delFlag` from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="orderNum != null and orderNum != ''"> and orderNum = #{orderNum} </if>
+			<if test="delFlag != null and delFlag != ''"> and delFlag = #{delFlag} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by venderId desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="parentId != null and parentId != ''"> and parentId = #{parentId} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="orderNum != null and orderNum != ''"> and orderNum = #{orderNum} </if>
+			<if test="delFlag != null and delFlag != ''"> and delFlag = #{delFlag} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.common.entity.Vender">
+		insert into sys_vender
+		(
+		`venderId`,
+		`parentId`,
+		`name`,
+		`orderNum`,
+		`delFlag`
+		)
+		values
+		(
+		#{venderId},
+		#{parentId},
+		#{name},
+		#{orderNum},
+		#{delFlag}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.common.entity.Vender">
+		update sys_vender
+		<set>
+			<if test="parentId != null">`parentId` = #{parentId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="orderNum != null">`orderNum` = #{orderNum}, </if>
+			<if test="delFlag != null">`delFlag` = #{delFlag}</if>
+		</set>
+		where venderId = #{venderId}
+	</update>
+
+	<delete id="remove">
+		delete from sys_vender where venderId = #{venderId}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from sys_vender where venderId in
+		<foreach item="venderId" collection="array" open="(" separator=","
+			close=")">
+			#{venderIds}
+		</foreach>
+	</delete>
+	
+	<select id="listParentVender" resultType="long">
+		select DISTINCT parentId from sys_vender
+	</select>
+
+    <select id="getVenderUserNumber" resultType="int">
+		select count(*) from sys_user where venderId = #{value}
+	</select>
+	<select id="listVenderOrderList" resultType="com.cibnvideo.tcmalladmin.model.bean.VenderOrderManagerVo">
+		select `venderId` as venderId,`name` as venderName from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name  like CONCAT('%',#{name},'%') </if>
+		</where>
+		    order by venderId
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	<select id="countVenderOrderList" resultType="int">
+		select count(1) from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name  like CONCAT('%',#{name},'%') </if>
+		</where>
+	</select>
+
+	<select id="listVenderInvoice" resultType="com.cibnvideo.tcmalladmin.model.bean.VenderInvoiceManagerVo">
+		select `venderId` as venderId,`name` as venderName from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name  like CONCAT('%',#{name},'%') </if>
+		</where>
+		order by venderId
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	<select id="countVenderInvoice" resultType="int">
+		select count(1) from sys_vender
+		<where>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name  like CONCAT('%',#{name},'%') </if>
+		</where>
+	</select>
+</mapper>

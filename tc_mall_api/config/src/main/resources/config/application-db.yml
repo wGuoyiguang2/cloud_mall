@@ -1,0 +1,261 @@
+spring:
+ #------------------数据库配置-----------------------------
+  datasource:
+    bms:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/bms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/bms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    ims:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/ims?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/ims?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    oms:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/oms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/oms?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    jdsync:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/jdsync?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/jdsync?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    search:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/search?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/search?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    admin:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/tcmalladmin?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/tcmalladmin?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    ums:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/tcmallums?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/tcmallums?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    thirdpart:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/tcmall3rd?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/tcmall3rd?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+    jobservice:
+      master:
+        url: jdbc:mysql://172.16.11.228:3306/tcmalljob?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+      slave00:
+        url: jdbc:mysql://172.16.11.228:3306/tcmalljob?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.jdbc.Driver
+        maxActive: 6
+        maxIdle: 2
+        minIdle: 2
+        initialSize: 4
+        timeBetweenEvictionRunsMillis: 30000
+        minEvictableIdleTimeMillis: 60000
+        validation-query: SELECT 1
+        test-while-idle: true
+
+  #------------------redis配置-----------------------------
+  redis:
+    host: 172.16.11.228
+    port: 6379
+    password:
+    database: 0
+    pool:
+      max-idle: 5
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+    timeout:
+      default: 60
+      weixinToken: 7100

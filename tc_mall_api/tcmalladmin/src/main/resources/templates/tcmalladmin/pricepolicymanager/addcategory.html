@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="categoryForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">商品分类：</label>
+								<input name="policyid" th:value="${policyid}" style="display: none">
+								<div id="categoryprice" class="col-sm-8">
+									<select id="cat0" name="cat0" placeholder="请选择" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+										<option th:each="cat:${cat0list}" th:value="${cat.catId}" th:text="${cat.name}" th:selected="${cat0 == cat.catId}"></option>
+									</select>
+									<select id="cat1" name="cat1" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+									</select>
+									<select id="cat2" name="cat2" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/pricepolicymanager/addcategory.js">
+	</script>
+</body>
+</html>

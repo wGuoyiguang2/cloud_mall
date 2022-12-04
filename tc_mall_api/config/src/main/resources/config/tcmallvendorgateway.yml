@@ -1,0 +1,4 @@
+#vendor appKey 生成规则: md5(tcmall+'_vendor_'+vendorId对应的值)
+server:
+  appKey:
+    vendor_56: b587668314c24b51adb58ebf53fc39eb

@@ -1,0 +1,121 @@
+spring:
+  application:
+    name: tcmallmobilegateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod,db,kafka
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+zuul:
+  semaphore:
+    max-semaphores: 2000
+  ignoredServices: '*'
+  sensitiveHeaders:
+  ignoredPatterns: /**/bms/vender/**
+  routes:
+    cms_api_home:
+      path: /v1/home/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    cms_api_center:
+      path: /v1/center/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    cms_api_product:
+      path: /v1/product/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    cms_api_search:
+      path: /v1/search/product/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    ims_api_search_history:
+      path: /v1/search/history/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    cms_api_search_qrcode:
+      path: /v1/search/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    ims_api_favorite:
+      path: /v1/favorite/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    ims_api_address:
+      path: /v1/address/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    ims_api_invoice:
+      path: /v1/invoice/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    ims_api_cart:
+      path: /v1/cart/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    bms_api:
+      path: /v1/bms/**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_api_order:
+      path: /v1/order/**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_api_aftersale:
+      path: /v1/afterSale/**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    jdservice_api:
+      path: /balance/getBalance**
+      strip-prefix: false
+      service-id: tcmalljdservice
+    message_server:
+      path: /v1/messsage/phone/**
+      strip-prefix: false
+      service-id: tcmallmessage
+    ums_api:
+      path: /v1/**
+      strip-prefix: false
+      service-id: tcmallumsapi
+  ratelimit:
+    key-prefix: rateLimit
+    enabled: true
+    repository: Redis
+    behind-proxy: true
+    default-policy:
+      limit: 1800
+      quota: 1800
+      refresh-interval: 3600
+      type:
+        - user
+        - url
+        - origin
+    policies:
+      bms_api:
+        limit: 1200
+        quota: 1200
+        refresh-interval: 3600
+        type:
+          - user
+          - url
+          - origin

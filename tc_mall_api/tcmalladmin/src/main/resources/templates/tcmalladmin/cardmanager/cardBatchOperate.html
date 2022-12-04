@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							购物卡批次信息
+							<div class="col-sm-12 m-b-xs container">
+								<table  border="1" cellspacing="0" th:width="750px" th:height="200px">
+									<tr>
+										<td>购物卡批次号</td><td th:text="${bean.batchNo}" id="batchNo"></td>
+										<td>购物卡名称</td><td th:text="${bean.cardName}"></td>
+									</tr>
+									<tr>
+										<td>数量</td><td th:text="${bean.count}"></td>
+										<td>单张金额</td><td th:text="${bean.faceValue}"></td>
+									</tr>
+									<tr>
+										<td>创建人</td><td th:text="${bean.operator}"></td>
+										<td>创建时间</td><td th:text="${bean.ctime}"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				*操作原因
+				<div>
+					&ensp&ensp&ensp<textarea  id="intro"  name="intro"  th:rows="5" th:cols="20"></textarea>
+				</div>
+			</div>
+			<br><br><br>
+			<div class="col-lg-12">
+				执行操作
+				<div id="toolbar" role="group">
+					&ensp&ensp
+					<button shiro:hasPermission="admin:cardbatch:start" class="btn btn-primary" type="button" onclick="operateStart()">
+						<strong>激活</strong>
+					</button>
+					<button shiro:hasPermission="admin:cardbatch:pause" class="btn btn-primary" type="button" onclick="operatePause()">
+						<strong>暂停</strong>
+					</button>
+					<button shiro:hasPermission="admin:cardbatch:export" class="btn btn-primary" type="button" onclick="operateExport()">
+						<strong>导出</strong>
+					</button>
+					<button shiro:hasPermission="admin:cardbatch:abandon" class="btn btn-primary" type="button" onclick="operateAbandon()">
+						<strong>废弃</strong>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/cardmanager/cardbatchOperate.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+
+	<div>
+		<script type="text/javascript">
+            var s_start_h = 'hidden';
+            var s_pause_h = 'hidden';
+            var s_export_h = 'hidden';
+            var s_abandon_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="admin:cardbatch:start">
+		<script type="text/javascript">
+            var s_start_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="admin:cardbatch:pause">
+		<script type="text/javascript">
+            var s_pause_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="admin:cardbatch:export">
+		<script type="text/javascript">
+            var s_export_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="admin:cardbatch:abandon">
+		<script type="text/javascript">
+            var s_abandon_h = '';
+		</script>
+	</div>
+</body>
+</html>

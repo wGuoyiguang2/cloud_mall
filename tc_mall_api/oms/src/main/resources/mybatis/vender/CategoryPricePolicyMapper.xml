@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.CategoryPricePolicyDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCategory">
+		select `id`, `venderid`, `policyid`,`cat0`,`cat1`,`cat2`,`ctime`, `utime` from t_vender_price_category where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCategory">
+		select  `id`, `venderid`, `policyid`,`cat0`,`cat1`,`cat2`,`ctime`, `utime` from t_vender_price_category
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderid != null and venderid != ''"> and venderid = #{venderid} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+			<if test="cat0 != null"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null"> and cat2 = #{cat2} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_price_category
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderid != null and venderid != ''"> and venderid = #{venderid} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+			<if test="cat0 != null"> and cat0 = #{cat0} </if>
+			<if test="cat1 != null"> and cat1 = #{cat1} </if>
+			<if test="cat2 != null"> and cat2 = #{cat2} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCategory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_price_category
+		(
+		`venderid`,
+		`policyid`,
+		`cat0`,
+		`cat1`,
+		`cat2`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderid},
+		#{policyid},
+		#{cat0},
+		#{cat1},
+		#{cat2},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<delete id="remove">
+		delete from t_vender_price_category where id = #{id}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_price_category
+		<where>
+			<if test="ids != null and ids.size>0"> and id in
+				<foreach item="id" collection="ids" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+		</where>
+	</delete>
+
+	<select id="getByCatId" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PricePolicyCategory">
+		select
+			a.percent as percent,
+			b.cat0 as cat0,
+			b.cat1 as cat1,
+			b.cat2 as cat2
+		from t_vender_price_policy a
+		left join t_vender_price_category b on a.id = b.policyid
+		where a.type = 1 and a.status = 1 and a.venderid = #{venderid} and (b.cat0 is null or b.cat0 = 0 or b.cat0 = #{cat0}) and (b.cat1 is null or b.cat1 = 0 or b.cat1 = #{cat1}) and (b.cat2 is null or b.cat2 = 0 or b.cat2 = #{cat2})
+	</select>
+</mapper>

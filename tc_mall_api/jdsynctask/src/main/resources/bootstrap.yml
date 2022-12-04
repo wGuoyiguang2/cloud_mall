@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: tcmalljdsynctask
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod,db,kafka
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 20
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/

@@ -1,0 +1,264 @@
+ums_api
+
+A:声明
+wanghaoyang
+v1版本的接口统一调用电视后台的ums,所以在测试使用这些接口时需要保证电视后台得ums可用
+
+B:接口列表
+    1:发送短信验证码       /v1/message/send
+    2:校验短信验证码       /v1/message/verify
+    3:手机注册            /v1/phone/register
+    4:手机登录            /v1/phone/login
+    5:生成微信二维码       /v1/qrcode/create
+    6:轮循微信二维码       /v1/qrcode/check
+    7:退出登录接口         /v1/user/logout
+    8:修改密码接口         /v1/phone/password
+    9:通过uid获取用户信息   /v1/user/info
+    10:添加小程序登录接口   /v1/user/applet/login
+    11:小程序获取用户的openid   /v1/user/applet/openid
+
+
+C:接口说明
+一、发送短信验证码
+1、请求地址: http://{ip}:{port}/v1/message/send
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'mobile':'15910386364'                    用户手机（必填）
+'mac':'12:34:56:78:56'                    终端mac（必填）
+'msgType':1                               消息类型（必填）(1：注册2:找回密码)
+5、返回值说明
+{
+	"error": 0,
+	"msg": "成功",
+	"data": null
+}
+
+
+二、校验短信验证码
+1、请求地址: http://{ip}:{port}/v1/message/verify
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'mobile':'15910386364'                    用户手机（必填）
+'code':'123456'                           短信验证码（必填）
+5、返回值说明
+{
+	"error": 0,
+	"msg": "OK",
+	"data": {
+		"result": 0
+	}
+}
+result: 0校验不通过|1校验通过
+
+
+三、手机注册
+1、请求地址: http://{ip}:{port}/v1/phone/register
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'mobile':'15910386364'                    用户手机（必填）
+'passWord':'sfaefawfaewfaefaefea'         用户密码(必填)
+'code':'123456'                           短信验证码（必填）
+'mac':'12:34:56:78:56'                    终端mac(必填)
+5、返回值说明
+{
+	"error": 0,
+	"msg": "注册成功！",
+	"data": {
+		"cibnUserId": "11138727",
+		"cibnUserToken": "e132760a9530994a386f9319f754c64e",
+		"coinnumber": "0",
+		"endTime": "",
+		"member": "false",
+		"memberType": "0",
+		"newCoin": "0",
+		"nickName": "15910386364",
+		"userHeader": "",
+		"userId": "791538",
+		"userName": "15910386364",
+		"userToken": "41600ac7c8117ae764bd1c43db9ad057"
+	}
+}
+
+
+四、手机登录
+1、请求地址: http://{ip}:{port}/v1/phone/login
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'mobile':'15910386364'                    用户手机（必填）
+'passWord':'sfaefawfaewfaefaefea'         用户密码(必填)
+'mac':'12:34:56:78:56'                    终端mac(必填)
+5、返回值说明
+{
+	"error": 0,
+	"msg": "登陆成功！",
+	"data": {
+		"cibnUserId": "11138727",
+		"cibnUserToken": "e132760a9530994a386f9319f754c64e",
+		"coinnumber": "0",
+		"endTime": "",
+		"member": "false",
+		"memberType": "0",
+		"newCoin": "0",
+		"nickName": "15910386364",
+		"userHeader": "",
+		"userId": "791538",
+		"userName": "15910386364",
+		"userToken": "f6e65532a249dc36589a51bbb7cefcf5"
+	}
+}
+
+
+五、生成二维码
+1、请求地址: http://{ip}:{port}/v1/qrcode/create
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'mac':'12:34:56:78:56'                    终端mac(必填)
+5、返回值说明
+{
+	"error": 0,
+	"msg": "OK",
+	"data": {
+		"qrTicket": "gQEC8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyNVJYVWxZM3RjNmkxb2NndWhyMUYAAgQMAzdbAwQAjScA",
+		"scanId": "3846303"
+	}
+}
+
+
+六、轮循二维码(判断用户是否登录)
+1、请求地址: http://{ip}:{port}/v1/qrcode/check
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'scanId':123654                    二维码id(必填)(接口5返回)
+'ticket':'gQEC8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyNVJYVWxZM3RjNmkxb2NndWhyMUYAAgQMAzdbAwQAjScA'   换取二维码的Ticket(必填)(接口5返回)
+5、返回值说明
+{
+	"error": 0,
+	"msg": "登陆成功！",
+	"data": {
+		"cibnUserId": "11123396",
+		"cibnUserToken": "376f4464c246386818be483b00c6852d",
+		"coinnumber": "0",
+		"endTime": "",
+		"member": "false",
+		"memberType": "0",
+		"newCoin": "0",
+		"nickName": "wx_N-ta3I",
+		"userHeader": "",
+		"userId": "266590",
+		"userName": "wx_N-ta3I",
+		"userToken": "5b9f48eec25124f70446480a0ddeaf41"
+	}
+}
+
+七、退出登录接口
+1、请求地址: http://{ip}:{port}/v1/user/logout
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+5、返回值说明
+{
+	"error": 0,
+	"msg": "ok",
+	"data": null
+}
+
+八、修改密码接口
+1、请求地址: http://{ip}:{port}/v1/phone/password
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"mobile":"15910386364"                              用户手机号
+"password":"222222"                                 新密码
+"code":"563214"                                     短信验证码
+"mac":"23:ef:e5:5a:3c:6d"                           终端mac
+5、返回值说明
+{
+    "error": 0,
+    "msg": "成功",
+    "data": {
+        "cibnUserId": "11234228",
+        "cibnUserToken": "aa6f6b6de3bb7ab882fcd672272d5e28",
+        "coinnumber": "0",
+        "endTime": "",
+        "member": "false",
+        "memberType": "0",
+        "newCoin": "0",
+        "nickName": "15910386364",
+        "userHeader": "",
+        "userId": "161571",
+        "userName": "15910386364",
+        "userToken": "45d85efa0a0fdca5de0d9df5da84c8ed"
+    }
+}
+
+九、通过uid获取用户信息
+1、请求地址: http://{ip}:{port}/v1/user/info
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+"userId":161573                                 #用户id
+"mac":"sdfafaef"                                #登录设备mac(可以不传)
+5、返回值说明
+{
+    "error": 0,
+    "msg": "成功",
+    "data": {
+        "cibnUserId": "11265981",
+        "cibnUserToken": "57b3a0b8323d287cd9a14d14d45aa42e",
+        "coinnumber": "0",
+        "endTime": "",
+        "member": "false",
+        "memberType": "0",
+        "newCoin": "0",
+        "nickName": "15910386364",
+        "userHeader": "",
+        "userId": "161573",
+        "userName": "15910386364",
+        "userToken": "08bc07fdd2a03aa824bca0aa95b4ed23"
+    }
+}
+
+十、小程序登录
+1、请求地址: http://{ip}:{port}/v1/user/applet/login
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"userCode":"081TWglU1Ry61X06O5lU1Qg7lU1TWgl1"            #小程序终端生成的code(必传)
+"appName":"jinriyouxiang"                                #应用名称(必传 今日有享小程序固定传“jinriyouxiang”)
+"venderId":56                                            #大客户id(必传)
+5、返回值说明(返回结果会携带cookie)
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "userId": 14,
+        "nickName": "oxXu94j8SwqBP4ChZPO0QUdkHbKg",
+        "userHeader": ""
+    }
+}
+
+
+十一、小程序获取用户的openid
+1、请求地址: http://{ip}:{port}/v1/user/applet/openid
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+"userCode":"081TWglU1Ry61X06O5lU1Qg7lU1TWgl1"            #小程序终端生成的code(必传)
+"appName":"jinriyouxiang"                                #应用名称(必传 今日有享小程序固定传“jinriyouxiang”)
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "openId": "oxXu94j8SwqBP4ChZPO0QUdkHbKg"
+    }
+}
+
+备注:
+建议终端验证密码不少于6位,并做一定的加密后将密文上传

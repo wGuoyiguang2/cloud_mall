@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.CategoryPictureDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture">
+		select
+			`id`,
+			`venderid` as `venderId`,
+			`catid` as `catId`,
+			`cat_type` as `catType`,
+			`icon`,
+			`picture`,
+			`background`,
+			`shared`,
+			`status`,
+			`ctime`,
+			`utime`
+		from t_category_picture where id = #{id}
+	</select>
+
+	<select id="getByCatId" resultType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture">
+		select
+			`id`,
+			`venderid` as `venderId`,
+			`catid` as `catId`,
+			`cat_type` as `catType`,
+			`icon`,
+			`picture`,
+			`background`,
+			`shared`,
+			`status`,
+			`ctime`,
+			`utime`
+		from t_category_picture where catid = #{catId} and venderid = #{venderId} limit 1;
+	</select>
+
+	<select id="getByCatIds" resultType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture">
+		select
+			`id`,
+			`venderid` as `venderId`,
+			`catid` as `catId`,
+			`cat_type` as `catType`,
+			`icon`,
+			`picture`,
+			`background`,
+			`shared`,
+			`status`,
+			`ctime`,
+			`utime`
+		from
+        (select * from t_category_picture where status='1' order by shared asc) as a
+		where (venderid = #{venderId} or shared = '1')
+		<if test="catIds != null and catIds.size>0"> and catid in
+			<foreach item="catid" collection="catIds" open="(" separator="," close=")">
+				  #{catid}
+			</foreach>
+		</if>
+        group by catid
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture">
+		select
+		`id`,
+		`venderid` as `venderId`,
+		`catid` as `catId`,
+		`cat_type` as `catType`,
+		`icon`,
+		`picture`,
+		`background`,
+		`shared`,
+		`status`,
+		`ctime`,
+		`utime`
+		from t_category_picture
+		<where>
+			<if test="id != null"> and id = #{id} </if>
+			<if test="venderId != null"> and venderid = #{venderId} </if>
+			<if test="catId != null"> and catid = #{catId} </if>
+			<if test="catType != null"> and cat_type = #{catType} </if>
+			<if test="icon != null and icon != ''"> and icon = #{icon} </if>
+			<if test="picture != null and picture != ''"> and picture = #{picture} </if>
+			<if test="background != null and background != ''"> and background = #{background} </if>
+			<if test="shared != null"> and shared = #{shared} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+			<if test="isin != null and isin.size>0"> and catid in
+				<foreach item="catid" collection="isin" open="(" separator="," close=")">
+					#{catid}
+				</foreach>
+			</if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_category_picture
+		<where>
+			<if test="id != null"> and id = #{id} </if>
+			<if test="venderId != null"> and venderId = #{venderId} </if>
+			<if test="catId != null"> and catid = #{catId} </if>
+			<if test="catType != null"> and cat_type = #{catType} </if>
+			<if test="icon != null and icon != ''"> and icon = #{icon} </if>
+			<if test="picture != null and picture != ''"> and picture = #{picture} </if>
+			<if test="background != null and background != ''"> and background = #{background} </if>
+			<if test="shared != null"> and shared = #{shared} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+			<if test="isin != null and isin.size>0"> and catid in
+				<foreach item="catid" collection="isin" open="(" separator="," close=")">
+					#{catid}
+				</foreach>
+			</if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_category_picture
+		(
+		`venderid`,
+		`catid`,
+		`cat_type`,
+		`icon`,
+		`picture`,
+		`background`,
+		`shared`,
+		`status`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{catId},
+		#{catType},
+		#{icon},
+		#{picture},
+		#{background},
+		#{shared},
+		#{status},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.CategoryPicture">
+		update t_category_picture
+		<set>
+			<if test="icon != null">`icon` = #{icon}, </if>
+			<if test="picture != null">`picture` = #{picture}, </if>
+			<if test="background != null">`background` = #{background}, </if>
+			<if test="shared != null">`shared` = #{shared}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="ctime != null">`ctime` = #{ctime},</if>
+			<if test="utime != null">`utime` = #{utime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from t_category_picture where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,1633 @@
+〇、外网获取token接口
+1、请求地址: http://{ip}:9010/token/getToken
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数 无
+5、返回值：token
+
+一、获取商品价格
+1、请求地址: http://{ip}:9010/goods/price/get
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku":"770135,927534"}
+注：多个sku中间以逗号隔开，
+5、返回值说明
+{
+    "biz_price_sellPrice_get_response": {
+        "success": true,
+        "resultMessage": "价格为null或者小于0时，为暂无报价",
+        "resultCode": "0000",
+        "result": [
+            {
+                "price": 88.25,
+                "skuId": 100401,
+                "jdPrice": 109
+            }
+        ],
+        "code": "0"
+    }
+}
+二、获取商品价格（可以获取税率，市场价等）
+1、请求地址: http://{ip}:9010/goods/price/getTaxPrices
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku":"770135,927534","queryExts":"containsTax,marketPrice"}
+注：多个sku中间以逗号隔开，
+5、返回值说明
+{
+    "jd_kpl_open_getsellprice_query_response": {
+        "success": true,
+        "resultMessage": "价格为null或者小于0时，为暂无报价",
+        "resultCode": "0000",
+        "result": [
+            {
+                "marketPrice": 112,
+                "price": 88.25,
+                "tax": 16,
+                "taxPrice": 12.17,
+                "skuId": 100401,
+                "jdPrice": 109,
+                "nakedPrice": 76.08
+            }
+        ],
+        "code": "0"
+    }
+}
+三、获取商品库存1
+1、请求地址: http://{ip}:9010/goods/stock/get
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"area":"1_0_0 ","sku":"569172"}
+注：多个sku中间以逗号隔开，1_0_0分别代表1、2、3级地址
+5、返回值说明
+{
+    "biz_stock_forList_batget_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": [
+            {
+                "state": "33",
+                "area": "6_398_400_5448",
+                "desc": "有货",
+                "sku": "100401"
+            }
+        ],
+        "code": "0"
+    }
+}
+四、获取商品库存2
+1、请求地址: http://{ip}:9010/goods/stock/getOrderStock
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"area":"1_2801_2800","skuNums":"[{skuId: 569172,num:101}]"}
+注：1_2801_2800分别代表1、2、3级地址，skuNums为列表形式
+5、返回值说明
+{
+    "biz_stock_fororder_batget_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": [
+            {
+                "skuId": 100401,
+                "areaId": "6_398_400_5448",
+                "stockStateId": 33,
+                "stockStateDesc": "有货",
+                "remainNum": -1
+            }
+        ],
+        "code": "0"
+    }
+}
+五、获取库存一级地址
+1、请求地址: http://{ip}:9010/goods/address/getOneLevel
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数  无
+5、返回值说明
+{
+    "biz_address_allProvinces_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "北京": 1,
+            "新疆": 31,
+            "重庆": 4,
+            "广东": 19,
+            "天津": 3,
+            "浙江": 15,
+            "港澳": 52993,
+            "广西": 20,
+            "内蒙古": 11,
+            "宁夏": 30,
+            "江西": 21,
+            "台湾": 32,
+            "安徽": 14,
+            "贵州": 24,
+            "陕西": 27,
+            "辽宁": 8,
+            "山西": 6,
+            "青海": 29,
+            "四川": 22,
+            "江苏": 12,
+            "河北": 5,
+            "西藏": 26,
+            "钓鱼岛": 84,
+            "福建": 16,
+            "吉林": 9,
+            "上海": 2,
+            "湖北": 17,
+            "海南": 23,
+            "云南": 25,
+            "甘肃": 28,
+            "湖南": 18,
+            "山东": 13,
+            "河南": 7,
+            "黑龙江": 10
+        },
+        "code": "0"
+    }
+}
+六、获取库存二级地址
+1、请求地址: http://{ip}:9010/goods/address/getTwoLevel
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "id":1 }
+注：id为省份id
+5、返回值说明
+{
+    "biz_address_citysByProvinceId_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "运城市": 398,
+            "忻州市": 350,
+            "朔州市": 330,
+            "阳泉市": 318,
+            "晋中市": 336,
+            "长治市": 3074,
+            "大同市": 309,
+            "晋城市": 325,
+            "临汾市": 379,
+            "吕梁市": 368,
+            "太原市": 303
+        },
+        "code": "0"
+    }
+}
+七、获取库存三级地址
+1、请求地址: http://{ip}:9010/goods/address/getThreeLevel
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "id":1 }
+注：id为市级id
+5、返回值说明
+{
+    "biz_address_countysByCityId_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "盐湖区": 32360,
+            "临猗县": 409,
+            "永济市": 400,
+            "平陆县": 403,
+            "万荣县": 410,
+            "新绛县": 402,
+            "垣曲县": 404,
+            "稷山县": 406,
+            "河津市": 399,
+            "绛县": 405,
+            "芮城县": 407,
+            "闻喜县": 3233,
+            "夏县": 408
+        },
+        "code": "0"
+    }
+}
+八、获取库存四级地址
+1、请求地址: http://{ip}:9010/goods/address/getFourLevel
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "id":1 }
+注：id为县级id
+5、返回值说明
+{
+    "biz_address_townsByCountyId_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "城区": 51318,
+            "韩阳镇": 5449,
+            "董村农场": 32386,
+            "栲栳镇": 32383,
+            "张营镇": 5450,
+            "枵栳镇": 5447,
+            "开张镇": 5446,
+            "于乡农场": 32385,
+            "蒲州镇": 5448,
+            "卿头镇": 5445,
+            "伍姓湖农场": 32384,
+            "虞乡镇": 5444
+        },
+        "code": "0"
+    }
+}
+九、获取订单信息
+1、请求地址: http://{ip}:9010/order/getOrderInfo
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "jdOrderId": 2302507708,"queryExts":"orderType,jdOrderState" }
+注：queryExts参数可选
+5、返回值说明
+{
+    "jd_kpl_open_selectjdorder_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "pOrder": 0,
+            "jdOrderState": 2,
+            "orderState": 1,
+            "jdOrderId": 77530530691,
+            "freight": 8,
+            "state": 0,
+            "submitState": 0,
+            "orderPrice": 5.4,
+            "orderNakedPrice": 4.65,
+            "sku": [
+                {
+                    "category": 16806,
+                    "num": 1,
+                    "price": 5.4,
+                    "tax": 16,
+                    "oid": 0,
+                    "name": "中华(ZHONGHUA)健齿白 炫动果香牙膏200g",
+                    "taxPrice": 0.75,
+                    "skuId": 1634093,
+                    "nakedPrice": 4.65,
+                    "type": 0
+                }
+            ],
+            "type": 2,
+            "orderTaxPrice": 0.75
+        },
+        "code": "0"
+    }
+}
+十、京东商品搜索接口
+1、请求地址: http://{ip}:9010/v1/product/search
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"brands"      :"",                    品牌搜索 多个品牌以逗号分隔
+"catId"       :"",                    分类Id,只支持三级类目Id
+"keyword"     :"苹果",                 搜索关键字
+"max"         :"3000",                价格区间搜索，高价
+"min"         :"1000",                价格区间搜索，低价
+"pageIndex"   :0,                     当前第几页
+"pageSize"    :10                     每页大小
+注：01.关键字搜索  02.分类Id搜索  03.品牌搜索  04.带价格的组合搜索(价格区间，catId、keyword、低价和高价为必须)
+5、返回值说明
+{"jd_biz_search_search_response":
+   {“success”: true,
+    “resultMessage”: ”操作成功”,                                  ##resultCode的说明
+    “resultCode”: ”0000”,                                        ##响应状态码
+    “result”:{
+        “resultCount”：100，                                       ##搜索结果总记录数量
+        “pageCount “：10,                                         ##总页数
+        “pageSize”: 10,                                           ##每页大小
+        “pageIndex”:1,                                            ##当前页
+        "brandAggregate":{ 								          ##品牌分类汇总信息
+                "brandList":[							          ##品牌列表
+                    {
+                        "id":"1001",					          ##品牌id
+                        "name":"Apple",					          ##品牌名称
+                        "pinyin":"A"					          ##品牌首字母拼音
+                    },
+                    {
+                        "id":"10003",
+                        "name":"华为",
+                        "pinyin":"H"
+                    }
+                ],
+                "pinyinAggr":[
+                    "A",
+                    "B",
+                    "C"
+                ]
+              },
+         "priceIntervalAggregate":[					              ##价格汇总
+                {
+                    "max":1000000,					              ##高价
+                    "min":0							              ##低价
+                },
+                {
+                    "max":0,
+                    "min":10000
+                }
+            ],
+         "categoryAggregate":{						               ##分类汇总
+                "firstCategory":[					               ##一级类目分类
+                    {
+                        "catId":1002,				               ##分类Id
+                        "count":2000,				               ##分类下商品数量
+                        "name":"Cloth",					           ##分类名称
+                        "weight":3						           ##分类权重
+                    }
+                ],
+                "secondCategory":[					               ##二级类目分类
+                    {
+                        "catId":1002,
+                        "count":2,
+                        "name":"Cloth",
+                        "weight":3
+                    },
+                    {
+                        "catId":1002,
+                        "count":2,
+                        "name":"Cloth",
+                        "weight":3
+                    }
+                ],
+                "thridCategory":[						          ##三级类目分类
+                    {
+                        "catId":1002,
+                        "count":2,
+                        "name":"Cloth",
+                        "weight":3
+                    },
+                    {
+                        "catId":1002,
+                        "count":2,
+                        "name":"Cloth",
+                        "weight":3
+                    },
+                    {
+                        "catId":1002,
+                        "count":2,
+                        "name":"Cloth",
+                        "weight":3
+                    }
+                ]
+            },
+           “hitResult”:[
+                {
+                "brand": "惠普（HP）",    							##品牌名称
+                "imageUrl": “6468/e7839f86b26.jpg”, 				##商品图片url
+                “wareName”：“惠普（HP）C8766ZZ 855号彩色墨盒”,	        ##商品名称
+                “wareId“: "103890",								    ##商品id
+                "warePId": "196805",    							##商品spuid
+                "brandId":"14026",									##品牌id
+                "catId":"655",										##三级类目id
+                "cid1":"9987",										##一级类目id
+                "cid2":"653",										##二级类目id
+                "wstate" : "1",    									##上柜状态，1.有效
+                "wyn" : "1",        								##商品状态，1.有效
+                "catName" : "儿童家具 ",         					    ##三级分类名
+                "cid1Name" : "家居、厨具、家装",    				    ##一级分类名
+                "cid2Name" : "家具",                                 ##二级分类名
+                "synonyms" : "迪斯尼正版迪士尼",             		    ##商品同义词
+                }
+           ]
+         },
+      "code":"0"                                                    ##系统编号
+    }
+}
+十一、获取商品池编号
+1、请求地址: http://{ip}:9010/goods/getProductPoolPageNum
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数  无
+5、返回值说明
+{
+    "biz_product_PageNum_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "",
+        "result": [
+            {
+                "name": "首批商品",
+                "page_num": "100"
+            }
+        ]
+    }
+}
+十二、通过商品池编号获取sku
+1、请求地址: http://{ip}:9010/goods/getSkusByPageNum
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "pageNum": "100"}
+5、返回值说明
+{
+    "biz_product_sku_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "",
+        "result": "2679673,2677055,2676618"
+    }
+}
+十三、查询商品详细信息接口
+1、请求地址: http://{ip}:9010/goods/getProductDetail
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"sku":880110,"isShow":true}
+5、返回值说明
+①如果sku为非8位时是非图书非音响类目商品，返回值为：
+{
+    "biz_product_detail_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "",
+        "result": {
+            "saleUnit": "台",
+            "weight": "41.0",
+            "productArea": "中国大陆",
+            "wareQD": "洗衣机 × 1、说明书（含保修卡） × 1、进水管 × 1",
+            "imagePath": "jfs/t7840/183/4032450861/40135/79541184/5a05efeeNee0e7511.jpg",
+            "param": "<table cellpadding=\"0\" cellspacing=\"1\" width=\"100%\" border=\"0\" class=\"Ptable\"></table>",
+            "state": "1",
+            "sku": "2679673",
+            "brandName": "小天鹅（LittleSwan）",
+            "upc": "6901783007122",
+            "category": "737;794;880",
+            "name": "小天鹅（LittleSwan）8公斤变频全自动波轮洗衣机 京东微联智能APP手机控制 TB80-Mute60WD",
+            "introduction": "<div cssurl='//sku-market-gw.jd.com/css/pc/2679673.css?t=1519797912625'></div>"
+        }
+    }
+}
+②如果sku为8位时，返回值为：
+{
+    " biz_product_detail_query_response ": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "sku": "商品编号",
+            "skuType": "book",
+            "Author": "著者",
+            "Editer": "编者",
+            "Transfer": "译者",
+            "Drawer": "绘者",
+            "Proofreader": "校对",
+            "ISBN": "ISBN",
+            "Publishers": "出版社",
+            "Sheet": "开本",
+            "Pages": "页数",
+            "Package": "包装",
+            "PublishTime": "出版时间",
+            "BatchNo": "版次",
+            "PrIntegerTime": "印刷时间",
+            "PrIntegerNo": "印次",
+            "PackNum": "套装数量",
+            "Language": "正文语言",
+            "Papers": "用纸",
+            "Brand": "品牌",
+            "comments": "媒体评论",
+            "image": "插图",
+            "contentDesc": "内容摘要",
+            "relatedProducts": "产品描述",
+            "editerDesc": "编辑推荐",
+            "catalogue": "目录",
+            "bookAbstract": "精彩摘要",
+            "authorDesc": "作者简介",
+            "Integerroduction": "前言"
+        }
+    }
+}
+十四、获取PC样式
+1、请求地址: http://{ip}:9010/goods/getPCStyle
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"sku":"3485368"}
+5、返回值说明
+{
+    "jd_kpl_open_item_getwarestyleandjsbywareid_response": {
+        "detail": {
+            "jsContent": "<script></script>",
+            "cssContent": "<style></style>",
+            "sku": "2679673",
+            "htmlContent": null
+        },
+        "code": "0"
+    }
+}
+
+十五、获取移动端样式
+1、请求地址: http://{ip}:9010/goods/getMobileStyle
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"sku":"3485368"}
+5、返回值说明
+{
+    "jd_kpl_open_item_getmobilewarestyleandjsbywareid_response": {
+        "detail": {
+            "jsContent": "<script></script>",
+            "cssContent": "<style>/*C-B*/\n.ssd-module-wrap {width: 640px; margin: 0 auto; position: relative; text-align: left; background-color: #ffffff; }\n.ssd-module-wrap .ssd-module,.ssd-module-wrap .ssd-module-heading{ width:640px; position:relative; overflow: hidden;  }\n.ssd-module{background-repeat:no-repeat; background-position:left top; background-size:100% 100%;}\n.ssd-module .ssd-widget-pic,.ssd-module .ssd-widget-text,.ssd-module .ssd-widget-line,.ssd-module-wrap .ssd-widget-rectangle,.ssd-module-wrap .ssd-widget-circle,.ssd-module-wrap .ssd-widget-triangle,.ssd-module-wrap .ssd-widget-table{ position: absolute; overflow: hidden; }\n.ssd-module-wrap .ssd-widget-table table{width: 100%;}\n.ssd-module-wrap .ssd-widget-table th,.ssd-module-wrap .ssd-widget-table td{position:relative;}\n.ssd-module .ssd-widget-pic img{display:block; width:100%!important; height:100%!important;}\n.ssd-module .ssd-widget-text span{display:block; overflow:hidden; width:100%;  height:100%; padding:0; margin: 0; word-break:break-all; word-wrap:break-word; white-space:normal; }\n.ssd-module .ssd-widget-link{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: transparent;z-index:100 }\n.ssd-module-wrap .ssd-widget-text{ line-height: 1.5; }\n.ssd-module-wrap .ssd-cell-text{position:absolute;top:0;left:0;right:0;width: 100%;height: 100%;overflow: auto;}\n.ssd-module-heading{background-repeat:no-repeat; background-position:left center; background-size:100% 100%; }\n.ssd-module-heading .ssd-module-heading-layout{display:inline-block;}\n.ssd-module-heading .ssd-widget-heading-ch{float: left;display:inline-block;margin: 0 6px 0 15px; }\n.ssd-module-heading .ssd-widget-heading-en{float: left;display:inline-block;margin: 0 15px 0 6px; }\n.ssd-module-wrap .ssd-widget-rectangle{box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}\n.ssd-module-wrap .ssd-show{display: block;}\n.ssd-module-wrap .ssd-hide{display: none;}\n/*C-E*/.ssd-module-wrap .M14823073796293{height:146px; background-size:100% 100%; width:100.00%; background-color:#f9e2b1; background-image:url(https://img30.360buyimg.com/sku/jfs/t18262/278/549794014/131540/268bf184/5a960daeN8ff8748e.jpg)}\n.ssd-module-wrap .M15146375226661{height:566px; background-size:100% 100%; width:100.00%; background-color:#f2f2f2; background-image:url(https://img30.360buyimg.com/sku/jfs/t14248/26/1608764572/86748/60d118ef/5a5355dcNa1fccd4c.jpg)}\n.ssd-module-wrap .M14823079764365{height:1008px; background-size:100% 100%; width:100.00%; background-color:#f9e2b1; background-image:url(https://img30.360buyimg.com/sku/jfs/t12412/242/2637832641/146007/60ee6697/5a478951N4ed64e5e.jpg)}\n.ssd-module-wrap .M14823079948036{height:1149px; background-size:100% 100%; width:100.00%; background-color:#f9e2b1; background-image:url(https://img30.360buyimg.com/sku/jfs/t6154/71/777779928/358744/33d69eb5/5944c985N130042c4.jpg)}\n.ssd-module-wrap .M14823080108677{height:1064px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t6625/143/742576020/372897/9ab1491c/5944c985N05c6e7a3.jpg)}\n.ssd-module-wrap .M14823080352998{height:844px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t5704/267/3957771860/218854/ae2f36b1/5944c984N6641eb4d.jpg)}\n.ssd-module-wrap .M14823080528039{height:1033px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t5740/307/3969421521/304088/5070c90f/5944c97bN857bc809.jpg)}\n.ssd-module-wrap .M148230808420311{height:1065px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t6316/153/755151927/250602/cbdea9e0/5944c985Neadeb723.jpg)}\n.ssd-module-wrap .M148230806938010{height:1190px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t6460/229/755063895/307158/3b552b08/5944c985N52c811de.jpg)}\n.ssd-module-wrap .M148230812579612{height:1065px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t6631/161/777094344/174925/adbbf912/5944c985N19b9dd3a.jpg)}\n.ssd-module-wrap .M148230816933913{height:835px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t5614/354/3951943067/154846/22a90557/5944c984N121a0c71.jpg)}\n.ssd-module-wrap .M148230819521914{height:737px; background-size:100% 100%; width:100.00%; background-color:#ffffff; background-image:url(https://img30.360buyimg.com/sku/jfs/t6376/27/766774974/150655/e8ea4901/5944c97eNc41defbe.jpg)}\n.ssd-module-wrap .M14917345942601{height:579px; background-size:100% 100%; width:100.00%; background-color:#a7d7e8; background-image:url(https://img30.360buyimg.com/sku/jfs/t5983/267/2746241955/133644/f6c0b44b/5944c98aN051a3b3a.jpg)}\n.ssd-module-wrap .M14976804361971{height:515px; background-size:100% 100%; width:100.00%; background-color:#cbcbcb; background-image:url(https://img30.360buyimg.com/sku/jfs/t7198/342/448158806/74114/c746d232/5980695eNa67e8484.jpg)}\n.ssd-module-wrap .M15009838366111{height:258px; background-size:100% 100%; width:100.00%; background-color:#b3b3b3; background-image:url(https://img30.360buyimg.com/sku/jfs/t6841/184/526160612/159213/acefbf7b/5977322eNcaf754b5.jpg)}\n.ssd-module-wrap .M14976804541442{height:486px; background-size:100% 100%; width:100.00%; background-color:#b3b3b3; background-image:url(https://img30.360buyimg.com/sku/jfs/t7075/333/447712181/100485/add2d34d/59806962N904cfe22.jpg)}\n.ssd-module-wrap .M14976805420643{height:632px; background-size:100% 100%; width:100.00%; background-color:#cbcbcb; background-image:url(https://img30.360buyimg.com/sku/jfs/t5845/174/8900274374/115862/86bba00d/59806962Naf3faa2e.jpg)}\n</style>",
+            "sku": "2679673",
+            "htmlContent": null
+        },
+        "code": "0"
+    }
+}
+十六、获取PC端商品详情图片
+1、请求地址: http://{ip}:9010/goods/getPCProductDetailIMG
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"sku":"3485368"}
+5、返回值说明
+{
+    "jd_kepler_item_querybigfieldconvertsku_response": {
+        "propCode": "<table cellpadding=\"0\" cellspacing=\"1\" width=\"100%\" border=\"0\" class=\"Ptable\"><tr><th class=\"tdTitle\" colspan=\"2\">主体</th><tr><tr><td class=\"tdTitle\">品牌</td><td>小天鹅</td></tr><tr><td class=\"tdTitle\">系列</td><td>净立方</td></tr><tr><td class=\"tdTitle\">型号</td><td>TB80-Mute60WD</td></tr><tr><td class=\"tdTitle\">颜色</td><td>银色</td></tr><tr><td class=\"tdTitle\">类别</td><td>波轮式</td></tr><tr><td class=\"tdTitle\">自动化程度</td><td>全自动</td></tr><tr><td class=\"tdTitle\">显示方式</td><td>LED数码管显示</td></tr><tr><td class=\"tdTitle\">控制方式</td><td>电脑控制</td></tr><tr><td class=\"tdTitle\">开门方式</td><td>顶开式</td></tr><tr><td class=\"tdTitle\">排水方式</td><td>下排水</td></tr><tr><td class=\"tdTitle\">电机类型</td><td>直驱变频电机</td></tr><tr><th class=\"tdTitle\" colspan=\"2\">特色功能</th><tr><tr><td class=\"tdTitle\">儿童安全锁</td><td>支持</td></tr><tr><td class=\"tdTitle\">预约功能</td><td>支持</td></tr><tr><td class=\"tdTitle\">干衣功能</td><td>不支持</td></tr><tr><td class=\"tdTitle\">电辅加热烘干</td><td>不支持</td></tr><tr><td class=\"tdTitle\">电辅加热洗涤</td><td>不支持</td></tr><tr><td class=\"tdTitle\">自动断电</td><td>支持</td></tr><tr><td class=\"tdTitle\">智能断电记忆</td><td>不支持</td></tr><tr><td class=\"tdTitle\">排水阀漏水保护</td><td>支持</td></tr><tr><td class=\"tdTitle\">进水阀漏水保护</td><td>支持</td></tr><tr><th class=\"tdTitle\" colspan=\"2\">规格</th><tr><tr><td class=\"tdTitle\">洗净比</td><td>0.9</td></tr><tr><td class=\"tdTitle\">洗衣程序</td><td>标准洗、强洗、快洗、浸洗、童装洗、家纺洗、羊毛洗、桶自洁</td></tr><tr><td class=\"tdTitle\">洗涤容量（kg）</td><td>8</td></tr><tr><td class=\"tdTitle\">脱水容量（kg）</td><td>8</td></tr><tr><td class=\"tdTitle\">电源规格</td><td>220V/50HZ</td></tr><tr><td class=\"tdTitle\">产品尺寸（深×宽×高）mm</td><td>565x550x925</td></tr><tr><td class=\"tdTitle\">包装尺寸（深x宽x高）mm</td><td>644x639x925</td></tr><tr><td class=\"tdTitle\">产品重量（kg）</td><td>35</td></tr><tr><th class=\"tdTitle\" colspan=\"2\">特性</th><tr><tr><td class=\"tdTitle\">特性</td><td>8公斤大件洗</td></tr></table>",
+        "wareQD": "洗衣机 × 1、说明书（含保修卡） × 1、进水管 × 1",
+        "service": "",
+        "wReadMe": null,
+        "shouhou": "",
+        "wdis": "<div cssurl='//sku-market-gw.jd.com/css/pc/2679673.css?t=1519797912625'></div><div id='zbViewModulesH'  value='15443'></div><input id='zbViewModulesHeight' type='hidden' value='15443'/><div skudesign=\"100010\"></div><div class=\"ssd-module-wrap\" > <div class=\"ssd-module M14823073796293 animate-M14823073796293\">\n        </div>\n<div class=\"ssd-module M15146375226661 animate-M15146375226661\">\n        </div>\n<div class=\"ssd-module M14823079764365 animate-M14823079764365\">\n        </div>\n<div class=\"ssd-module M14823079948036 animate-M14823079948036\">\n        </div>\n<div class=\"ssd-module M14823080108677 animate-M14823080108677\">\n        </div>\n<div class=\"ssd-module M14823080352998 animate-M14823080352998\">\n        </div>\n<div class=\"ssd-module M14823080528039 animate-M14823080528039\">\n        </div>\n<div class=\"ssd-module M148230808420311 animate-M148230808420311\">\n        </div>\n<div class=\"ssd-module M148230806938010 animate-M148230806938010\">\n        </div>\n<div class=\"ssd-module M148230812579612 animate-M148230812579612\">\n        </div>\n<div class=\"ssd-module M148230816933913 animate-M148230816933913\">\n        </div>\n<div class=\"ssd-module M148230819521914 animate-M148230819521914\">\n        </div>\n<div class=\"ssd-module M14917345942601 animate-M14917345942601\">\n        </div>\n<div class=\"ssd-module M14976804361971 animate-M14976804361971\">\n        </div>\n<div class=\"ssd-module M15009838366111 animate-M15009838366111\">\n        </div>\n<div class=\"ssd-module M14976804541442 animate-M14976804541442\">\n        </div>\n<div class=\"ssd-module M14976805420643 animate-M14976805420643\">\n        </div>\n </div><!-- 2018-02-28 11:34:00 --> ",
+        "code": "0",
+        "msg": null
+    }
+}
+十七、获取H5端商品详情图片
+1、请求地址: http://{ip}:9010/goods/getH5ProductDetailIMG
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"sku":"3485368"}
+5、返回值说明
+{
+    "jingdong_new_ware_mobilebigfield_get_response": {
+        "code": "0",
+        "msg": null,
+        "result": "<div cssurl='//sku-market-gw.jd.com/css/mobile/2679673.css?t=1519797912648'></div><div id='zbViewModulesH'  value='13172'></div><input id='zbViewModulesHeight' type='hidden' value='13172'/><div skudesign=\"100011\"></div><div class=\"ssd-module-wrap\" > <div class=\"ssd-module M14823073796293 animate-M14823073796293\">\n        </div>\n<div class=\"ssd-module M15146375226661 animate-M15146375226661\">\n        </div>\n<div class=\"ssd-module M14823079764365 animate-M14823079764365\">\n        </div>\n<div class=\"ssd-module M14823079948036 animate-M14823079948036\">\n        </div>\n<div class=\"ssd-module M14823080108677 animate-M14823080108677\">\n        </div>\n<div class=\"ssd-module M14823080352998 animate-M14823080352998\">\n        </div>\n<div class=\"ssd-module M14823080528039 animate-M14823080528039\">\n        </div>\n<div class=\"ssd-module M148230808420311 animate-M148230808420311\">\n        </div>\n<div class=\"ssd-module M148230806938010 animate-M148230806938010\">\n        </div>\n<div class=\"ssd-module M148230812579612 animate-M148230812579612\">\n        </div>\n<div class=\"ssd-module M148230816933913 animate-M148230816933913\">\n        </div>\n<div class=\"ssd-module M148230819521914 animate-M148230819521914\">\n        </div>\n<div class=\"ssd-module M14917345942601 animate-M14917345942601\">\n        </div>\n<div class=\"ssd-module M14976804361971 animate-M14976804361971\">\n        </div>\n<div class=\"ssd-module M15009838366111 animate-M15009838366111\">\n        </div>\n<div class=\"ssd-module M14976804541442 animate-M14976804541442\">\n        </div>\n<div class=\"ssd-module M14976805420643 animate-M14976805420643\">\n        </div>\n </div><!-- 2018-02-28 11:34:13 --> "
+    }
+}
+
+十八、分页获取商品sku
+1、请求地址: http://{ip}:9010/goods/getSkusByPage
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"pageNum":"100","pageNo":"1"}
+注：pageNum为商品池编号，pageNo为页码数
+5、返回值说明
+{
+    "jd_biz_product_getSkuByPage_response": {
+        "success": true,
+        "resultMessage": "操作成功",
+        "resultCode": "0000",
+        "result": {
+            "pageCount": 1,
+            "skuIds": [
+                100401,
+                100418,
+                6082321,
+                6082327
+            ]
+        },
+        "code": "0"
+    }
+}
+
+十九、查询商品上下架状态
+1、请求地址: http://{ip}:9010/goods/getProductState
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku": "100401,100418"}
+注：多个sku中间用逗号隔开
+5、返回值说明
+{
+    "biz_product_state_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "操作成功",
+        "result": [
+            {
+                "sku": 100401,
+                "state": 1                          //1：上架；0：下架
+            },
+            {
+                "sku": 100418,
+                "state": 1
+            }
+        ]
+    }
+}
+
+二十、查询商品图片信息
+1、请求地址: http://{ip}:9010/goods/getImgBySku
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku": "100401,100418"}
+注：多个sku中间用逗号隔开
+5、返回值说明
+{
+    "biz_product_skuImage_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "操作成功",
+        "result": {
+            "100418": [
+                {
+                    "isPrimary": 1,
+                    "id": 32238519,
+                    "path": "jfs/t21577/166/1776108006/412243/b3bbd08c/5b34f43dNcc4b1bd9.jpg",
+                    "type": 0,
+                    "skuId": 100418,
+                    "created": 1530238918000,
+                    "modified": 1530238918000,
+                    "orderSort": null,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32238520,
+                    "path": "jfs/t17371/323/1516606491/322371/f780f25b/5acecab8N403c1ee3.jpg",
+                    "type": 0,
+                    "skuId": 100418,
+                    "created": 1530238918000,
+                    "modified": 1530238918000,
+                    "orderSort": 1,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32238521,
+                    "path": "jfs/t18946/84/1605870137/338952/3a792473/5acecab9N04cf7f03.jpg",
+                    "type": 0,
+                    "skuId": 100418,
+                    "created": 1530238918000,
+                    "modified": 1530238918000,
+                    "orderSort": 2,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32238522,
+                    "path": "jfs/t19045/94/1578019681/376629/a5014c4b/5acecabaN52ddf170.jpg",
+                    "type": 0,
+                    "skuId": 100418,
+                    "created": 1530238918000,
+                    "modified": 1530238918000,
+                    "orderSort": 3,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32238523,
+                    "path": "jfs/t17626/262/1524372085/286992/4715d486/5acecabaNc5d84584.jpg",
+                    "type": 0,
+                    "skuId": 100418,
+                    "created": 1530238918000,
+                    "modified": 1530238918000,
+                    "orderSort": 4,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                }
+            ],
+            "100401": [
+                {
+                    "isPrimary": 1,
+                    "id": 32235883,
+                    "path": "jfs/t21652/224/1757953814/378743/a4b344fd/5b35b700N6dc8f291.jpg",
+                    "type": 0,
+                    "skuId": 100401,
+                    "created": 1530251829000,
+                    "modified": 1530251829000,
+                    "orderSort": null,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32235884,
+                    "path": "jfs/t22387/322/128526693/399576/989c4e28/5afd3f07N46d98415.jpg",
+                    "type": 0,
+                    "skuId": 100401,
+                    "created": 1530251829000,
+                    "modified": 1530251829000,
+                    "orderSort": 1,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32235885,
+                    "path": "jfs/t17317/225/2588400178/380793/f136a6a9/5afd3f08N9f273ba0.jpg",
+                    "type": 0,
+                    "skuId": 100401,
+                    "created": 1530251829000,
+                    "modified": 1530251829000,
+                    "orderSort": 2,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32235886,
+                    "path": "jfs/t20305/15/126574393/405699/b94f6747/5afd3f08N4aef0c10.jpg",
+                    "type": 0,
+                    "skuId": 100401,
+                    "created": 1530251829000,
+                    "modified": 1530251829000,
+                    "orderSort": 3,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                },
+                {
+                    "isPrimary": 0,
+                    "id": 32235887,
+                    "path": "jfs/t17692/264/2537455596/297670/40afea9d/5afd3f09N245d307b.jpg",
+                    "type": 0,
+                    "skuId": 100401,
+                    "created": 1530251829000,
+                    "modified": 1530251829000,
+                    "orderSort": 4,
+                    "features": null,
+                    "position": null,
+                    "yn": 1
+                }
+            ]
+        }
+    }
+}
+
+二十一、查询商品好评度
+1、请求地址: http://{ip}:9010/goods/getProductComments
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku": "100401,100418"}
+注：多个sku中间用逗号隔开
+5、返回值说明
+{
+    "biz_product_commentSummarys_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "",
+        "result": [
+            {
+                "averageScore": 5,
+                "goodRate": 0.97,
+                "generalRate": 0.025,
+                "poorRate": 0.0050,
+                "skuId": 100401
+            },
+            {
+                "averageScore": 5,
+                "goodRate": 0.98,
+                "generalRate": 0.014,
+                "poorRate": 0.0060,
+                "skuId": 100418
+            }
+        ]
+    }
+}
+
+二十二、查询商品购买区域限制
+1、请求地址: http://{ip}:9010/goods/getAreaLimit
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+    "skuIds": "100401,104852",
+    "province": 6,      #一级地址编号
+    "city": 398,        #二级地址编号
+    "county": 400,      #三级地址编号
+    "Town": 5448        #四级地址编号
+}
+5、返回值说明
+{
+    "biz_product_checkAreaLimit_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "",
+        "result": [
+            {
+                "skuId": 104852,
+                "areaRestrict": false
+            },
+            {
+                "skuId": 100401,
+                "areaRestrict": false
+            }
+        ]
+    }
+}
+
+二十三、查询商品是否支持货到付款
+1、请求地址: http://{ip}:9010/goods/getIsCod
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+    "skuIds": "100401,104852",
+    "province": 6,      #一级地址编号
+    "city": 398,        #二级地址编号
+    "county": 400,      #三级地址编号
+    "Town": 5448        #四级地址编号
+}
+注：多个sku中间用逗号隔开
+5、返回值说明
+{
+    "biz_product_isCod_query_response": {
+        "result": true,                     //若验证所有商品都支持货到付款，则返回true; 除此之外返回false
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": ""
+    }
+}
+
+二十四、查询赠品信息
+1、请求地址: http://{ip}:9010/goods/getGiftBySku
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+"skuId": "100401",
+"province": 6,
+"city": 398,
+"county": 400,
+"Town": 5448
+}
+注：只支持单个sku查询
+5、返回值说明
+{
+    "biz_product_skuGift_query_response": {
+        "result": {
+            "gifts": [
+                {
+                    "skuId": 1280166,
+                    "num": 1,
+                    "giftType": 2
+                }
+            ],
+            "maxNum": 0,
+            "minNum": 1,
+            "promoStartTime": 1448529822917,
+            "promoEndTime": 1453972948000
+        },
+        "resultCode": "0000",
+        "code": "0",
+        "resultMessage": "",
+        "success": true
+    }
+}
+二十五、商品可售验证
+1、请求地址: http://{ip}:9010/goods/getSellCheck
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "sku": "100401,100418"}
+注：多个sku中间用逗号隔开
+5、返回值说明
+{
+    "biz_product_sku_check_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "操作成功",
+        "result": [
+            {
+                "skuId": 100401,
+                "name": "吉列手动剃须刀刮胡刀刀片锋速3突破（4刀头）（新老包装随机发货）",
+                "saleState": 1,
+                "isCanVAT": 1,
+                "is7ToReturn": 1
+            },
+            {
+                "skuId": 100418,
+                "name": "吉列手动剃须刀刮胡刀刀片锋速3经典（4刀头）",
+                "saleState": 1,
+                "isCanVAT": 1,
+                "is7ToReturn": 1
+            }
+        ]
+    }
+}
+二十六、查询分类列表信息接口
+1、请求地址: http://{ip}:9010/goods/getCategory
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"cid":"670"}
+注：cid为分类id
+5、返回值说明
+{
+    "jd_biz_product_getcategory_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "操作成功",
+        "result": {
+            "catId": "670",
+            "parentId": "0",
+            "name": "电脑、办公",
+            "catClass": "0",
+            "state": "1"
+        }
+    }
+}
+二十七、查询分类列表分页信息接口
+1、请求地址: http://{ip}:9010/goods/getCategoryPage
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"catClass":"","pageNo":1,"pageSize":2,"parentId":""}
+注：cid为分类id
+5、返回值说明{
+"jd_biz_product_getcategorys_response": {
+  "code": "0",
+  "resultCode": "0000",
+  "success": "true",
+  "resultMessage": "操作成功",
+  "result": {
+      "categorys": [
+          {
+              "catId": "15126",
+              "parentId": "0",
+              "name": "艺术品",
+              "catClass": "0",
+              "state": "1"
+          },
+          {
+              "catId": "5272",
+              "parentId": "0",
+              "name": "数字内容",
+              "catClass": "0",
+              "state": "1"
+          }
+      ],
+      "totalRows": "5688",
+      "pageNo": "1",
+      "pageSize": "2"
+  }
+}
+二十八、信息推送接口
+1、请求地址: http://{ip}:9010/goods/getMessage
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"type":"1,2,4"}
+5、返回值说明
+{
+    "biz_message_get_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": [
+            {
+                "id": 8467722,
+                "result": {
+                    "pOrder": 1920238472
+                },
+                "time": "2014-09-30 11:51:15",
+                "type": 1
+            },
+            {
+                "id": 8487555,
+                "result": {
+                    "pOrder": 1921588541
+                },
+                "time": "2014-09-30 17:43:00",
+                "type": 1
+            }
+        ]
+    }
+}
+二十九、信息删除接口
+1、请求地址: http://{ip}:9010/goods/deleteMessage
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "id": 114854711}
+5、返回值说明
+{
+    "biz_message_del_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": true
+    }
+}
+二十八、运费查询
+二十九、获取日历
+二十八、查询商品延保接口
+三十、商品搜索接口
+三十一、同类商品查询接口
+
+三十二、校验某订单中某商品是否可以提交售后服务
+1、请求地址: http://{ip}:9010/v1/jDafterSale/isCan
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'jdOrderId'   : 40245152920,               京东订单号（必填）
+'skuId'       : 800032                     京东商品编号（必填）
+5、返回值说明{
+{
+    "biz_afterSale_availableNumberComp_query_response": {
+        "success": true,
+        "resultMessage": null,
+        "resultCode": "0",
+        "result": 99
+    }
+}
+
+三十三、根据订单号、商品编号查询支持的商品返回京东方式
+1、请求地址: http://{ip}:9010/v1/jDafterSale/getJdMethod
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'jdOrderId'   : 40245152920,               京东订单号（必填）
+'skuId'       : 800032                     京东商品编号（必填）
+5、返回值说明{
+{
+    "biz_afterSale_wareReturnJdComp_query_response": {
+        "success": true,
+        "resultMessage": null,
+        "resultCode": "0",
+        "result": [
+            {
+             "code": "7",
+             "name": "客户送货"
+            },
+            {
+              "code": "40",
+              "name": "客户发货"
+            }
+        ]
+    }
+}
+
+三十四、根据订单号、商品编号查询支持的服务类型
+1、请求地址: http://{ip}:9010/v1/jDafterSale/getJdCustomerType
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'jdOrderId'   : 40245152920,               京东订单号（必填）
+'skuId'       : 800032                     京东商品编号（必填）
+5、返回值说明{
+{
+    "biz_afterSale_customerExpectComp_query_response": {
+        "success": true,
+        "resultMessage": null,
+        "resultCode": "0",
+        "result": [
+            {
+              "code": "30",
+              "name": "维修"
+            }
+        ]
+    }
+}
+
+三十五、根据客户账号和订单号分页查询服务单概要信息
+1、请求地址: http://{ip}:9010/v1/jDafterSale/getServiceListPage
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'jdOrderId'   : 40215143944,               京东订单号（必填）
+'pageIndex'   : 1                          页码（必填）
+'pageSize'    : 10                         每页记录数（必填）
+5、返回值说明{
+{
+    "biz_afterSale_serviceListPage_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0",
+        "result": {
+            "serviceInfoList": [
+                {
+                    "afsServiceId": 262367527,                  服务单号
+                    "customerExpect": 10,                       服务类型码   退货(10)、换货(20)、维修(30)
+                    "customerExpectName": "退货",                服务类型名
+                    "afsApplyTime": "2016-11-30 10:56:11",      服务单申请时间
+                    "orderId": 45794690848,                     订单号
+                    "wareId": 102818,                           商品编号
+                    "wareName": "耳机 带线控耳麦 网吧专用 黑色",     商品名称
+                    "afsServiceStep": 21,       服务单环节        申请阶段(10),审核不通过(20),客服审核(21),商家审核(22),京东收货(31),商家收货(32), 京东处理(33),商家处理(34), 用户确认(40),完成(50), 取消 60);
+                    "afsServiceStepName": "客服审核",             服务单环节名称  申请阶段,客服审核,商家审核,京东收货,商家收货, 京东处理,商家处理, 用户确认,完成, 取消;
+                    "cancel": 0                                 是否可取消 0代表否，1代表是
+                },
+                {
+                    "afsServiceId": 262169107,
+                    "customerExpect": 10,
+                    "customerExpectName": "退货",
+                    "afsApplyTime": "2016-11-29 14:56:46",
+                    "orderId": 45794690848,
+                    "wareId": 102818,
+                    "wareName": "声丽（SENICC）ST-808 头戴式电脑耳机 带线控耳麦 网吧专用 黑色",
+                    "afsServiceStep": 60,
+                    "afsServiceStepName": "取消",
+                    "cancel": 0
+                }
+            ],
+            "totalNum": 2,          总记录数
+            "pageSize": 10,         每页记录数
+            "pageNum": 1,           总页数
+            "pageIndex": 1          当前页数
+        },
+        "code": "0"
+    }
+}
+
+
+三十六、根据服务单号查询服务单明细信息
+1、请求地址: http://{ip}:9010/v1/jDafterSale/getServiceDetail
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+  "afsServiceId":100011597,         服务单号（必填）
+  "appendInfoSteps":[1,2,4,5]       获取信息模块
+}
+注：不设置数据表示只获取服务单主信息、商品明细以及客户信息；1、代表增加获取售后地址信息 2、代表增加获取客户发货信息3、代表增加获取退款明细 4、 增加获取跟踪信息 5.获取允许的操作信息
+5、返回值说明{
+{
+    "biz_afterSale_serviceDetailInfo_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0",
+        "result": {
+            "afsServiceId": 100011597,
+            "customerExpect": 10,
+            "afsApplyTime": "2012-09-22 08:25:03",
+            "orderId": 323088097,
+            "isHasInvoice": 1,
+            "isNeedDetectionReport": 0,
+            "isHasPackage": 1,
+            "questionPic": "",
+            "afsServiceStep": 50,
+            "afsServiceStepName": "完成",
+            "approveNotes": "亲爱的客户，很抱歉出现这样的情况，如情况属实并非人为因素造成损坏，我们可以为您办理。请 您将商品全套及发票原件自行返回名鞋库，请您放心，收到货后会尽快为您办理。(我司不支持平邮和到付）\n",
+            "questionDesc": "鞋码大一码",
+            "approvedResult": 33,
+            "approvedResultName": "客户发货",
+            "processResult": 23,
+            "processResultName": "换新",
+            "serviceCustomerInfoDTO": {
+                "customerPin": "啊啊啊嘟嘟脸",
+                "customerName": "董慈应",
+                "customerContactName": "董慈应",
+                "customerTel": null,
+                "customerMobilePhone": "13868757840",
+                "customerEmail": "434435146@qq.com",
+                "customerPostcode": null
+            },
+            "serviceAftersalesAddressInfoDTO": null,
+            "serviceExpressInfoDTO": null,
+            "serviceFinanceDetailInfoDTOs": null,
+            "serviceTrackInfoDTOs": [
+                {
+                    "afsServiceId": 100011597,
+                    "title": "预处理环节",
+                    "context": "您的服务单已申请成功，京东售后审核中",
+                    "createDate": "2012-09-22 08:24:59",
+                    "createName": "系统",
+                    "createPin": "afs system"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "请将商品寄回京东卖家",
+                    "context": "您的服务单已审核客户发货，请将商品寄回京东卖家",
+                    "createDate": "2012-09-22 12:14:03",
+                    "createName": "名鞋库网络科技有限公司",
+                    "createPin": "mxk_007"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "商品京东卖家已收到",
+                    "context": "您的服务单100011597的商品已收到",
+                    "createDate": "2012-09-28 09:43:58",
+                    "createName": "mxk_007",
+                    "createPin": "mxk_007"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "返修换新订单生成",
+                    "context": "您的服务单已生成新订单，订单号332383204",
+                    "createDate": "2012-09-28 16:33:54",
+                    "createName": "jd_mxkyd",
+                    "createPin": "jd_mxkyd"
+                },
+                {
+                    "afsServiceId": 100011597,
+                    "title": "返修换新完成",
+                    "context": "您的服务单100011597京东商城操作已完成，如有疑问请留言反馈，谢谢~",
+                    "createDate": "2012-10-18 20:35:50",
+                    "createName": "jd_mxkyd",
+                    "createPin": "jd_mxkyd"
+                }
+            ],
+            "serviceDetailInfoDTOs": [
+                {
+                    "wareId": 1008253646,
+                    "wareName": "NIKE COURT TOUR 耐克 板鞋 男鞋 458673-101 白+黑 40",
+                    "wareBrand": "Nike耐克",
+                    "afsDetailType": 10,
+                    "wareDescribe": null
+                },
+                {
+                    "wareId": 1008253646,
+                    "wareName": "NIKE COURT TOUR 耐克 板鞋 男鞋 458673-101 白+黑 40",
+                    "wareBrand": "Nike耐克",
+                    "afsDetailType": 30,
+                    "wareDescribe": null
+                }
+            ],
+            "allowOperations": null,
+            "expectPickwareType": null
+        },
+        "code": "0"
+    }
+}
+
+三十七、取消服务单/客户放弃
+1、请求地址: http://{ip}:9010/v1/jDafterSale/cancelService
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+  "serviceIdList":[11,12],           服务单号集合（必填）
+  "approveNotes":"审核意见"           审核意见（必填）
+}
+5、返回值说明{
+{
+    "biz_afterSale_auditCancel_query_response": {
+        "success": true,
+        "resultMessage": null,
+        "resultCode": "0",
+        "result": true
+    }
+}
+
+三十八、填写客户发运信息
+1、请求地址: http://{ip}:9010/v1/jDafterSale/addSendSku
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+"afsServiceId"   :10000,                 服务单号（必填）
+"freightMoney"   :1.00,                  运费（必填）
+"expressCompany" :"发运公司",              发运公司（必填）
+"deliverDate"    :"20171010",            发货日期（必填）
+"expressCode"    :"货运单号"               货运单号（必填）
+5、返回值说明{
+{
+    "biz_afterSale_sendSku_update_response": {
+        "success": false,
+        "resultMessage": "客户填写发运信息失败：根据该服务单号（100013559）不存在原始运费信息获取！",
+        "resultCode": "0",
+        "result": null
+    }
+}
+
+三十九、申请售后服务（退货、换货、维修）
+1、请求地址: http://{ip}:9010/v1/jDafterSale/applyAfterSale
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+    "jdOrderId": 48407489852,                 #订单号(必填)
+    "customerExpect": 30,                     #客户预期（退货(10)、换货(20)、维修(30)）(可为空)
+    "questionDesc": "123",                    #产品问题描述(可为空)
+    "isNeedDetectionReport": true,            #是否需要检测报告(可为空)
+    "questionPic": null,                      #问题描述图片(可为空)
+    "isHasPackage": true,                     #是否有包装(可为空)
+    "packageDesc": 0,                         #包装描述(可为空)
+    "asCustomerDto": {                        #客户信息实体
+        "customerContactName": "yhj",         #联系人(必填)
+        "customerTel": "13901234567",         #联系电话
+        "customerMobilePhone": "13901234567", #手机号(必填)
+        "customerEmail": "123456@163.com",    #Email
+        "customerPostcode": "065201"          #邮编
+    },
+    "asPickwareDto": {                        #取件信息实体，即原商品如何返回京东或者卖家，如果不为上门取件方式，默认设置订单中省市县镇信息
+        "pickwareType": 40,                   #取件方式 4上门取件 7客户送货 40客户发货
+        "pickwareProvince": 1,                #取件省
+        "pickwareCity": 72,                   #取件市
+        "pickwareCounty": 2839,               #取件县
+        "pickwareVillage": 0,                 #取件乡镇
+        "pickwareAddress": "test"             #取件街道地址
+    },
+    "asReturnwareDto": {                      #返件信息实体，即商品如何返回客户手中
+        "returnwareType": 10,                 #返件方式 自营配送(10),第三方配送(20);换、修这两种情况必填（默认值）
+        "returnwareProvince": 2839,           #返件省  换、修这两种情况必填
+        "returnwareCity": 72,                 #返件市
+        "returnwareCounty": 1,                #返件县
+        "returnwareVillage": 0,               #返件乡镇
+        "returnwareAddress": "111"            #返件街道地址 换、修这两种情况必填
+    },
+    "asDetailDto": {                          #申请单明细
+        "skuId": 1545857,                     #商品编号(必填)
+        "skuNum": 1                           #申请数量(必填)
+    }
+}
+5、返回值说明{
+{
+    "biz_afterSale_afsApply_create_response": {
+        "success": true,
+        "resultMessage": "成功",
+        "resultCode": "0",
+        "result": null,
+        "code": "0"
+    }
+}
+
+四十、通过第三方订单号查询京东订单号（反查订单号）
+1、请求地址: http://{ip}:9010/order/getOrderIdByThirdId
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{"thirdOrder": FN01201409031742533443}
+5、返回值说明
+{
+    "biz_order_jdOrderIDByThridOrderID_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": "77532115840",
+        "code": "0"
+    }
+}
+四十一、查询配送信息
+1、请求地址: http://{ip}:9010/order/getOrderTrack
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{ "jdOrderId": 2302507708}
+5、返回值说明
+{
+    "biz_order_orderTrack_query_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": {
+            "orderTrack": [
+                {
+                    "content": "您提交了订单，请等待系统确认",
+                    "msgTime": "2018-07-13 15:30:44",
+                    "operator": "客户"
+                }
+            ],
+            "jdOrderId": 77530530691
+        },
+        "code": "0"
+    }
+}
+四十二、查询余额
+1、请求地址: http://{ip}:9010/balance/getBalance
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{“payType”:4 }
+5、返回值说明
+{
+    "biz_price_balance_get_response": {
+        "success": true,
+        "resultMessage": "",
+        "resultCode": "0000",
+        "result": "500.0000",
+        "code": "0"
+    }
+}
+四十三、获取同类商品
+1、请求地址: http://{ip}:9010/goods/getSimilarGoods
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{“skuId”:"1139788" }
+5、返回值说明
+{
+    "jd_biz_product_getSimilarSku_response": {
+        "success": true,
+        "resultMessage": "操作成功",
+        "resultCode": "0000",
+        "result": [
+            {
+                "dim": 1,
+                "saleName": "规格",
+                "saleAttrList": [
+                    {
+                        "imagePath": "jfs/t6007/70/1746219894/250933/94b799b5/5936708cN84ede564.jpg",
+                        "saleValue": "长粒香大米2.5kg",
+                        "skuIds": [
+                            1833258
+                        ]
+                    },
+                    {
+                        "imagePath": "jfs/t5953/135/1866084114/278269/6aca4c67/59367a27N3940f87e.jpg",
+                        "saleValue": "长粒香大米500g",
+                        "skuIds": [
+                            1139788
+                        ]
+                    },
+                    {
+                        "imagePath": "jfs/t6805/8/2154661812/367702/f306c342/59897525Ndc098f1c.jpg",
+                        "saleValue": "长粒香大米5kg",
+                        "skuIds": [
+                            958912
+                        ]
+                    }
+                ]
+            }
+        ],
+        "code": "0"
+    }
+}
+
+四十四、查询商品延保
+1、请求地址: http://{ip}:9010/goods/yanbaoList
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+{
+  "skuIds":"2147347,5677229,5601427",            商品编号(必填)
+  "province":21,                                 京东省地址编号，必需大于0
+  "city":0,                                      京东市地址编号，不区分市可给0
+  "county":0,                                    京东县地址编号，可以给0
+  "town":0                                       京东镇地址编号，可以给0
+}
+5、返回值说明
+{
+    "biz_product_yanbao_sku_query_response": {
+        "code": "0",
+        "resultCode": "0000",
+        "success": "true",
+        "resultMessage": "操作成功",
+        "result": {
+            "2147347": [                                  #查询sku对应的延保信息列表
+                {
+                    "categoryCode": "VXP-CXTH",           #保障服务类别名称
+                    "detailUrl": "http://sale.jd.com/act/u8CgTZcQS4mf.html",                       #保障服务类别静态页详情url
+                    "displayName": "促销特惠",              #保障服务分类名称
+                    "displayNo": 1,                        #保障服务分类编码
+                    "imgUrl": "/fuwu/jfs/t2698/230/1388474793/1074/f4dd7f21/573d98d0N003f3b6b.png", #保障服务类别显示图标url
+                    "mainSkuId": 2147347,                  #主商品的sku
+                    "fuwuSkuDetailList": [                 #保障服务商品详情列表
+                        {
+                            "bindSkuId": 7944861,           #保障服务skuId 
+                            "bindSkuName": "全保修1年",      #保障服务sku名称（6字内）
+                            "favor": false,                 #是否是优惠保障服务
+                            "price": 199,                   #保障服务sku价格
+                            "sortIndex": 3,                 #显示排序
+                            "tip": "性能/意外故障免费维修"      #保障服务说明提示语（20字内）
+                        },
+                        {
+                            "bindSkuId": 7731962,
+                            "bindSkuName": "全保修2年",
+                            "favor": false,
+                            "price": 289,
+                            "sortIndex": 4,
+                            "tip": "性能/意外故障免费维修"
+                        },
+                        {
+                            "bindSkuId": 7731952,
+                            "bindSkuName": "全保修3年",
+                            "favor": false,
+                            "price": 379,
+                            "sortIndex": 5,
+                            "tip": "性能/意外故障免费维修"
+                        }
+                    ]
+                },
+                {
+                    "categoryCode": "VXP-YCBX",
+                    "detailUrl": "http://sale.jd.com/act/s7oXRvFNyVl.html",
+                    "displayName": "延长保修",
+                    "displayNo": 2,
+                    "imgUrl": "/fuwu/jfs/t2623/112/1419031929/1227/e5dadbca/573d95abNc672af4d.png",
+                    "mainSkuId": 2147347,
+                    "fuwuSkuDetailList": [
+                        {
+                            "bindSkuId": 7945105,
+                            "bindSkuName": "延保至3年",
+                            "favor": false,
+                            "price": 129,
+                            "sortIndex": 3,
+                            "tip": "厂保内性能故障免费维修"
+                        },
+                        {
+                            "bindSkuId": 7945107,
+                            "bindSkuName": "延保至4年",
+                            "favor": false,
+                            "price": 189,
+                            "sortIndex": 4,
+                            "tip": "厂保内性能故障免费维修"
+                        },
+                        {
+                            "bindSkuId": 7944895,
+                            "bindSkuName": "延保至5年",
+                            "favor": false,
+                            "price": 269,
+                            "sortIndex": 5,
+                            "tip": "厂保内性能故障免费维修"
+                        }
+                    ]
+                },
+                {
+                    "categoryCode": "VXP-FWBZ",
+                    "detailUrl": "http://sale.jd.com/act/3vn6yrwXg0.html",
+                    "displayName": "服务保障",
+                    "displayNo": 3,
+                    "imgUrl": "/fuwu/jfs/t2896/141/1400713660/1119/b6e6fbf5/573d979cNcc2483e4.png",
+                    "mainSkuId": 2147347,
+                    "fuwuSkuDetailList": [
+                        {
+                            "bindSkuId": 7732004,
+                            "bindSkuName": "屏碎保1年",
+                            "favor": false,
+                            "price": 49,
+                            "sortIndex": 3,
+                            "tip": "屏碎故障免费维修"
+                        },
+                        {
+                            "bindSkuId": 7945117,
+                            "bindSkuName": "屏碎保2年",
+                            "favor": false,
+                            "price": 74,
+                            "sortIndex": 4,
+                            "tip": "屏碎故障免费维修"
+                        }
+                    ]
+                }
+            ],
+            "5677229": [
+                {
+                    "categoryCode": "VXP-FWBZ",
+                    "detailUrl": "http://sale.jd.com/act/3vn6yrwXg0.html",
+                    "displayName": "服务保障",
+                    "displayNo": 3,
+                    "imgUrl": "/fuwu/jfs/t2896/141/1400713660/1119/b6e6fbf5/573d979cNcc2483e4.png",
+                    "mainSkuId": 5677229,
+                    "fuwuSkuDetailList": [
+                        {
+                            "bindSkuId": 2958006,
+                            "bindSkuName": "企悦上门安装",
+                            "favor": false,
+                            "price": 99,
+                            "sortIndex": 1,
+                            "tip": "为您提供办公外设的上门安装软硬件服务"
+                        }
+                    ]
+                },
+                {
+                    "categoryCode": "VXP-YWBH",
+                    "detailUrl": "http://sale.jd.com/act/yTmRskIACGlQotr1.html",
+                    "displayName": "意外保护",
+                    "displayNo": 5,
+                    "imgUrl": "/fuwu/jfs/t2650/94/1366712706/1313/a055eace/573d9679Ne0c98383.png",
+                    "mainSkuId": 5677229,
+                    "fuwuSkuDetailList": [
+                        {
+                            "bindSkuId": 2958034,
+                            "bindSkuName": "企悦上门检修",
+                            "favor": false,
+                            "price": 119,
+                            "sortIndex": 2,
+                            "tip": "为您提供办公外设的上门检测、调试服务"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

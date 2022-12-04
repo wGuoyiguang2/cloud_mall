@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="col-sm-8">
+        <div class="bbc"/>
+    </div>
+
+<style>
+    .bbc{margin:10px 0px 0px 10px; position: absolute; }
+    .abc{
+        float:left;
+        border:1px solid #333;
+        margin-right:-1px;
+        margin-bottom:-1px;
+        overflow:hidden;
+        position: absolute;
+        background:#eee;
+        background-image:
+                linear-gradient(45deg,
+                rgba(0,0,0,.25)25%,transparent 0,
+                transparent 75%,rgba(0,0,0,.25)0),
+                linear-gradient(45deg,
+                rgba(0,0,0,.25)25%,transparent 0,
+                transparent 75%,rgba(0,0,0,.25)0);
+        background-position:0 0,15px 15px;
+        background-size: 30px 30px
+    }
+</style>
+    <div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    $(function () {
+        var layout = $.parseJSON([[${template.layout}]]);
+        var widthCell = 15;
+        var heightCell = 15;
+        for(i=0;i<layout.layoutdetails.length;i++){
+            var layouts  = layout.layoutsize.split("*");
+            var item = layout.layoutdetails[i];
+
+            var html = $('.bbc').html();
+            var x1 =item.x*widthCell;
+            var y1 =item.y*heightCell;
+            var w1 = item.w*widthCell;
+            var h1 = item.h*heightCell;
+
+            var a11 = "<div class='abc' style='width:"+w1+"px;height:"+h1+"px;left:"+x1+"px;top:"+y1+"px;float:left;'></div>";
+
+            $('.bbc').html(html + a11);
+        }
+    });
+</script>
+</body>
+</html>

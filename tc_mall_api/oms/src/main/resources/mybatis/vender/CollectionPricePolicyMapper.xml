@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.CollectionPricePolicyDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCollection">
+		select `id`, `venderid`, `policyid`,`collectionid`,`ctime`, `utime` from t_vender_price_collection where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCollection">
+		select  `id`, `venderid`,  `policyid`,`collectionid`,`ctime`, `utime` from t_vender_price_collection
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderid != null and venderid != ''"> and venderid = #{venderid} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+			<if test="collectionid != null and collectionid != ''"> and collectionid = #{collectionid} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_price_collection
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderid != null and venderid != ''"> and venderid = #{venderid} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+			<if test="collectionid != null and collectionid != ''"> and collectionid = #{collectionid} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.PriceCollection"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_price_collection
+		(
+		`venderid`,
+		`policyid`,
+		`collectionid`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderid},
+		#{policyid},
+		#{collectionid},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<delete id="remove">
+		delete from t_vender_price_collection where id = #{id}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_price_collection
+		<where>
+			<if test="ids != null and ids.size>0"> and id in
+				<foreach item="id" collection="ids" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="policyid != null and policyid != ''"> and policyid = #{policyid} </if>
+		</where>
+	</delete>
+
+	<select id="getByCollectionId" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PricePolicy">
+		select
+			a.id as id,
+			a.venderid as venderId,
+			a.name as name,
+			a.type as type,
+			a.percent as percent,
+			a.status as status,
+			a.ctime as ctime,
+			a.utime as utime
+		from
+			t_vender_price_policy a
+		left join t_vender_price_collection b on a.id = b.policyid
+		where a.type=2 and a.status=1 and b.collectionid = #{collectionId} limit 1
+	</select>
+</mapper>

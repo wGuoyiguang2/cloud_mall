@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.HelpCenterInfoDao">
+    <select id="listAllType" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HelpCenterInfoVo">
+        select id as typeId,title as typeName from t_assistance where venderid=#{venderId} order by utime desc
+    </select>
+    <select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ExplainBean">
+		select `id`, `intro` from t_explain where aid = #{id} order by `position` asc
+	</select>
+
+    <delete id="delete">
+		delete from t_explain where aid = #{id}
+	</delete>
+
+    <update id="update" parameterType="java.util.HashMap">
+        update t_explain
+        <set>
+            <if test="intro != null">`intro` = #{intro}, </if>
+            `utime`=NOW()
+        </set>
+        where aid=#{id}
+    </update>
+
+    <insert id="add" parameterType="java.util.HashMap">
+        insert into t_explain
+        (
+          `aid`,
+          `intro`,
+          `ctime`,
+          `utime`
+        )
+        values
+        (
+          #{id},
+          #{intro},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+
+    <select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HelpCenterInfoVo">
+        SELECT
+        a.title AS typeName,
+        e.intro AS QA,
+        a.id AS typeId,
+        e.id AS QAId,
+        a.position as typePosition,
+        a.status as status
+        FROM
+        t_assistance a
+        LEFT JOIN t_explain e ON e.aid = a.id
+        <where>
+            venderid = #{venderId}
+            <if test="id != null and id != ''"> and e.id = #{id} </if>
+            <if test="aid != null and aid != ''"> and e.aid = #{aid} </if>
+            <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
+            <if test="intro != null and intro != ''"> and e.intro like CONCAT('%',#{intro},'%') </if>
+        </where>
+        order by a.utime desc,e.utime desc
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+    </select>
+    <select id="count" resultType="int">
+        select count(1) from t_explain e
+        LEFT JOIN t_assistance a ON e.aid = a.id
+        <where>
+            a.`status` = 1
+            and venderid = #{venderId}
+            <if test="id != null and id != ''"> and e.id = #{id} </if>
+            <if test="aid != null and aid != ''"> and e.aid = #{aid} </if>
+            <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
+            <if test="intro != null and intro != ''"> and e.intro like CONCAT('%',#{intro},'%') </if>
+        </where>
+    </select>
+    <select id="getQAAndTypeById" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HelpCenterInfoVo">
+        SELECT
+        e.intro AS QA,
+        e.id AS QAId,
+        a.id AS typeId,
+        a.title AS typeName,
+        e.position as position,
+        a.position as typePosition,
+        a.status as status
+        FROM
+        t_explain e
+        LEFT JOIN t_assistance a ON e.aid = a.id
+        WHERE
+        e.id = #{id}
+    </select>
+    <update id="updateQA" parameterType="java.util.HashMap">
+        update t_explain e left join t_assistance a on e.aid=a.id
+        <set>
+            <if test="QA != null and QA!=''">e.intro = #{QA},</if>
+            <if test="typeName != null and typeName!=''">a.title = #{typeName},</if>
+            <if test="typePosition != null and typePosition!=''">a.position = #{typePosition},</if>
+            <if test="status != null and status!=''">a.status = #{status},</if>
+            e.utime=NOW(),
+            a.utime=NOW()
+        </set>
+        where e.id=#{QAId}
+    </update>
+    <delete id="deleteQAAndTypeByTypeId">
+        delete a,e from t_explain e INNER JOIN t_assistance a on a.id=e.aid where e.id=#{id}
+    </delete>
+    <delete id="deleteTypeById">
+        delete from t_assistance where id=#{id}
+    </delete>
+    <insert id="addQA" parameterType="java.util.HashMap">
+        insert into t_explain
+        (
+        `aid`,
+        `intro`,
+        `ctime`,
+        `utime`,
+        `position`
+        )
+        values
+        (
+        #{typeId},
+        #{QA},
+        NOW(),
+        NOW(),
+        #{position}
+        )
+    </insert>
+    <insert id="addType" parameterType="java.util.HashMap">
+        insert into t_assistance
+        (
+        `venderid`,
+        `title`,
+        `ctime`,
+        `utime`,
+        `position`,
+        `status`
+        )
+        values
+        (
+        #{venderid},
+        #{title},
+        NOW(),
+        NOW(),
+        #{position},
+        #{status}
+        )
+    </insert>
+    <select id="getTypeById"  resultType="com.cibnvideo.oms.tcmallcustomer.bean.HelpCenterInfoVo">
+        select
+        id AS typeId,
+        title AS typeName,
+        position as typePosition,
+        status as status
+        from t_assistance where id=#{typeId}
+    </select>
+</mapper>

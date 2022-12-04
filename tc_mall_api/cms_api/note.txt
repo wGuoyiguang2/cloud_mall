@@ -1,0 +1,1087 @@
+一、获取分类列表
+1、请求地址: http://{ip}:9003/v1/product/cate/list
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'catId'       :'899'                       分类ID （默认为空）
+'parentId'    :''                          父分类ID（默认为空,catId为一级分类时 父分类id为0）
+'catClass'    :'2'                         分类类型 0:一级分类 1:二级分类 2:三级分类 （必填）
+5、返回值说明
+{
+    error: 0,
+    msg: "ok",
+    data: {
+        totalRows: 1,
+        data: [
+            {
+            catId: 899,
+            parentId: 752,
+            name: "面包机",
+            catClass: 2,
+            state: 1,
+            icon: "",
+            picture: "http://cdn.qiniu.cibnvideo.cibntv.net/03/20180802/737/752/899/737_752_899.png",
+            background: ""
+            }
+        ]
+    }
+}
+
+二、根据分类获取商品列表
+1、请求地址: http://{ip}:9003/v1/product/list
+2、请求方式  get
+3、是否需要登陆 否
+4、请求参数
+'venderId'    :56                            venderId（必填）
+'brandName'   :'利众'                         品牌（默认为""）
+'cat0'        :'0'                           一级分类id（默认为空）
+'cat1'        :'0'                           二级分类id（默认为空）
+'cat2'        :'0'                           三级分类id（默认为空）
+'pageNum'     :'0'                           当前页（默认为空）
+'pageSize'    :'10'                          每页条数（默认为空）
+'isNew'       : 1                            按新品（0升序|1降序）
+'isSales'     : 1                            按销量（0升序|1降序）
+'isPrice'     : 1                            按价格（0升序|1降序）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "totalRows": 9437,                  #商品总行数
+        "dataList": [                       #商品列表
+            {
+                "sku": 5838174,
+                "name": "京东叮咚(DingDong) 2代人工智能音箱新旗舰 迷你蓝牙/WIFI音响 海量应用 智能家居《正义联盟》-蝙蝠侠",
+                "brandName": "DingDong",
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t12349/258/780539651/292856/7d2dd7ce/5a141179N239604c8.jpg",
+                "jdPrice": 999,
+                "price": 899
+            },
+            {
+                "sku": 5838174,
+                "name": "京东叮咚(DingDong) 2代人工智能音箱新旗舰 迷你蓝牙/WIFI音响 海量应用 智能家居《正义联盟》-蝙蝠侠",
+                "brandName": "DingDong",
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t12349/258/780539651/292856/7d2dd7ce/5a141179N239604c8.jpg",
+                "jdPrice": 999,
+                "price": 899
+            }
+        ],
+        "brandList": [                         #品牌列表
+            "吉列（Gillette）",
+            "航嘉（Huntkey）",
+            "维氏（VICTORINOX）",
+            "森海塞尔（Sennheiser）",
+            "Canon",
+            "尼康（Nikon）",
+            "TCL",
+            "美居客"
+        ]
+    }
+}
+
+三、商品详情
+移动端：
+1、请求地址: http://{ip}:9003/v1/product/detailMobile
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'  :56                            venderId（必填）
+'sku'       :'6082327'                     sku id（必填）
+5、返回值说明
+{
+error: 0,
+msg: "ok",
+data: {
+    sku: 6082321,                          #商品编号
+    name: "利众 襄软米10kg",                 #商品名称
+    brandName: "利众",                      #品牌名称
+    category: "1320;1584;2675",            #商品分类（一二三级）
+    imagePath: "http://img13.360buyimg.com/n0/jfs/t12373/19/2519759157/306658/b3b7346e/5a40d2e8N01fbb817.jpg",
+    videoPath:"",                          #视频地址
+    jdPrice: 69.9,                         #京东价
+    price: 59.1,                           #零售价
+    state: 0,                              #是否可用 0:下架 1:上架
+    cat0:670,
+    cat1:716,
+    cat2:720,
+    weight:"8.21",                         #重量
+    productArea:"菲律宾",                   #产地
+    upc:"5677229",                         #条形号
+    saleUnit:"台",                         #销售单位
+    wareQD:"主机 × 1、电源线 × 1、数据线 × 1 × 1、标配青色墨水 × 1", #商品清单
+    introduction:"<div style=\"width:75 ></a8/70380/47a9a376/59faad52Nf41299b2.jpg\" />"  #pc端商品简介
+    appintroduce:"<div style=\"width:75 ></a8/70380/47a9a376/59faad52Nf41299b2.jpg\" />"  #app端商品简介
+    param:"<table cellpadding=\"0\" cellspacing=\"（出纸托盘关闭时）>重量</table>",           #商品参数
+    result: "<div id='zbViewMo268 animat</div> </div><!-- 2017-12-25 02:04:15 --> ",      #移动商品介绍
+    jsContent: "<script></script>",        #js内容
+    cssContenble th,.ssd-ay:blay:block; overflow:hidden</style>",     #CSS内容
+    htmlContent: null                      #html内容
+   }
+}
+
+pc端:
+1、请求地址: http://{ip}:9003/v1/product/detailPc
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'  :56                            venderId（必填）
+'sku'       :'6082327'                     sku id（必填）
+5、返回值说明
+{
+error: 0,
+msg: "ok",
+data: {
+    sku: 6082321,                          #商品编号
+    name: "利众 襄软米10kg",                 #商品名称
+    brandName: "利众",                      #品牌名称
+    category: "1320;1584;2675",            #商品分类（一二三级）
+    imagePath: "http://img13.360buyimg.com/n0/jfs/t12373/19/2519759157/306658/b3b7346e/5a40d2e8N01fbb817.jpg",
+    videoPath:"",                          #视频地址
+    jdPrice: 69.9,                         #京东价
+    price: 59.1,                           #零售价
+    state: 0,                              #是否可用 0:下架 1:上架
+    cat0:670,                              #一级分类id
+    cat1:716,                              #二级分类id
+    cat2:720,                              #三级分类id
+    weight:"8.21",                         #重量
+    productArea:"菲律宾",                   #产地
+    upc:"5677229",                         #条形号
+    saleUnit:"台",                          #销售单位
+    wareQD:"主机 × 1、电源线 × 1、数据线 × 1 × 1、标配青色墨水 × 1", #商品清单
+    introduction:"<div style=\"width:75 ></a8/70380/47a9a376/59faad52Nf41299b2.jpg\" />"  #pc端商品简介
+    appintroduce:"<div style=\"width:75 ></a8/70380/47a9a376/59faad52Nf41299b2.jpg\" />"  #app端商品简介
+    param:"<table cellpadding=\"0\" cellspacing=\"（出纸托盘关闭时）>重量</table>",           #商品参数
+    propCode: "<table 产品标准<td class="tdTitle">是否转基因</td><td>非转基因食品</td></tr></table>",   #规格参数
+    service: null,                                                    #服务
+    wReadMe: null,                                                    #readme
+    shouhou: "*",                                                     #售后
+    wdis: "<div id='zbViewModulesH' value='3600'></div><input </div>  #商品详情
+    wareQD: "利众 襄软米10kg*1",                                        #商品清单
+    jsContent: "<script></script>",        #js内容
+    cssContenble th,.ssd-ay:blay:block; overflow:hidden</style>",     #CSS内容
+    htmlContent: null                      #html内容
+    }
+}
+
+四、首页推荐位
+1、请求地址: http://{ip}:9003/v1/home/recommend
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'      : 1                    大客户 id（必填）
+'pageSize'      : 10                   每页条数(非必填，默认一页10条)
+'pageNum'       : 1                    页数(不填默认返回第一页)
+5、返回值说明
+{
+	error: 0,
+	msg: "ok",
+	data: [{
+			title: "精品推荐",
+			position: 1,
+			layoutSize: "6*3",
+			showTitle: false,
+			dataList: [{
+					name: "iPhone X",
+					subName: "iPhone x",
+					image: "https://www.enterdesk.com/download/15341-133025/",
+					action: "OPEN_DETAIL",
+					layout: "1,1,1,1",
+					actionParam: {
+						name: "iphone",
+						id: "2"
+					}
+				},
+				{
+					name: "MacBook",
+					subName: "MacBook",
+					image: "https://www.douban.com/photos/photo/2525886526/#image",
+					action: "OPEN_DETAIL",
+					layout: "1,2,1,1",
+					actionParam: {
+						name: "MacBook",
+						id: "3"
+					}
+				},
+				{
+					name: "MacBook Air",
+					subName: "MacBook Air",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525886528.webp",
+					action: "OPEN_DETAIL",
+					layout: "1,3,1,1",
+					actionParam: {
+						name: "MacBook Air",
+						id: "4"
+					}
+				},
+				{
+					name: "MacBook Pro",
+					subName: "MacBook Pro",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525886528.webp",
+					action: "OPEN_DETAIL",
+					layout: "1,4,1,1",
+					actionParam: {
+						name: "MacBook Pro",
+						id: "5"
+					}
+				},
+				{
+					name: "Mac",
+					subName: "Mac",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525833917.webp",
+					action: "OPEN_DETAIL",
+					layout: "1,5,1,1",
+					actionParam: {
+						name: "Mac",
+						id: "6"
+					}
+				}
+			]
+		},
+		{
+			title: "分类推荐",
+			position: 2,
+			layoutSize: "6*1",
+			showTitle: false,
+			dataList: [{
+					name: "搜索",
+					subName: "搜索",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,1,1,1",
+					actionParam: {
+						name: "搜索",
+						url: "http://www.baidu.com"
+					}
+				},
+				{
+					name: "全部分类",
+					subName: "全部分类",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,2,1,1",
+					actionParam: {
+						name: "全部分类",
+						url: "http://www.sina.com"
+					}
+				},
+				{
+					name: "居家生活",
+					subName: "居家生活",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,3,1,1",
+					actionParam: {
+						name: "全部分类",
+						url: "http://www.tencent.com"
+					}
+				},
+				{
+					name: "厨房用品",
+					subName: "厨房用品",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,4,1,1",
+					actionParam: {
+						name: "厨房用品",
+						url: "http://www.alibaba.com"
+					}
+				},
+				{
+					name: "电器数码",
+					subName: "电器数码",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,5,1,1",
+					actionParam: {
+						name: "电器数码",
+						url: "http://www.mi.com"
+					}
+				},
+				{
+					name: "美妆个护",
+					subName: "美妆个护",
+					image: "https://img1.doubanio.com/view/photo/l/public/p2525566177.webp",
+					action: "OPEN_CATEGORY",
+					layout: "1,6,1,1",
+					actionParam: {
+						name: "美妆个护",
+						url: "http://www.jd.com"
+					}
+				}
+			]
+		},
+		{
+			title: "限时推荐",
+			position: 3,
+			layoutSize: "4*2",
+			showTitle: true,
+			dataList: []
+		}
+	]
+}
+
+五、关于我们
+1、请求地址: http://{ip}:9003/v1/center/contact
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'       :1                    大客户 id（必填）
+5、返回值说明
+{
+	error: 0,
+	msg: "ok",
+	data: {
+		url: "http://www.ali.com",
+		hotline: "654355261"
+	}
+}
+
+六、帮助中心列表
+1、请求地址: http://{ip}:9003/v1/center/assist/list
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'       :1                    大客户 id（必填）
+5、返回值说明
+{
+  error: 0,
+  msg: "ok",
+  data: {
+    introList: [
+      {
+        "id": 4,
+        "intro": "支付问题１"
+      },
+      {
+        "id": 8,
+        "intro": "支付问题２"
+      }
+    ],
+    dataList: [
+      {
+        title: "支付问题",
+        id: 17
+      },
+      {
+        title: "物流问题",
+        id: 18
+      }
+    ]
+  }
+}
+
+七、帮助中心详情
+1、请求地址: http://{ip}:9003/v1/center/assist/detail
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'assistId'       :1                    帮助中心列表id（必填）
+5、返回值说明
+{
+  error: 0,
+  msg: "ok",
+  data: [
+    {
+      "id": 1,
+      "intro": "hello world"
+    },
+    {
+      "id": 5,
+      "intro": "hello world"
+    },
+    {
+      "id": 9,
+      "intro": "hello world"
+    }
+  ]
+}
+
+八、根据一级分类获取二三级分类
+1、请求地址: http://{ip}:9003/v1/product/cate1/list
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'catId'       :'15248'                     分类ID（必填）
+'state'       :'1'                         是否可用 0:不可用 1:可用 （默认为空）
+5、返回值说明
+{
+    error: 0,
+    msg: "ok",
+    data: [
+        {
+            catId: 15250,
+            parentId: 15248,
+            name: "居家布艺",
+            catClass: 1,
+            state: 1,
+            list: [
+                {
+                  "catId": 15286,
+                  "parentId": 15250,
+                  "name": "窗帘/窗纱",
+                  "catClass": 2,
+                  "state": 1,
+                  "icon": "",
+                  "picture": "",
+                  "background": ""
+                },
+                {
+                  "catId": 15285,
+                  "parentId": 15250,
+                  "name": "沙发垫套/椅垫",
+                  "catClass": 2,
+                  "state": 1,
+                  "icon": "",
+                  "picture": "",
+                  "background": ""
+                },
+                {
+                  "catId": 15284,
+                  "parentId": 15250,
+                  "name": "桌布/罩件",
+                  "catClass": 2,
+                  "state": 1,
+                  "icon": "",
+                  "picture": "",
+                  "background": ""
+                },
+                {
+                  "catId": 15283,
+                  "parentId": 15250,
+                  "name": "抱枕靠垫",
+                  "catClass": 2,
+                  "state": 1,
+                  "icon": "",
+                  "picture": "http://cdn.qiniu.cibnvideo.cibntv.net/03/20180802/15248/15250/15283/15248_15250_15283.png",
+                  "background": ""
+                }
+            ]
+        }
+    ]
+}
+九、搜索接口
+1、请求地址: http://{ip}:9003/v1/search/product
+注：mac为用户mac地址，venderId为客户id
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+    "mac1":""
+    "keyword": "苹果",                #关键字，非必填,如果关键字是中文需要进行encodeURIComponent编码
+    "cat0": 1,                        #一级分类id，非必填
+    "cat1": 2,                        #二级分类id，非必填
+    "cat2": 3,                        #三级分类id，非必填
+    "brands": "",                     #品牌id，多个中间用逗号隔开，非必填
+    "pageNum": 1,                     #当前页，非必填
+    "pageSize": 10                    #每页显示条数，非必填
+    "venderId":"56"                   #客户id，必填
+    "isNew": 1                        #是否新品排序，非必填,0升序|1降序
+    "isSales": 1                      #是否销量排序，非必填,0升序|1降序
+    "isPrice": 1                      #是否价格排序，非必填,0升序|1降序
+5、返回示例
+{
+    "error": 0,
+    "msg": "OK",
+    "data": {
+        "dataList": [
+            {
+                "sku": 844719,
+                "name": "http://img13.360buyimg.com/n0/佳洁士(Crest) 茶洁牙膏90g(天然茶叶精华 高效防蛀)",
+                "jdPrice": 3.9,
+                "price": 2.6,
+                "imagePath": "http://img13.360buyimg.com/n0/g12/M00/03/1E/rBEQYFGLdN8IAAAAAAGEyKNeCLsAAAxkQH2z3cAAYTg328.jpg",
+                "brandName": "佳洁士（CREST）",
+                "ctime": 1533106401000
+            },
+            {
+                "sku": 1326523,
+                "name": "http://img13.360buyimg.com/n0/云南白药 牙膏 180g×3 （留兰香型）新老包装随机发货",
+                "jdPrice": 84.9,
+                "price": 72.8,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t2962/77/813935917/193319/3243d0dc/57690cd1N8cb60918.jpg",
+                "brandName": "云南白药（YUNNANBAIYAO）",
+                "ctime": 1532933601000
+            },
+            {
+                "sku": 844715,
+                "name": "http://img13.360buyimg.com/n0/佳洁士(Crest) 盐白牙膏(清凉薄荷香型)90g(天然盐 洁白牙齿 防蛀)（新旧包装随机发货）",
+                "jdPrice": 3.9,
+                "price": 2.6,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t4585/254/1454074180/210568/ecc6e4cf/59128a0bN1c3100bf.jpg",
+                "brandName": "佳洁士（CREST）",
+                "ctime": 1532069601000
+            },
+            {
+                "sku": 312598,
+                "name": "http://img13.360buyimg.com/n0/云南白药 牙膏 120g （留兰香型）新老包装随机发货",
+                "jdPrice": 21.6,
+                "price": 21.6,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t19828/68/2364669134/203499/9555b313/5b3e0381N6be85665.jpg",
+                "brandName": "云南白药（YUNNANBAIYAO）",
+                "ctime": 1531119201000
+            },
+            {
+                "sku": 312606,
+                "name": "http://img13.360buyimg.com/n0/云南白药 牙膏 180g （留兰香型）新老包装随机发货",
+                "jdPrice": 28.3,
+                "price": 25.8,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t21259/200/1899531527/202326/30dc87cc/5b3c8be7Ne166cc9d.jpg",
+                "brandName": "云南白药（YUNNANBAIYAO）",
+                "ctime": 1531032801000
+            },
+            {
+                "sku": 844725,
+                "name": "http://img13.360buyimg.com/n0/佳洁士(Crest) 珍珠盐白牙膏90g(洁白清新+自然光泽)（新老包装随机发货）",
+                "jdPrice": 5.9,
+                "price": 4,
+                "imagePath": "http://img13.360buyimg.com/n0/g10/M00/18/0B/rBEQWFF2ICoIAAAAAAFQ0Sb6fVQAAEwcwEIfGIAAVDp075.jpg",
+                "brandName": "佳洁士（CREST）",
+                "ctime": 1530946401000
+            },
+            {
+                "sku": 851474,
+                "name": "http://img13.360buyimg.com/n0/黑人（DARLIE）双重薄荷清新口气牙膏225g 防蛀固齿防口气  (新老包装随机发放）",
+                "jdPrice": 16.9,
+                "price": 13.1,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t19759/285/883397460/271458/ae44ce1e/5aaf2915N18d28160.jpg",
+                "brandName": "黑人（DARLIE）",
+                "ctime": 1530860001000
+            },
+            {
+                "sku": 1068549,
+                "name": "http://img13.360buyimg.com/n0/云南白药 环保牙膏4支装 益生菌 (晨露100g×2+益优冰柠105g+益优薄荷105g+环保购物袋)新老包装随机发货",
+                "jdPrice": 69,
+                "price": 63.5,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t2893/252/3463327248/275894/4eb45960/578f13a2N8395e163.jpg",
+                "brandName": "云南白药（YUNNANBAIYAO）",
+                "ctime": 1530773601000
+            },
+            {
+                "sku": 1099521,
+                "name": "http://img13.360buyimg.com/n0/高露洁（Colgate）360°新品 双锌备长炭深洁 牙膏200g（冬青薄荷，清新口气）",
+                "jdPrice": 23.9,
+                "price": 13.1,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t20572/317/1913162039/130765/feec1269/5b3dc716N2e3a7bf0.jpg",
+                "brandName": "高露洁（Colgate）",
+                "ctime": 1530687201000
+            },
+            {
+                "sku": 1237316,
+                "name": "http://img13.360buyimg.com/n0/黑人（DARLIE）超白美白牙膏 亮白清新有效防蛀（竹炭深洁190g）（新老包装随机发放）",
+                "jdPrice": 20.9,
+                "price": 12.1,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t7333/328/4540028232/277206/bfdee340/5a014db8Nb7a0a892.jpg",
+                "brandName": "黑人（DARLIE）",
+                "ctime": 1530600801000
+            }
+        ],
+        "brandList": [
+            "云南白药（YUNNANBAIYAO）",
+            "舒适达",
+            "佳洁士（Crest）",
+            "狮王（Lion）",
+            "舒客",
+            "黑人（DARLIE）",
+            "高露洁（Colgate）",
+            "LG竹盐",
+            "花王（KAO）",
+            "皓乐齿（Ora2）",
+            "严迪（YANDY）",
+            "中华（ZHONGHUA）"
+        ],
+        "totalRows": 10
+    }
+}
+
+十、单独根据分类获取品牌列表
+1、请求地址: http://{ip}:9003/v1/product/brandlist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'cat0'   :''                        一级分类（可为空）
+'cat1'   :''  	                    二级分类（可为空）
+'cat2'   :''                        三级分类（可为空）
+注：按照最高级分类取前50个品牌
+5、返回示例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        "吉列（Gillette）",           品牌名称
+        "航嘉（Huntkey）",
+        "维氏（VICTORINOX）",
+        "森海塞尔（Sennheiser）",
+        "Canon",
+        "尼康（Nikon）",
+        "TCL",
+        "亚都（YADU）",
+        "佳能（Canon）",
+        "南孚",
+        "百龄（Smiling）",
+        "中诺（CHINO-E）",
+        "美居客"
+    ]
+}
+
+十一、根据商品集合id获取商品列表
+1、请求地址: http://{ip}:9003/v1/product/setlist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId' :56                        venderId（必填）
+'id'       : 1                       #商品集合id（必填）
+'brandName': "利众",                   #品牌名称（可为空）
+'pageSize' :1                         #(可为空)
+'pageNum'  :10                        #(可为空)
+注：按照最高级分类取前50个品牌
+5、返回示例
+{
+    "error":0,
+    "msg":"ok",
+    "data":{
+        "totalRows":673,
+        "dataList":[
+            {
+                "sku":100001048521,
+                "name":"【京选尚品X佳明】佳明 GARMIN instinct本能系列 GPS蓝牙多功能跑步智能运动表智能心率防水军规表 冻原白",
+                "brandName":"佳明（GARMIN）",
+                "jdPrice":2280,
+                "price":2322.8,
+                "imagePath":"http://img13.360bu.com/n0/jfs/t1/4756/20/10965/215463/5bcd4316E3b195725/489e16ad6.jpg",
+                "state":1
+            }
+        ],
+        "productcollection":{
+            "id":2,
+            "venderId":56,
+            "name":"likaitest",
+            "describe":"test",
+            "imagePath":"http://172.16.200.49:9009/fileupload/56/1531480363820_631132897.jpg",
+            "status":1,
+            "ctime":"2018-07-13 14:01:02",
+            "utime":"2018-12-12 11:15:18"
+        },
+        "brandList":[
+            "全部",
+            "美的（Midea）",
+            "海尔（Haier）"
+        ]
+    }
+}
+
+
+
+十二、查询同类商品
+1、请求地址: http://{ip}:9003/v1/product/similarGoods
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+''sku'   :'1139788'     商品编号（必填）
+注：按照最高级分类取前50个品牌
+5、返回示例
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "dim": "1",                                   #维度
+            "saleName": "规格",                            #销售名称
+            "saleAttrList": [                             #商品销售标签
+                {
+                    "imagePath": "jfs/t6007/70/1746219894/250933/94b799b5/5936708cN84ede564.jpg",  #标签图片地址
+                    "saleValue": "长粒香大米2.5kg",         #标签名称
+                    "skuIds": [
+                        "1833258"                         #当前标签下的同类商品skuId
+                    ]
+                },
+                {
+                    "imagePath": "jfs/t5953/135/1866084114/278269/6aca4c67/59367a27N3940f87e.jpg",
+                    "saleValue": "长粒香大米500g",
+                    "skuIds": [
+                        "1139788"
+                    ]
+                },
+                {
+                    "imagePath": "jfs/t6805/8/2154661812/367702/f306c342/59897525Ndc098f1c.jpg",
+                    "saleValue": "长粒香大米5kg",
+                    "skuIds": [
+                        "958912"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+十三、获取搜索二维码跳转地址
+1、请求地址: http://{ip}:9003/v1/search/qrcode
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数 无
+5、返回示例
+{"error":0,"msg":"ok","data":"www.baidu.com?hqtc=12342342"}
+注：hqtc的值为用户cookie
+
+十四、往期推荐
+1、请求地址: http://{ip}:9003/v1/home/recommendhistory
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'venderId'      : 56                   大客户id(必填)
+'startTime'     : '2018-08-03'         起止时间(可为空)
+'pageSize'      : 3                    每页条数(非必填，默认一页配置条数)
+5、返回示例
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    {
+      "time": "2018-08-06",
+      "list": [
+        {
+          "sku": 5340538,
+          "name": "小米（MI）小米运动蓝牙耳机mini 黑色 无线蓝牙入耳式运动耳机",
+          "brandName": "小米（MI）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t6121/24/8341569586/92095/cab871f5/5987d659N741a0fd9.jpg",
+          "jdPrice": 169.00,
+          "price": 165.4,
+          "utime": "2018-08-06 15:21:24"
+        },
+        {
+          "sku": 5601427,
+          "name": "索尼（SONY）ILCE-7RM3 全画幅微单相机单机身（约4240万有效像素 4K视频 5轴防抖 α7RM3/a7RM3/A7R III）",
+          "brandName": "索尼（SONY）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t11476/71/554102445/171354/274c7bf3/59f30ad7N0d6fc22f.jpg",
+          "jdPrice": 19999.00,
+          "price": 20805.0,
+          "utime": "2018-08-06 14:59:14"
+        }
+      ]
+    },
+    {
+      "time": "2018-08-01",
+      "list": [
+        {
+          "sku": 5454992,
+          "name": "九阳（Joyoung）榨汁机 双杯 快速料理 可搅拌碎冰 迷你型 便携式L3-C1 粉色",
+          "brandName": "九阳（Joyoung）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t9364/112/1835188446/199101/5b82dc66/59c07d44N5c28b574.jpg",
+          "jdPrice": 99.00,
+          "price": 98.9,
+          "utime": "2018-08-01 17:06:06"
+        },
+        {
+          "sku": 5598996,
+          "name": "洽洽 坚果炒货 每日坚果零食礼盒 夏威夷果碧根果 一代宗食坚果大礼包1360g",
+          "brandName": "洽洽",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t14230/64/1703854776/202183/ffebf81b/5a55707dNdf614a11.jpg",
+          "jdPrice": 69.90,
+          "price": 75.0,
+          "utime": "2018-08-01 17:06:01"
+        },
+        {
+          "sku": 5601427,
+          "name": "索尼（SONY）ILCE-7RM3 全画幅微单相机单机身（约4240万有效像素 4K视频 5轴防抖 α7RM3/a7RM3/A7R III）",
+          "brandName": "索尼（SONY）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t11476/71/554102445/171354/274c7bf3/59f30ad7N0d6fc22f.jpg",
+          "jdPrice": 19999.00,
+          "price": 20805.0,
+          "utime": "2018-08-01 17:05:56"
+        },
+        {
+          "sku": 5336598,
+          "name": "现代牧业（MODERN FARMING）鲜语 纯牛奶250ml×12盒/礼盒装",
+          "brandName": "现代牧业（MODERN FARMING）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t17272/339/744772211/59172/29613dbd/5aa786b3N32401172.jpg",
+          "jdPrice": 72.00,
+          "price": 70.7,
+          "utime": "2018-08-01 17:05:35"
+        },
+        {
+          "sku": 5357336,
+          "name": "努比亚（nubia）Z17 无边框 极光蓝 8GB+128GB 全网通 移动联通电信4G手机 双卡双待",
+          "brandName": "努比亚（nubia）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t5365/74/1150127851/106993/fd7a81db/598d5e62N6cba08db.jpg",
+          "jdPrice": 2999.00,
+          "price": 3119.9,
+          "utime": "2018-08-01 17:05:15"
+        },
+        {
+          "sku": 5340538,
+          "name": "小米（MI）小米运动蓝牙耳机mini 黑色 无线蓝牙入耳式运动耳机",
+          "brandName": "小米（MI）",
+          "imagePath": "http://img13.360buyimg.com/n0/jfs/t6121/24/8341569586/92095/cab871f5/5987d659N741a0fd9.jpg",
+          "jdPrice": 169.00,
+          "price": 165.4,
+          "utime": "2018-08-01 17:04:46"
+        }
+      ]
+    }
+  ]
+}
+
+十五、热门搜索
+1、请求地址: http://{ip}:9003/v1/product/hotSearch
+2、请求方式  get
+3、是否需要登陆 否
+4、请求参数
+ "venderId":56                                   客户id(必填)
+5、返回值说明
+{
+  "error": 0,
+  "msg": "ok",
+  "data": [
+    "毛衣3",
+    "毛衣7",
+    "毛衣23",
+    "毛衣",
+    "毛衣2",
+    "毛衣55",
+    "毛衣5",
+    "毛衣21"
+  ]
+}
+
+十六、查询商品延保
+1、请求地址: http://{ip}:9003/v1/product/warranty
+2、请求方式  get
+3、是否需要登陆 否
+4、请求参数
+{
+  "skuIds":"2147347,5677229,5601427",            商品编号(必填)
+  "province":21,                                 京东省地址编号，必需大于0
+  "city":0,                                      京东市地址编号，不区分市可给0
+  "county":0,                                    京东县地址编号，可以给0
+  "town":0                                       京东镇地址编号，可以给0
+}
+5、返回值说明
+{
+  "error": 0,
+  "msg": "ok",
+  "data": {
+    "2147347": [                                 #查询sku对应的延保信息列表
+      {
+        "categoryCode": "VXP-CXTH",              #保障服务类别名称
+        "detailUrl": "http://sale.jd.com/act/u8CgTZcQS4mf.html",                       #保障服务类别静态页详情url
+        "displayName": "促销特惠",                #保障服务分类名称
+        "displayNo": 1,                          #保障服务分类编码
+        "imgUrl": "/fuwu/jfs/t2698/230/1388474793/1074/f4dd7f21/573d98d0N003f3b6b.png", #保障服务类别显示图标url
+        "mainSkuId": 2147347,                    #主商品的sku
+        "fuwuSkuDetailList": [                   #保障服务商品详情列表
+          {
+             "bindSkuId": 7944861,               #保障服务skuId 
+             "bindSkuName": "全保修1年",          #保障服务sku名称（6字内）
+             "favor": false,                     #是否是优惠保障服务
+             "price": 199,                       #保障服务sku价格
+             "sortIndex": 3,                     #显示排序
+             "tip": "性能/意外故障免费维修"          #保障服务说明提示语（20字内）
+          },
+          {
+            "bindSkuId": 7731962,
+            "bindSkuName": "全保修2年",
+            "favor": false,
+            "price": 289.0,
+            "sortIndex": 4,
+            "tip": "性能/意外故障免费维修"
+          },
+          {
+            "bindSkuId": 7731952,
+            "bindSkuName": "全保修3年",
+            "favor": false,
+            "price": 379.0,
+            "sortIndex": 5,
+            "tip": "性能/意外故障免费维修"
+          }
+        ]
+      },
+      {
+        "categoryCode": "VXP-YCBX",
+        "detailUrl": "http://sale.jd.com/act/s7oXRvFNyVl.html",
+        "displayName": "延长保修",
+        "displayNo": 2,
+        "imgUrl": "/fuwu/jfs/t2623/112/1419031929/1227/e5dadbca/573d95abNc672af4d.png",
+        "mainSkuId": 2147347,
+        "fuwuSkuDetailList": [
+          {
+            "bindSkuId": 7945105,
+            "bindSkuName": "延保至3年",
+            "favor": false,
+            "price": 129.0,
+            "sortIndex": 3,
+            "tip": "厂保内性能故障免费维修"
+          },
+          {
+            "bindSkuId": 7945107,
+            "bindSkuName": "延保至4年",
+            "favor": false,
+            "price": 189.0,
+            "sortIndex": 4,
+            "tip": "厂保内性能故障免费维修"
+          },
+          {
+            "bindSkuId": 7944895,
+            "bindSkuName": "延保至5年",
+            "favor": false,
+            "price": 269.0,
+            "sortIndex": 5,
+            "tip": "厂保内性能故障免费维修"
+          }
+        ]
+      },
+      {
+        "categoryCode": "VXP-FWBZ",
+        "detailUrl": "http://sale.jd.com/act/3vn6yrwXg0.html",
+        "displayName": "服务保障",
+        "displayNo": 3,
+        "imgUrl": "/fuwu/jfs/t2896/141/1400713660/1119/b6e6fbf5/573d979cNcc2483e4.png",
+        "mainSkuId": 2147347,
+        "fuwuSkuDetailList": [
+          {
+            "bindSkuId": 7732004,
+            "bindSkuName": "屏碎保1年",
+            "favor": false,
+            "price": 49.0,
+            "sortIndex": 3,
+            "tip": "屏碎故障免费维修"
+          },
+          {
+            "bindSkuId": 7945117,
+            "bindSkuName": "屏碎保2年",
+            "favor": false,
+            "price": 74.0,
+            "sortIndex": 4,
+            "tip": "屏碎故障免费维修"
+          }
+        ]
+      }
+    ],
+    "5677229": [
+      {
+        "categoryCode": "VXP-FWBZ",
+        "detailUrl": "http://sale.jd.com/act/3vn6yrwXg0.html",
+        "displayName": "服务保障",
+        "displayNo": 3,
+        "imgUrl": "/fuwu/jfs/t2896/141/1400713660/1119/b6e6fbf5/573d979cNcc2483e4.png",
+        "mainSkuId": 5677229,
+        "fuwuSkuDetailList": [
+          {
+            "bindSkuId": 2958006,
+            "bindSkuName": "企悦上门安装",
+            "favor": false,
+            "price": 99.0,
+            "sortIndex": 1,
+            "tip": "为您提供办公外设的上门安装软硬件服务"
+          }
+        ]
+      },
+      {
+        "categoryCode": "VXP-YWBH",
+        "detailUrl": "http://sale.jd.com/act/yTmRskIACGlQotr1.html",
+        "displayName": "意外保护",
+        "displayNo": 5,
+        "imgUrl": "/fuwu/jfs/t2650/94/1366712706/1313/a055eace/573d9679Ne0c98383.png",
+        "mainSkuId": 5677229,
+        "fuwuSkuDetailList": [
+          {
+            "bindSkuId": 2958034,
+            "bindSkuName": "企悦上门检修",
+            "favor": false,
+            "price": 119.0,
+            "sortIndex": 2,
+            "tip": "为您提供办公外设的上门检测、调试服务"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+十七、全量同步商品信息接口
+1、请求地址: http://{ip}:9003/v1/product/syncList
+2、请求方式  get
+3、是否需要登陆 否
+4、请求参数
+venderId     :56                大客户id(必填)
+pageNum      :1                 页数（不填默认第一页）
+pageSize     :5                 当前页行数(不填默认配置页数)
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "total": 47542,
+        "dataList": [
+            {
+                "sku": 1039785,                                     #商品编号
+                "name": "威露士（Walch） 家用消毒液170ml 家居衣物除菌液", #商品名称
+                "brandName": "威露士（Walch）",                       #品牌名称
+                "category": "15901;15904;15928",                    #商品分类（一二三级）
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t3928/106/1454069083/180812/c8c77579/58789f52N6f1678db.jpg",
+                "videoPath": "",                                     #视频地址
+                "jdPrice": 16.9,                                    #京东价
+                "price": 9.3,                                       #零售价
+                "state": 0,                                         #是否可用 0:下架 1:上架
+                "cat0": 15901,                                      #一级分类id
+                "cat1": 15904,                                      #二级分类id
+                "cat2": 15928,                                      #三级分类id
+                "weight": "0.21",                                   #重量
+                "productArea": "广州省从化市",                        #产地
+                "upc": "6925911500125",                             #条形号
+                "saleUnit": "瓶",                                    #销售单位
+                "wareQD": "威露士家用消毒液170ml*1",                   #商品清单
+                "introduction": "<div id='zbViewModulesH'  value=   #pc端商品简介
+                "appintroduce": "",                                 #app端商品简介
+                "param": "<table cellpadding=\"0\" cellspacing=\"1\"#商品参数
+                "propCode": "<table cellpadding=\"0\" cellspacing=\ #规格参数
+                "service": "",                                      #服务
+                "wReadMe": null,                                    #read me
+                "shouhou": " ",                                      #售后
+                "wdis": "<div id='zbViewModulesH'  value='8076'>     #商品详情
+                "jsContent": "<script></script>",                    #js内容
+                "cssContent": "<style>/*C-B*/\n\n.ssd-module-wrap {w #CSS内容
+                "htmlContent": null                                  #html内容
+            }
+        ]
+    }
+}
+
+
+备注 1
+公共请求参数:
+'token':'hqtc'                                  服务器颁发,开发者身份
+'timestamp':1467961797                          时间戳
+'rand':37385                                  	随机数字
+'opaque':741ec2044907273d0a96ee8c3da3d06b     	url 验签, 计算方式见备注1
+
+opaque生成的通用步骤如下：
+第一步，设发送的数据为集合M，将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序），使用URL键值对的格式
+（即key1=value1&key2=value2…）拼接成字符串stringA。
+第二步，在stringA最后拼接上key(key由后台分配),前面拼接上uri,得到stringSignTemp字符串，并对stringSignTemp进行MD5运算，
+再将得到的字符串所有字符转换为小写，得到sign值opaque。
+python例子
+1、假设发送的数据为
+params = {
+"a":1,
+"b":2,
+"c":3,
+"d":4
+}
+2、得到发送数据参数名字的字典序
+keys = params.keys()
+keys.sort() #字典序
+3、得到计算md5的字符串
+uri="/v1/home/recommend"
+stringArray = []
+for k in keys:
+    stringArray.append("{0}={1}".format(k, params[k]))
+    stringArray.append("key={0}".format("3E8A4281-3568-467C-96C5-7496DAD6A0D8"))
+    strings = "&".join(stringArray)
+    strings = "{0}?{1}".format(uri, strings)
+最终strings的值为 strings="/v1/home/recommend?a=1&b=2&c=3&d=4&key=3E8A4281-3568-467C-96C5-7496DAD6A0D8"
+4、得到opaque
+opaque = hashlib.new("MD5", strings).hexdigest().lower()
+
+备注2
+开发token和key
+token: hqtc
+key: 3E8A4281-3568-467C-96C5-7496DAD6A0D8
+

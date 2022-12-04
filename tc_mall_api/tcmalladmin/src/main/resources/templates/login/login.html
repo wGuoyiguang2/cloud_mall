@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>登陆</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+
+<link th:href="@{/css/animate.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/fmslogin.css}" rel="stylesheet" />
+
+<!-- Sweet Alert -->
+<link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+    
+</head>
+
+<body class="text-center">
+
+	<div class="text-center loginscreen animated fadeInDown">
+		<div class="container-fluid self_login_box">
+			<div>
+				<h2><img alt="image" th:src="@{/img/cibnvideo.png}" /></h2>
+			</div>
+			<h3>欢迎登录</h3>
+			<form id="signupForm" class="" role="form" action="login" method="post">
+				<div class="form-group has-feedback">
+					<div class="input-group self_input_group">
+						<span class="input-group-addon" ><span class="glyphicon glyphicon-user self_icon1"></span></span>
+						<input type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon1" name="username" id="username" required="" />
+						<span class="glyphicon glyphicon-ok form-control-feedback sr-only user-icon"></span>
+					</div>
+				</div>
+				<div class="form-group has-feedback">
+					<div class="input-group self_input_group">
+						<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock self_icon2"></span></span>
+						<input type="password" class="form-control" placeholder="密码" name="password" id="password" required="" />
+						<span class="glyphicon glyphicon-ok form-control-feedback sr-only password-icon"></span>
+					</div>
+				</div>
+				<button type="button" class="btn btn-primary self_submit" onclick="login()">登录</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+	<!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+	
+	<script th:inline="javascript">
+		var error = [[${error}]];
+		$(document).ready(function () {
+			if(error!=null){
+				 swal({
+		         	title : "温馨提示",
+		         	text : error
+		      	});
+			}
+		});
+		
+	    /*-------------用户验证--------------*/
+	    $( '#username' ).change( function(){
+	        if( $( '#username' ).val() ){
+	            $( '.user-icon' ).removeClass( 'sr-only' );
+	            $( this ).parents( '.form-group' ).addClass( 'has-success' ).removeClass( 'has-error');
+	        } else{
+	            $( '.user-icon' ).addClass( 'sr-only' );
+	            $( this ).parents( '.form-group' ).addClass( 'has-error' ).removeClass( 'has-success');
+	        }
+	    } );
+	    /*----------密码验证 ----------*/
+	    $( '#password' ).change( function(){
+	        if( $( 'input[ name="password" ]' ).val() ){
+	            $( '.password-icon' ).removeClass( 'sr-only' );
+	            $( this ).parents( '.form-group' ).addClass( 'has-success' ).removeClass( 'has-error');
+	            
+	        } else{
+	            $( '.password-icon' ).addClass( 'sr-only' );
+	            $( this ).parents( '.form-group' ).addClass( 'has-error' ).removeClass( 'has-success');
+
+	        }
+	    } );
+	    
+	    function login() {
+	        $.ajax({
+	            type: "POST",
+	            url: ctx+"login",
+	            data: $('#signupForm').serialize(),
+	            success: function (r) {
+	                if (r.code == 0) {
+	                    var index = layer.load(1, {
+	                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+	                    });
+	                    parent.location.href = '/index';
+	                } else {
+	                    layer.msg(r.msg);
+	                }
+	            }
+	        });
+	    }
+
+	</script>
+</body>
+
+</html>

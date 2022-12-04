@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.HelpCenterDao">
+    <select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HelpCenter">
+        select `id`,`title` from t_assistance where venderid = #{venderId} and status=1 order by position asc
+    </select>
+
+    <update id="update" parameterType="java.util.HashMap">
+        update t_assistance
+        <set>
+            <if test="venderId != null">`venderid` = #{venderId}, </if>
+            <if test="status != null">`status` = #{status}, </if>
+            <if test="position != null">`position` = #{position}, </if>
+            <if test="title != null">`title` = #{title}, </if>
+            `utime`=NOW()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+	 	delete from t_assistance where id = #{id}
+	</delete>
+
+    <delete id="deleteCustomer">
+        delete from t_assistance where venderid = #{venderId}
+    </delete>
+
+    <insert id="add" parameterType="java.util.HashMap"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into t_assistance
+		(
+		  `venderid`,
+		  `title`,
+		  `status`,
+		  `position`,
+		  `ctime` ,
+		  `utime`
+		)
+		values
+		(
+		  #{venderId},
+		  #{title},
+		  #{status},
+		  #{position},
+		  NOW(),
+		  NOW()
+		)
+	</insert>
+
+</mapper>

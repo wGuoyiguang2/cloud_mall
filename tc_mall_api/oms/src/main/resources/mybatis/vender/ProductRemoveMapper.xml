@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.ProductRemoveDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductRemove">
+		select `id`, `venderid` as `venderId`, `sku`,`ctime`,`utime` from t_vender_product_remove where id = #{id}
+	</select>
+
+	<select id="skusByVenderId" resultType="long">
+		select `sku` from t_vender_product_remove where venderid = #{venderId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductRemove">
+		select  `id`, `venderid` as `venderId`, `sku`,`ctime`, `utime` from t_vender_product_remove
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_product_remove
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.ProductRemove"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_product_remove
+		(
+		`venderid`,
+		`sku`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{sku},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<insert id="batchSave">
+		insert ignore into t_vender_product_remove
+		(
+			`venderid`,
+			`sku`,
+			`ctime`,
+			`utime`
+		)
+		values
+			<foreach collection="list" item="item" index="id" separator=",">
+				(
+				#{item.venderId},
+				#{item.sku},
+				now(),
+				now()
+				)
+			</foreach>
+
+	</insert>
+
+	<delete id="remove">
+		delete from t_vender_product_remove where id = #{id}
+	</delete>
+
+	<delete id="removeBySku">
+		delete from t_vender_product_remove where venderid = #{venderId} and sku = #{sku}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_product_remove
+		<where>
+			<if test="ids != null and ids.size>0"> and id in
+				<foreach item="id" collection="ids" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+		</where>
+	</delete>
+
+	<delete id="batchRemoveBySku">
+		delete from t_vender_product_remove where (venderid, sku) in
+			<foreach item="item" collection="list" open="(" separator="," close=")">
+			  (
+				#{item.venderId},
+				#{item.sku}
+			  )
+			</foreach>
+	</delete>
+</mapper>

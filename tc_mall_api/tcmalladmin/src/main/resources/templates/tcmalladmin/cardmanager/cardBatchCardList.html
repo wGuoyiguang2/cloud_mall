@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<input style="display: none" th:value="${batchNo}" id="batchNo"  name="batchNo">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							购物卡批次信息
+							<div class="col-sm-12 m-b-xs container">
+								<table style="word-break: break-all; word-wrap: break-word"   border="２" cellspacing="1" th:width="750px" th:height="200px">
+									<tr>
+										<td th:align="center">大客户ID</td>
+										<td th:text="${bean.venderid}" th:align="center"></td>
+										<td th:align="center">购物卡批次号</td>
+										<td th:text="${bean.batchNo}" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">购物卡名称</td>
+										<td th:text="${bean.cardName}" th:align="center"></td>
+										<td th:align="center">卡类型</td>
+										<td th:text="${bean.cardType==1}?'实物卡':'虚拟卡'" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">生成数量</td>
+										<td th:text="${bean.count}" th:align="center"></td>
+										<td th:align="center">创建时间</td>
+										<td th:text="${bean.ctime}" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">有效期</td>
+										<td th:text="${bean.stime}+'至'+${bean.etime}" th:align="center"></td>
+										<td th:align="center">单张金额</td>
+										<td th:text="${bean.faceValue}" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">总金额</td>
+										<td th:text="${bean.sumMoney}" th:align="center"></td>
+										<td th:align="center">已用金额</td>
+										<td th:text="${bean.usedMoney}" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">剩余金额</td>
+										<td th:text="${bean.balance}" th:align="center"></td>
+										<td th:align="center">绑定数量</td>
+										<td th:text="${bean.bindCount}" th:align="center"></td>
+									</tr>
+									<tr>
+										<td th:align="center">未绑定数量</td>
+										<td th:text="${bean.unBindCount}" th:align="center"></td>
+										<td th:align="center">已激活数量</td>
+										<td th:text="${bean.activedCount}" th:align="center"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							<div class="col-sm-12 m-b-xs container">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="cardNo" class="arealabel">卡号:</label>
+										<input id="cardNo" name="cardNo" class="form-control" type="text"  />
+										<label for="bindUser" class="arealabel">&ensp&ensp绑定账号:</label>
+										<input id="bindUser" name="bindUser" class="form-control" type="text"  />
+										<label for="startTime" class="arealabel">&ensp&ensp创建时间:</label>
+										<input id="startTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">　－　
+										<input id="endTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">
+										<button type="button" class="btn btn-primary" onclick="searcher()">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+					<div class="ibox-content">
+						<div id="toolbar" role="group">
+							<button shiro:hasPermission="admin:card:start" class="btn btn-primary" type="button" onclick="cardStart()">
+								<strong>激活</strong>
+							</button>
+							<button shiro:hasPermission="admin:card:bind" class="btn btn-primary" type="button" onclick="cardBind()">
+								<strong>手动绑定</strong>
+							</button>
+							<button shiro:hasPermission="admin:card:abandon" class="btn btn-primary" type="button" onclick="cardAbandon()">
+								<strong>废弃</strong>
+							</button>
+							<button shiro:hasPermission="admin:card:export" class="btn btn-primary" type="button" onclick="cardExport()">
+								<strong>导出</strong>
+							</button>
+						</div>
+						<table id="cardtb" class="col-xs-12" data-toolbar="#toolbar" data-show-refresh="true">
+						</table>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/cardmanager/cardbatchCardList.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+</body>
+</html>

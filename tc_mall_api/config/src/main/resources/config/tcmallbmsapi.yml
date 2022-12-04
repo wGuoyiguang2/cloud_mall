@@ -1,0 +1,85 @@
+spring:
+  task:
+  #最小线程数
+    corePoolSize: 1
+  #最大线程数
+    maxPoolSize: 1000
+  #允许线程空闲时间
+    keepAliveSeconds: 1000
+  #允许缓存队列数量
+    queueCapacity: 10000
+  config:
+    afterSaleQrcode: http://172.16.11.228/static/tcmall_h5/afterService.html
+    encryptKey: shoppingKey12345
+  cloud:
+    stream:
+      bindings:
+        output_bms_aftersale:
+          destination: bms_aftersale
+          content-type: application/json
+          producer:
+            partitionCount: 1
+        input_bms_aftersale:
+          destination: bms_aftersale
+          content-type: application/json
+
+
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1
+
+RPC:
+  pmsHost: http://172.16.11.228:8080
+
+pay:
+  notifyUrl: http://172.16.11.228:9005/v1/bms/pay/notify
+  refundNotifyUrl: http://172.16.11.228:9005/v1/bms/refund/notify
+  #微信退款证书的存放位置(结尾需要包含"/")
+  refundCertPath: /home/wanghaoyang/work/server_code/tc/refund_crt/
+
+order:
+  product:
+    maxSize: 50
+  pms:
+    partnerId: 100000A4
+    appid: 100000
+  notifyEmail: wanghaoyang@cibnvideo.com
+  vender:
+    defaultFreight: 6
+  cancel:
+    expireTime: 30
+    eachSize: 100
+  toJD: true
+
+
+wechatApplet:
+  #优享小程序渠道及配置
+  lists:
+    223:
+      appid: wx604d33e3e93bd77e
+      appSecret: 73978d24cd9a4bee77c64f7bf8f914cb
+      mechid: 1515569481
+      apikey: 9490776d3f242feb94f538705167b379
+  #航美小程序渠道及配置
+    493:
+      appid: wx4e735f92cb736431
+      appSecret: 09711a42a604c7c8b2593d93e0811e38
+      mechid: 1519072391
+      apikey: 3fd365ee51032a0597fe749377c303ea
+    #吉林优享小程序
+    400:
+      appid: wx06f750d136e60be3
+      appSecret: e313b711431669520bbd6f189c2912dc
+      mechid: 1515569481
+      apikey: 9490776d3f242feb94f538705167b379
+
+service:
+  config:
+    pageSize: 12
+    timeout: 300
+    serviceSize: 1000
+
+#ip白名单相关配置
+ipWhiteList:
+  pmsServer: 0.0.0.0

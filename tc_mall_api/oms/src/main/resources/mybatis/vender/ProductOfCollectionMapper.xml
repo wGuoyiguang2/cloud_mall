@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.ProductOfCollectionDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductOfCollection">
+		select `id`, `venderid` as `venderId`,`collectionid` as `collectionId`, `sku` from t_vender_collection_product where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductOfCollection">
+		select  `id`, `venderid` as `venderId`,`collectionid` as `collectionId`,`sku` from t_vender_collection_product
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="collectionId != null and collectionId != ''"> and collectionid = #{collectionId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_collection_product
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="collectionId != null and collectionId != ''"> and collectionid = #{collectionId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.ProductOfCollection"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_collection_product
+		(
+		`venderid`,
+		`collectionid`,
+		`sku`
+		)
+		values
+		(
+		#{venderId},
+		#{collectionId},
+		#{sku}
+		)
+	</insert>
+
+	<insert id="batchSave" parameterType="java.util.List">
+		insert into t_vender_collection_product
+		(
+		`venderid`,
+		`collectionid`,
+		`sku`
+		)
+		values
+		<foreach item="item" index="index" collection="list" separator=",">
+			(#{item.venderId},#{item.collectionId},#{item.sku})
+		</foreach>
+	</insert>
+
+
+	<delete id="remove">
+		delete from t_vender_collection_product where id = #{id}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_collection_product
+		<where>
+			<if test="ids != null and ids.size>0"> and id in
+				<foreach item="id" collection="ids" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="skus != null and skus.size>0"> and sku in
+				<foreach item="sku" collection="skus" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="collectionId != null and collectionId != ''"> and collectionid = #{collectionId} </if>
+		</where>
+	</delete>
+
+	<select id="getCollectionIdBySku" resultType="int">
+		select
+			a.collectionid
+		from
+			t_vender_collection_product a
+		left join t_vender_collection b on a.collectionid = b.id
+		where b.status = 1 and a.venderid = #{venderId} and a.sku = #{sku}
+	</select>
+</mapper>

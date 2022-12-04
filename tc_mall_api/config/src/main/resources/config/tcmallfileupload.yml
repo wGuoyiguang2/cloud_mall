@@ -1,0 +1,14 @@
+spring:
+  http:
+    multipart:
+      max-file-size: 500Mb
+      max-request-size: 500Mb
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1
+
+cibnvideo:
+  domain: http://images.can-tv.cn/02/
+  site: tcmallfileupload
+  httpupload: http://httpupload.can-tv.cn:8088

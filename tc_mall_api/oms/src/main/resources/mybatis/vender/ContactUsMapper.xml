@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.ContactUsDao">
+    <select id="getByVenderId" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ContactUsBean">
+        select id,venderid,hotline,url,ctime,utime from t_contact where venderid = #{venderId}
+	</select>
+    <select id="getById" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ContactUsBean">
+        select id,venderid,hotline,url,ctime,utime from t_contact where id = #{id}
+    </select>
+    <update id="update">
+        update t_contact
+        <set>
+            <if test="venderid!=null and venderid!=''">venderid=#{venderid},</if>
+            <if test="hotline!=null and hotline!=''"> hotline=#{hotline},</if>
+            <if test="url!=null and url!=''"> url=#{url},</if>
+            <if test="ctime!=null and ctime!=''"> ctime=#{ctime},</if>
+            <if test="utime!=null and utime!=''"> hotline=#{utime}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <insert id="add">
+        insert into t_contact SET hotline=#{hotline}, url=#{url},venderid=#{venderid},ctime=NOW(),utime=NOW()
+    </insert>
+</mapper>

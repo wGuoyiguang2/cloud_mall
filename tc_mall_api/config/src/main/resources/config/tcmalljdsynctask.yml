@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        output-jdsync-change:
+          destination: jdsync
+          content-type: application/json
+          producer:
+            partitionCount: 1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*Mapper.xml
+  typeAliasesPackage: com.cibnvideo.jdsynctask.model
+
+cibnvideo:
+  jd-image-path: http://img13.360buyimg.com/n0/

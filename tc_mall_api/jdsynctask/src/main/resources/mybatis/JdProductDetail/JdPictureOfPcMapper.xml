@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.JdPictureOfPcDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.PictureOfPcResponse">
+		select `sku`,`propCode`,`wareQD`, `service`, `code`, `wReadMe`, `shouhou`, `wdis` from t_jd_product_picture_pc where sku = #{sku}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.PictureOfPcResponse">
+		select `sku`,`propCode`,`wareQD`, `service`, `code`, `wReadMe`, `shouhou`, `wdis` from t_jd_product_picture_pc
+        <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="propCode != null and propCode != ''"> and propCode = #{propCode} </if>
+		  		  <if test="wareQD != null and wareQD != ''"> and wareQD = #{wareQD} </if>
+		  		  <if test="service != null and service != ''"> and service = #{service} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		  <if test="wReadMe != null and wReadMe != ''"> and wReadMe = #{wReadMe} </if>
+		  		  <if test="shouhou != null and shouhou != ''"> and shouhou = #{shouhou} </if>
+		  		  <if test="wdis != null and wdis != ''"> and wdis = #{wdis} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_picture_pc
+		 <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="propCode != null and propCode != ''"> and propCode = #{propCode} </if>
+		  		  <if test="wareQD != null and wareQD != ''"> and wareQD = #{wareQD} </if>
+		  		  <if test="service != null and service != ''"> and service = #{service} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		  <if test="wReadMe != null and wReadMe != ''"> and wReadMe = #{wReadMe} </if>
+		  		  <if test="shouhou != null and shouhou != ''"> and shouhou = #{shouhou} </if>
+		  		  <if test="wdis != null and wdis != ''"> and wdis = #{wdis} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.PictureOfPcResponse">
+		insert into t_jd_product_picture_pc
+		(
+			`sku`, 
+			`propCode`, 
+			`wareQD`,
+			`service`,
+			`code`,
+			`wReadMe`,
+			`shouhou`,
+			`wdis`
+		)
+		values
+		(
+			#{sku}, 
+			#{propCode}, 
+			#{wareQD}, 
+			#{service},
+			#{code},
+			#{wReadMe}, 
+			#{shouhou},
+			#{wdis}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.PictureOfPcResponse">
+		update t_jd_product_picture_pc 
+		<set>
+			<if test="sku != null">`sku` = #{sku}, </if>
+			<if test="propCode != null">`propCode` = #{propCode}, </if>
+			<if test="wareQD != null">`wareQD` = #{wareQD}, </if>
+			<if test="service != null">`service` = #{service}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="wReadMe != null">`wReadMe` = #{wReadMe}, </if>
+			<if test="shouhou != null">`shouhou` = #{shouhou}, </if>
+			<if test="wdis != null">`wdis` = #{wdis}, </if>
+		</set>
+		where sku = #{sku}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_product_picture_pc where sku = #{sku}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_product_picture_pc where sku in 
+		<foreach item="sku" collection="skus" open="(" separator="," close=")">
+			#{sku}
+		</foreach>
+	</delete>
+
+</mapper>

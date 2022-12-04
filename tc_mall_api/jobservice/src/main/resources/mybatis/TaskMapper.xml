@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jobservice.dao.TaskDao">
+
+    <select id="get" resultType="com.cibnvideo.jobservice.model.TaskDO">
+        select
+            `id`,
+            `service_name`,
+            `job_name`,
+            `job_group`,
+            `job_param`,
+            `cron_expression`,
+            `job_status`,
+            `last_start_time`,
+            `last_end_time`,
+            `result_status`,
+            `result_msg`,
+            `description`,
+            `ctime`,
+            `utime`
+        from t_task
+        where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.cibnvideo.jobservice.model.TaskDO">
+        select
+        `id`,
+        `service_name`,
+        `job_name`,
+        `job_group`,
+        `job_param`,
+        `cron_expression`,
+        `job_status`,
+        `last_start_time`,
+        `last_end_time`,
+        `result_status`,
+        `result_msg`,
+        `description`,
+        `ctime`,
+        `utime`
+        from t_task
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="serviceName != null and serviceName != ''">and service_name = #{serviceName}</if>
+            <if test="jobName != null and jobName != ''">and job_name = #{jobName}</if>
+            <if test="jobGroup != null and jobGroup != ''">and job_group = #{jobGroup}</if>
+            <if test="cronExpression != null and cronExpression != ''">and cron_expression = #{cronExpression}</if>
+            <if test="description != null and description != ''">and description = #{description}</if>
+            <if test="jobStatus != null and jobStatus != ''">and job_status = #{jobStatus}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_task
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="serviceName != null and serviceName != ''">and service_name = #{serviceName}</if>
+            <if test="jobName != null and jobName != ''">and job_name = #{jobName}</if>
+            <if test="jobGroup != null and jobGroup != ''">and job_group = #{jobGroup}</if>
+            <if test="cronExpression != null and cronExpression != ''">and cron_expression = #{cronExpression}</if>
+            <if test="description != null and description != ''">and description = #{description}</if>
+            <if test="jobStatus != null and jobStatus != ''">and job_status = #{jobStatus}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.cibnvideo.jobservice.model.TaskDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_task
+        (
+            `service_name`,
+            `job_name`,
+            `job_group`,
+            `job_param`,
+            `cron_expression`,
+            `job_status`,
+            `last_start_time`,
+            `last_end_time`,
+            `result_status`,
+            `result_msg`,
+            `description`,
+            `ctime`,
+            `utime`
+        )
+        values
+            (
+                #{serviceName},
+                #{jobName},
+                #{jobGroup},
+                #{jobParam},
+                #{cronExpression},
+                #{jobStatus},
+                #{lastStartTime},
+                #{lastEndTime},
+                #{resultStatus},
+                #{resultMsg},
+                #{description},
+                #{ctime},
+                #{utime}
+            )
+    </insert>
+
+    <update id="update" parameterType="com.cibnvideo.jobservice.model.TaskDO">
+        update t_task
+        <set>
+            <if test="serviceName != null">`service_name` = #{serviceName},</if>
+            <if test="jobName != null">`job_name` = #{jobName},</if>
+            <if test="jobGroup != null">`job_group` = #{jobGroup},</if>
+            <if test="jobParam != null">`job_param` = #{jobParam},</if>
+            <if test="cronExpression != null">`cron_expression` = #{cronExpression},</if>
+            <if test="jobStatus != null">`job_status` = #{jobStatus},</if>
+            <if test="lastStartTime != null">`last_start_time` = #{lastStartTime},</if>
+            <if test="lastEndTime != null">`last_end_time` = #{lastEndTime},</if>
+            <if test="resultStatus != null">`result_status` = #{resultStatus},</if>
+            <if test="resultMsg != null">`result_msg` = #{resultMsg},</if>
+            <if test="description != null">`description` = #{description},</if>
+            <if test="utime != null">`utime` = #{utime}</if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_task
+        where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_task where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateStartTime">
+        update t_task
+        set last_start_time = now()
+        where id = #{taskId}
+    </update>
+
+    <update id="updateEndTime">
+        update t_task
+        set result_status = #{resultStatus}, result_msg = #{msg}, last_end_time = now()
+        where id = #{taskId}
+    </update>
+
+</mapper>

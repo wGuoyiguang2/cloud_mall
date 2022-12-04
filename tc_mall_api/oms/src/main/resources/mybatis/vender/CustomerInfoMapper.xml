@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.CustomerInfoDao">
+
+    <select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.CustomerInfo">
+		select `url`,`hotline` from t_contact where venderid = #{venderId}
+	</select>
+
+	<update id="update" parameterType="java.util.HashMap">
+		update t_contact
+		<set>
+			<if test="hotline != null">`hotline` = #{hotline}, </if>
+			<if test="url != null">`url` = #{url}, </if>
+			`utime`=NOW()
+		</set>
+		where venderid = #{venderId}
+	</update>
+
+	<insert id="add" parameterType="java.util.HashMap"
+			useGeneratedKeys="true" keyProperty="id">
+			insert into t_contact
+			(
+			`venderid`,
+			`hotline`,
+			`url`  ,
+			`ctime` ,
+			`utime`
+			)
+			values
+			(
+			#{venderId},
+			#{hotline},
+			#{url}   ,
+			NOW()   ,
+			NOW()
+			)
+	</insert>
+
+	<delete id="delete">
+	 		delete from t_contact where venderid = #{venderId}
+	</delete>
+</mapper>

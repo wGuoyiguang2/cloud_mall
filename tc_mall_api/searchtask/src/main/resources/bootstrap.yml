@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: tcmallsearchtask
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod,db,kafka
+  data:
+    elasticsearch:
+      cluster-name: tcmall
+      cluster-nodes: 172.16.11.228:9300
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 20
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 5000

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.AddressDao">
+
+	<select id="getTownInfo" resultType="com.cibnvideo.jdsync.bean.AddressBean">
+		select distinct
+			a.townid as townId,
+			a.name as townName,
+			a.countyid as countyId,
+			b.name as countyName,
+			a.cityid as cityId,
+			c.name as cityName,
+			a.provinceid as provinceId,
+			d.name as provinceName
+		from
+			t_jd_address_towns a
+		left join
+			t_jd_address_countys b on a.countyid = b.countyid
+		left join
+				t_jd_address_citys c on a.cityid = c.cityid
+		left join
+				t_jd_address_provinces d on a.provinceid = d.provinceid
+		where
+			a.townid = #{townId}
+	</select>
+
+	<select id="getCountyInfo" resultType="com.cibnvideo.jdsync.bean.AddressBean">
+		select distinct
+			a.countyid as countyId,
+			a.name as countyName,
+			a.cityid as cityId,
+			b.name as cityName,
+			a.provinceid as provinceId,
+			c.name as provinceName
+		from
+			t_jd_address_countys a
+			left join
+			t_jd_address_citys b on a.cityid = b.cityid
+			left join
+			t_jd_address_provinces c on a.provinceid = c.provinceid
+		where
+			a.countyid = #{countyId}
+	</select>
+
+	<select id="getCityInfo" resultType="com.cibnvideo.jdsync.bean.AddressBean">
+		select distinct
+			a.cityid as cityId,
+			a.name as cityName,
+			a.provinceid as provinceId,
+			b.name as provinceName
+		from
+			t_jd_address_citys a
+			left join
+			t_jd_address_provinces b on a.provinceid = b.provinceid
+		where
+			a.cityid = #{cityId}
+	</select>
+
+	<select id="getProvinceInfo" resultType="com.cibnvideo.jdsync.bean.AddressBean">
+		select distinct
+			a.provinceid as provinceId,
+			a.name as provinceName
+		from
+			t_jd_address_provinces a
+		where
+			a.provinceid = #{provinceId}
+	</select>
+
+
+</mapper>

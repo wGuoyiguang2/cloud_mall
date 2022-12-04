@@ -1,0 +1,40 @@
+spring:
+  thymeleaf:
+    mode : LEGACYHTML5
+    encoding : UTF-8
+    cache : false
+  http:
+    multipart:
+      max-file-size: 500Mb
+      max-request-size: 500Mb
+  redis:
+    timeout: 1000
+  cloud:
+    stream:
+      bindings:
+        input-taskresult:
+          destination: taskresult
+          content-type: application/json
+          group: group-taskresult
+        output-searchtask:
+          destination: job-searchtask
+          content-type: application/json
+          producer:
+            partitionCount: 1
+        output-jdsynctask:
+          destination: job-jdsynctask
+          content-type: application/json
+          producer:
+            partitionCount: 1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*Mapper.xml
+  typeAliasesPackage: com.cibnvideo.**.bean
+
+pagehelper:
+  helperDialect : mysql
+  reasonable : true
+  supportMethodsArguments : true
+  params : count=countSql

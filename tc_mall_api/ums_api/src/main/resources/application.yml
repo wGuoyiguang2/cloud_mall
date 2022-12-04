@@ -1,0 +1,10 @@
+server:
+  port: 9081
+
+spring:
+  profiles:
+    active: dev
+
+
+#RPC:
+#  umsHost: http://localhost:8083

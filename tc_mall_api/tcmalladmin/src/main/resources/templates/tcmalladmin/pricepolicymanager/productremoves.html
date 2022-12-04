@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							<div class="col-sm-12 m-b-xs">
+								<form class="form-inline" onsubmit="return false">
+									<div class="form-group">
+										<div class="form-group">
+											<label for="name_search" class="arealabel">&ensp商品名称:</label>
+											<input id="name_search" name="name_search" placeholder="商品名称" class="form-control" type="text"  />
+										</div>
+										<button class="btn btn-primary" onclick="searcher()">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div id="toolbar" class="btn-group">
+							<button id="btn_add" shiro:hasPermission="mall:productremove:remove" type="button" class="btn btn-primary" onclick="batchRemove();">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>批量还原
+							</button>
+						</div>
+						<table id="productremovetb" class="col-xs-12" data-toolbar="#toolbar"
+							   data-show-export="true" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/pricepolicymanager/productremoves.js"></script>
+	<script th:inline="javascript">
+        $(".selectpicker").selectpicker({
+            noneResultsText : '未匹配',
+            noneSelectedText : '请选择'
+        });
+	</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.HotSearchDao">
+    <select id="listManagerHotSearch" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HotSearchBean">
+        select id,venderid,keyword,`position`,status,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%s') as ctime,DATE_FORMAT(utime,'%Y-%m-%d %H:%i:%s') as utime from t_hot_search
+        <where>
+            <if test="venderId!=null and venderId!=''"> and venderid=#{venderId}</if>
+            <if test="keyword!=null and keyword!=''"> and keyword like CONCAT('%',#{keyword},'%')</if>
+        </where>
+        order by utime desc,`position` asc
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+	</select>
+    <select id="countManagerHotSearch" resultType="int">
+        select count(1) from t_hot_search
+        <where>
+            <if test="venderId!=null and venderId!=''">venderid=#{venderId}</if>
+            <if test="keyword!=null and  keyword!=''"> and keyword like CONCAT('%',#{keyword},'%')</if>
+        </where>
+    </select>
+    <insert id="addHotSearch"  parameterType="java.util.HashMap">
+        insert into t_hot_search (venderid,keyword,`position`,status,ctime,utime)
+        values (#{venderId},#{keyword},#{position},#{status},NOW(),NOW())
+    </insert>
+    <select id="getById" resultType="com.cibnvideo.oms.tcmallcustomer.bean.HotSearchBean">
+        select id,venderid,keyword,`position`,status,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%s') as ctime,DATE_FORMAT(utime,'%Y-%m-%d %H:%i:%s') as utime from t_hot_search
+        where id=#{id}
+    </select>
+    <update id="updateManagerHotSearch"  parameterType="java.util.HashMap">
+        update t_hot_search
+        <set>
+            <if test="keyword != null and keyword!=''">`keyword`=#{keyword},</if>
+            <if test="position != null and position!=''">`position`=#{position},</if>
+            <if test="status != null and status!=''">`status`=#{status},</if>
+            utime=NOW()
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from t_hot_search where id=#{id}
+    </delete>
+    <select id="listByVenderId" resultType="String">
+        select keyword from t_hot_search where venderid=#{venderId} and status=1 order by position asc limit 0,#{limit}
+    </select>
+</mapper>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							<div class="col-sm-12 m-b-xs container">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="batchNo" class="arealabel">批次号:</label>
+										<input id="batchNo" name="batchNo" class="form-control" type="text"  />
+										<label for="cardNo" class="arealabel">卡号:</label>
+										<input id="cardNo" name="cardNo" class="form-control" type="text"  />
+										<label for="cardName" class="arealabel">卡名称:</label>
+										<input id="cardName" name="cardName" class="form-control" type="text"  />
+										<label for="cardType" class="arealabel">卡类型:</label>
+										<select id="cardType" name="cardType" placeholder="请选择" class="selectpicker" data-width="fit">
+											<option value="" selected="selected">全部</option>
+											<option value="1">实物卡</option>
+											<option value="2">虚拟卡</option>
+										</select>
+										<label for="status" class="arealabel">状态:</label>
+										<select id="status" name="status" placeholder="请选择" class="selectpicker" data-width="fit">
+											<option value="" selected="selected">全部</option>
+											<option value="0">未激活</option>
+											<option value="1">已激活</option>
+											<option value="2">已暂停</option>
+											<option value="3">已废弃</option>
+										</select>
+										<label for="createType" class="arealabel">生成规则:</label>
+										<select id="createType" name="createType" placeholder="请选择" class="selectpicker" data-width="fit">
+											<option value="" selected="selected">全部</option>
+											<option value="1">手动创建</option>
+											<option value="2">自动创建</option>
+										</select>
+										<label for="startTime" class="arealabel">&ensp&ensp创建时间:</label>
+										<input id="startTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">　－　
+										<input id="endTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">
+										<label for="sTime" class="arealabel">&ensp&ensp有效时间:</label>
+										<input id="sTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">　－　
+										<input id="eTime" class="form-control form_datetime" data-date-format="yyyy-mm-dd HH:ii:ss" type="text">
+										<button type="button" class="btn btn-primary" onclick="searcher()">
+											<i class="fa fa-search"></i><strong>搜索</strong>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+					<div class="ibox-content">
+						<table id="cardtb" class="col-xs-12" data-toolbar="#toolbar" data-show-refresh="true">
+						</table>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/cardmanager/carduserrecord.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+</body>
+</html>

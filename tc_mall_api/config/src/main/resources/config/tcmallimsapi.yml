@@ -1,0 +1,17 @@
+service:
+  config:
+    jd-domain: http://img13.360buyimg.com/n0/
+    addressQrcode: http://172.16.11.228/static/tcmall_h5/editAddress.html
+    invoiceQrcode: http://172.16.11.228/static/tcmall_h5/invoice.html
+    searchHistoryLimit: 8
+    cartMaxCount: 50
+
+redis:
+  expire: 30
+  cartExpire: 86400
+
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1

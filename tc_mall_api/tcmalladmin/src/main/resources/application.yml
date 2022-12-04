@@ -1,0 +1,7 @@
+server:
+  port : 8050
+  session-timeout : 86400
+
+spring:
+  profiles:
+    active: dev

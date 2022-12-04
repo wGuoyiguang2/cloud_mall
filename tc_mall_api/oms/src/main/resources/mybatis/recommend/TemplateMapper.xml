@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.recommend.dao.TemplateDao">
+
+    <select id="get" resultType="com.cibnvideo.oms.recommend.model.bean.TemplateBean">
+		select `id`, `venderid` AS `venderId`, `name`, `code`, `layout`, `rec_num` as `recNum`, `ctime`, `utime` from t_layout_template where id = #{templateId}
+	</select>
+
+    <select id="list" resultType="com.cibnvideo.oms.recommend.model.bean.TemplateBean">
+        select  `id`, `venderid` AS `venderId`, `name`, `code`, `layout`, `rec_num` as `recNum`, `ctime`, `utime`  from t_layout_template
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+            <if test="name != null and name != ''"> and name = #{name} </if>
+            <if test="code != null and code != ''"> and code = #{code} </if>
+            <if test="layout != null and layout != ''"> and layout = #{layout} </if>
+            <if test="recNum != null and recNum != ''"> and rec_num = #{recNum} </if>
+            <if test="ctime != null and ctime != ''"> and ctime = #{ctime} </if>
+            <if test="utime != null and utime != ''"> and utime = #{utime} </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by venderid desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit ${offset}, ${limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_layout_template
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+            <if test="name != null and name != ''"> and name = #{name} </if>
+            <if test="code != null and code != ''"> and code = #{code} </if>
+            <if test="layout != null and layout != ''"> and layout = #{layout} </if>
+            <if test="recNum != null and recNum != ''"> and rec_num = #{recNum} </if>
+            <if test="ctime != null and ctime != ''"> and ctime = #{ctime} </if>
+            <if test="utime != null and utime != ''"> and utime = #{utime} </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.cibnvideo.oms.recommend.model.bean.TemplateBean"
+            useGeneratedKeys="true" keyProperty="id">
+		insert into t_layout_template
+		(
+		`venderId`,
+		`name`,
+		`code`,
+		`layout`,
+		`rec_num`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{name},
+		#{code},
+		#{layout},
+		#{recNum},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.cibnvideo.oms.recommend.model.bean.TemplateBean">
+        update t_layout_template
+        <set>
+            <if test="name != null">`name` = #{name}, </if>
+            <if test="code != null">`code` = #{code}, </if>
+            <if test="layout != null">`layout` = #{layout},</if>
+            <if test="recNum != null">`rec_num` = #{recNum},</if>
+            <if test="utime != null">`utime` = #{utime}</if>
+        </set>
+        where id = #{templateId}
+    </update>
+
+    <delete id="remove">
+		delete from t_layout_template where id = #{templateId}
+	</delete>
+</mapper>

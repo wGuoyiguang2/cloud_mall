@@ -1,0 +1,22 @@
+spring:
+  elasticsearch:
+    jest:
+      uris: http://172.16.11.228:9200
+      read-timeout: 5000
+  cloud:
+    stream:
+      bindings:
+        input-jdsync:
+          destination: jdsync
+          content-type: application/json
+          group: group-jdsync
+        input-oms:
+          destination: oms
+          content-type: application/json
+          group: group-oms
+
+elasticsearch:
+  settings:
+    shards: 5
+    replicas: 1
+    maxResultWindow: 1000000

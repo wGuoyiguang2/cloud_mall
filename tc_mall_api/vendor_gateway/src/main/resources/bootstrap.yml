@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: tcmallvendorgateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+zuul:
+  semaphore:
+    max-semaphores: 2000
+  ignoredServices: '*'
+  sensitiveHeaders:
+  routes:
+    cms_product_api:
+      path: /v1/product/**
+      strip-prefix: false
+      service-id: tcmallcmsapi
+    ims_address_api:
+      path: /v1/address/**
+      strip-prefix: false
+      service-id: tcmallimsapi
+    bms_stock_api:
+      path: /v1/bms/stock/detail**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_freight_api:
+      path: /v1/bms/order/freight**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_track_api:
+      path: /v1/order/track**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_vender_order_api:
+      path: /v1/bms/vender/**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_aftersale_api:
+      path: /v1/afterSale/**
+      strip-prefix: false
+      service-id: tcmallbmsapi
+    bms_vendor_aftersale_api:
+      path: /v1/vender/afterSale/**
+      strip-prefix: false
+      service-id: tcmallbmsapi

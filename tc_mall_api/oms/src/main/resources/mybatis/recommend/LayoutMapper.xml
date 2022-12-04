@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.recommend.dao.LayoutDao">
+
+<select id="get" resultType="com.cibnvideo.oms.recommend.model.bean.LayoutBean">
+		select
+			a.id AS id,
+			a.parent_id AS parentId,
+			b.title AS parentTitle,
+			a.venderid AS venderId,
+			a.title AS title,
+			a.show_title AS showTitle,
+			a.status AS status,
+			a.template_id AS templateId,
+			a.position AS position,
+			a.share AS share,
+			a.auto_sync AS autoSync,
+			a.ctime as ctime,
+			a.utime as utime
+		from t_layout a left join t_layout b on a.parent_id = b.id
+		where a.id = #{id}
+</select>
+
+<select id="list" resultType="com.cibnvideo.oms.recommend.model.bean.LayoutBean">
+	select
+		a.id AS id,
+		a.parent_id AS parentId,
+		b.title AS parentTitle,
+		a.venderid AS venderId,
+		a.title AS title,
+		a.show_title AS showTitle,
+		a.status AS status,
+		a.template_id AS templateId,
+		a.position AS position,
+		a.share AS share,
+		a.auto_sync AS autoSync,
+		a.ctime as ctime,
+		a.utime as utime
+	from t_layout a left join t_layout b on a.parent_id = b.id
+	<where>
+		<if test="id != null and id != ''"> and a.id = #{id} </if>
+		<if test="parentId != null and parentId != ''"> and a.parent_id = #{parentId} </if>
+		<if test="venderId != null and venderId != ''"> and a.venderid = #{venderId} </if>
+		<if test="title != null and title != ''"> and a.title = #{title} </if>
+		<if test="showTitle != null and showTitle != ''"> and a.show_title = #{showTitle} </if>
+		<if test="status != null and status != ''"> and a.status = #{status} </if>
+		<if test="templateId != null and templateId != ''"> and a.template_id = #{templateId} </if>
+		<if test="position != null and position != ''"> and a.position = #{position} </if>
+		<if test="share != null and share != ''"> and a.share = #{share} </if>
+		<if test="autoSync != null and autoSync != ''"> and a.auto_sync = #{autoSync} </if>
+	</where>
+	<choose>
+		<when test="sort != null and sort.trim() != ''">
+			order by a.position asc
+		</when>
+		<otherwise>
+			order by a.id desc
+		</otherwise>
+	</choose>
+	<if test="offset != null and limit != null">
+		limit ${offset}, ${limit}
+	</if>
+</select>
+	<select id="getLayoutRecommendList" resultType="com.cibnvideo.oms.recommend.model.bean.LayoutRecommendBean">
+		select
+			a.id AS id,
+			a.parent_id AS parentId,
+			b.title AS parentTitle,
+			a.venderid AS venderId,
+			a.title AS title,
+			a.show_title AS showTitle,
+			a.status AS status,
+			a.template_id AS templateId,
+			a.position AS position,
+			a.share AS share,
+			a.auto_sync AS autoSync,
+			a.ctime AS ctime,
+			a.utime AS utime
+		from t_layout a left join t_layout b on a.parent_id = b.id
+		<where>
+			<if test="id != null and id != ''"> and a.id = #{id} </if>
+			<if test="parentId != null and parentId != ''"> and a.parent_id = #{parentId} </if>
+			<if test="venderId != null and venderId != ''"> and a.venderid = #{venderId} </if>
+			<if test="title != null and title != ''"> and a.title = #{title} </if>
+			<if test="showTitle != null and showTitle != ''"> and a.show_title = #{showTitle} </if>
+			<if test="status != null and status != ''"> and a.status = #{status} </if>
+			<if test="templateId != null and templateId != ''"> and a.template_id = #{templateId} </if>
+			<if test="position != null and position != ''"> and a.position = #{position} </if>
+			<if test="share != null and share != ''"> and a.share = #{share} </if>
+			<if test="autoSync != null and autoSync != ''"> and a.auto_sync = #{autoSync} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by a.id asc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+<select id="count" resultType="int">
+	select count(*) from t_layout
+	<where>
+		<if test="id != null and id != ''"> and id = #{id} </if>
+		<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+		<if test="title != null and title != ''"> and title = #{title} </if>
+		<if test="showTitle != null and showTitle != ''"> and show_title = #{showTitle} </if>
+		<if test="status != null and status != ''"> and status = #{status} </if>
+		<if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		<if test="position != null and position != ''"> and position = #{position} </if>
+		<if test="share != null and share != ''"> and share = #{share} </if>
+		<if test="autoSync != null and autoSync != ''"> and auto_sync = #{autoSync} </if>
+	</where>
+</select>
+
+<insert id="save" parameterType="com.cibnvideo.oms.recommend.model.bean.LayoutBean"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_layout
+		(
+		`parent_id`,
+		`venderid`,
+		`title`,
+		`show_title`,
+		`status`,
+		`template_id`,
+		`position`,
+		`share`,
+		`auto_sync`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{parentId},
+		#{venderId},
+		#{title},
+		#{showTitle},
+		#{status},
+		#{templateId},
+		#{position},
+		#{share},
+		#{autoSync},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+<update id="update" parameterType="com.cibnvideo.oms.recommend.model.bean.LayoutBean">
+	update t_layout
+	<set>
+		<if test="title != null">`title` = #{title}, </if>
+		<if test="showTitle != null">`show_title` = #{showTitle}, </if>
+		<if test="status != null">`status` = #{status},</if>
+		<if test="templateId != null">`template_id` = #{templateId},</if>
+		<if test="position != null">`position` = #{position},</if>
+		<if test="share != null">`share` = #{share},</if>
+		<if test="autoSync != null">`auto_sync` = #{autoSync},</if>
+		<if test="utime != null">`utime` = #{utime}</if>
+	</set>
+	where id = #{id}
+</update>
+
+<delete id="remove">
+		delete from t_layout where id = #{id}
+</delete>
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.common.dao.UserDao">
+
+	<select id="get" resultType="com.cibnvideo.common.entity.User">
+		select `userId`,`username`,`name`,`password`,`venderId`,`email`,`status`,`userIdCreate`,`gmtCreate`,`gmtModified` from sys_user where userId = #{userId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.common.entity.User">
+		select `userId`,`username`,`name`,`password`,`venderId`,`email`,`status`,`userIdCreate`,`gmtCreate`,`gmtModified`from sys_user
+        <where>  
+		  		  <if test="userId != null and userId != ''"> and userId = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and userIdCreate = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and gmtCreate = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and gmtModified = #{gmtModified} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by userId desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_user
+		 <where>  
+		  		  <if test="userId != null and userId != ''"> and userId = #{userId} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="userIdCreate != null and userIdCreate != ''"> and userIdCreate = #{userIdCreate} </if>
+		  		  <if test="gmtCreate != null and gmtCreate != ''"> and gmtCreate = #{gmtCreate} </if>
+		  		  <if test="gmtModified != null and gmtModified != ''"> and gmtModified = #{gmtModified} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.common.entity.User" useGeneratedKeys="true" keyProperty="userId">
+		insert into sys_user
+		(
+			`username`, 
+			`name`, 
+			`password`, 
+			`venderId`, 
+			`email`,
+			`status`, 
+			`userIdCreate`, 
+			`gmtCreate`, 
+			`gmtModified`
+		)
+		values
+		(
+			#{username}, 
+			#{name}, 
+			#{password}, 
+			#{venderId}, 
+			#{email},
+			#{status}, 
+			#{userIdCreate}, 
+			#{gmtCreate}, 
+			#{gmtModified}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.common.entity.User">
+		update sys_user 
+		<set>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="venderId != null">`venderId` = #{venderId}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="userIdCreate != null">`userIdCreate` = #{userIdCreate}, </if>
+			<if test="gmtCreate != null">`gmtCreate` = #{gmtCreate}, </if>
+			<if test="gmtModified != null">`gmtModified` = #{gmtModified} </if>
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_user where userId = #{userId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_user where userId in 
+		<foreach item="userId" collection="array" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+	<select id="listAllVender" resultType="long">
+				select DISTINCT venderId from sys_user
+	</select>
+</mapper>

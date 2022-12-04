@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.JdProductPriceDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.SellPriceResult">
+		select `skuId`,`jdPrice`,`price` from t_jd_product_price where skuId = #{skuId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.SellPriceResult">
+		select `skuId`,`jdPrice`,`price` from t_jd_product_price
+        <where>  
+		  		  <if test="skuId != null and skuId != ''"> and skuId = #{skuId} </if>
+		  		  <if test="jdPrice != null and jdPrice != ''"> and jdPrice = #{jdPrice} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by skuId desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(*) from t_jd_product_price
+		 <where>  
+		  		  <if test="skuId != null and skuId != ''"> and sku = #{sku} </if>
+		  		  <if test="jdPrice != null and jdPrice != ''"> and jdPrice = #{jdPrice} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.SellPriceResult">
+		insert into t_jd_product_price
+		(
+			`skuId`, 
+			`jdPrice`, 
+			`price`
+		)
+		values
+		(
+			#{skuId}, 
+			#{jdPrice}, 
+			#{price}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.SellPriceResult">
+		update t_jd_product_price 
+		<set>
+			<if test="skuId != null">`skuId` = #{skuId}, </if>
+			<if test="jdPrice != null">`jdPrice` = #{jdPrice}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+		</set>
+		where skuId = #{skuId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_product_price where skuId = #{skuId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_product_price where skuId in 
+		<foreach item="skuId" collection="skus" open="(" separator="," close=")">
+			#{skuId}
+		</foreach>
+	</delete>
+
+</mapper>

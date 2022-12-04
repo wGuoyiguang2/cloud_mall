@@ -1,0 +1,11 @@
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/**/*Mapper.xml
+  typeAliasesPackage: com.cibnvideo.jdsync.bean

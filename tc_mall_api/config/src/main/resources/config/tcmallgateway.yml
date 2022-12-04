@@ -1,0 +1,11 @@
+server:
+  api:
+    tokens: hqtc
+    hqtc: 3E8A4281-3568-467C-96C5-7496DAD6A0D8
+  ignoreRouters: /v1/address/provincelist,/v1/address/citylist,/v1/address/countylist,/v1/address/townlist,/v1/messsage/phone/searchinfo/set,/v1/messsage/phone/invoiceinfo/set,/v1/afterSale/reason,/v1/user/wechat/subscription/youxiang
+
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1

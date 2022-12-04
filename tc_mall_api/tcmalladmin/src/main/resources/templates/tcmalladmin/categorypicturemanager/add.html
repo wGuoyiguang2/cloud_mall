@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8"/>
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="categoryPictureForm" >
+							<div class="form-group">
+								<label class="col-sm-3 control-label">分类：</label>
+								<div id="open_category" class="col-sm-8">
+									<input id="catId" name="catId" class="form-control" type="text" style="display: none;"/>
+									<input id="catType" name="catType" class="form-control" type="text" style="display: none;"/>
+									<select id="cat0" name="cat0" placeholder="请选择" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+										<option th:each="cat:${cat0list}" th:value="${cat.catId}" th:text="${cat.name}"></option>
+									</select>
+									<select id="cat1" name="cat1" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+										<option th:each="cat:${cat1list}" th:value="${cat.catId}" th:text="${cat.name}"></option>
+									</select>
+									<select id="cat2" name="cat2" class="selectpicker" data-live-search="true" data-width="fit">
+										<option value="">请选择</option>
+										<option th:each="cat:${cat2list}" th:value="${cat.catId}" th:text="${cat.name}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">分类icon地址：</label>
+								<div class="col-sm-8">
+									<input id="icon" name="icon" class="form-control" type="text" readonly/>
+									<input id="file-pic-icon" name="file" type="file" multiple="multiple" style="display: inline-block"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">分类底图地址：</label>
+								<div class="col-sm-8">
+									<input id="background" name="background" class="form-control" type="text" readonly/>
+									<input id="file-pic-background" name="file" type="file" multiple="multiple" style="display: inline-block"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">分类图片地址：</label>
+								<div class="col-sm-8">
+									<input id="picture" name="picture" class="form-control" type="text" readonly/>
+									<input id="file-pic-picture" name="file" type="file" multiple="multiple" style="display: inline-block"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">共享：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="shared" value="0" checked/> 私有
+									</label>
+									<label class="radio-inline" shiro:haspermission="mall:categorypicture:shared">
+										<input type="radio" name="shared" value="1"/> 共享
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline">
+										<input type="radio" name="status" value="0" checked/> 禁用
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="status" value="1"/> 启用
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">确定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/categorypicturemanager/add.js">
+	</script>
+</body>
+</html>

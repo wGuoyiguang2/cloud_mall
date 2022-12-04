@@ -1,0 +1,19 @@
+cibnvideo:
+  appkey: 5b597f1db27b0a357300003a
+  app_mastersecret: wofk7tpvt57ehcfnpgnkj3xscncabv28
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 172.16.11.228:9092
+          zk-nodes: 172.16.11.228:2181
+          auto-add-partitions: true
+          auto-create-topics: true
+          min-partition-count: 1
+
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<input style="display: none" th:value="${cardNo}" id="cardNo"  name="cardNo">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							购物卡批次信息
+							<div class="col-sm-12 m-b-xs container">
+								<table  border="２" cellspacing="1" th:width="1200px" th:height="80">
+									<tr>
+										<td th:align="center">大客户ID</td>
+										<td th:align="center">购物卡批次号</td>
+										<td th:align="center">购物卡名称</td>
+										<td th:align="center">卡类型</td>
+										<td th:align="center">生成数量</td>
+										<td th:align="center">创建时间</td>
+										<td th:align="center">有效期</td>
+										<td th:align="center">单张金额</td>
+										<td th:align="center">总金额</td>
+										<td th:align="center">已用金额</td>
+										<td th:align="center">剩余金额</td>
+										<td th:align="center">绑定数量</td>
+										<td th:align="center">未绑定数量</td>
+										<td th:align="center">已激活数量</td>
+									</tr>
+									<tr>
+										<td th:text="${bean.venderid}" th:align="center"></td>
+										<td th:text="${bean.batchNo}" th:align="center"></td>
+										<td th:text="${bean.cardName}" th:align="center"></td>
+										<td th:text="${bean.cardType==1}?'实物卡':'虚拟卡'" th:align="center"></td>
+										<td th:text="${bean.count}" th:align="center"></td>
+										<td th:text="${bean.ctime}" th:align="center"></td>
+										<td th:text="${bean.stime}+'至'+${bean.etime}" th:align="center"></td>
+										<td th:text="${bean.faceValue}" th:align="center"></td>
+										<td th:text="${bean.sumMoney}" th:align="center"></td>
+										<td th:text="${bean.usedMoney}" th:align="center"></td>
+										<td th:text="${bean.balance}" th:align="center"></td>
+										<td th:text="${bean.bindCount}" th:align="center"></td>
+										<td th:text="${bean.unBindCount}" th:align="center"></td>
+										<td th:text="${bean.activedCount}" th:align="center"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content" style="display: block;">
+						<div class="row">
+							购物卡信息
+							<div class="col-sm-12 m-b-xs container">
+								<table  border="２" cellspacing="1" th:width="1200px" th:height="80">
+									<tr>
+										<td th:align="center">卡号</td>
+										<td th:align="center">状态</td>
+										<td th:align="center">绑定账号</td>
+										<td th:align="center">卡密码</td>
+										<td th:align="center">绑定方式</td>
+										<td th:align="center">创建时间</td>
+										<td th:align="center">已用金额</td>
+										<td th:align="center">剩余金额</td>
+									</tr>
+									<tr>
+										<td th:text="${bean2.cardNo}" th:align="center"></td>
+										<td th:text="${bean2.status}" th:align="center"></td>
+										<td th:text="${bean2.bindUser}" th:align="center"></td>
+										<td th:text="${bean2.passwd}" th:align="center"></td>
+										<td th:text="${bean2.bindType}" th:align="center"></td>
+										<td th:text="${bean2.ctime}" th:align="center"></td>
+										<td th:text="${bean2.faceValue-bean2.balance}" th:align="center"></td>
+										<td th:text="${bean2.balance}" th:align="center"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+					<div class="ibox-content">
+						使用记录
+						<table id="cardtb" class="col-xs-12" data-toolbar="#toolbar" data-show-refresh="true">
+						</table>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="picturePreview" tabindex="-1" role="dialog" aria-labelledby="picturePreview" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/cardmanager/cardDetail.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+		$("#message").addClass("active");
+		$("#faultlog").addClass("active");
+	</script>
+</body>
+</html>

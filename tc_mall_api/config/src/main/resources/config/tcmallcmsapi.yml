@@ -1,0 +1,31 @@
+service:
+  config:
+    pageSize: 12
+    jd-domain: http://img13.360buyimg.com/n0/
+    layoutStatus: 1
+    searchQrcode: http://172.16.11.228/static/tcmall_h5/search.html
+    state: 1
+    offset: 0
+    limit: 50
+    flashSaleListKey: flashSaleList
+    flashSalePayOrderListKey: flashSalePayOrderListKey
+    flashSaleMapKey: flashSaleMap
+    flashSaleOrderStateKey: flashSaleOrderState
+    threadPoolSize: 8
+    threadPoolMaxSize: 32
+    awaitTerminationSeconds: 20
+    payOrderMinutes: 30
+    defaultDate: 3
+    recommendSort: position
+    recommendOrder: asc
+    synchronizationPageSize: 50
+    synchronizationMaxPageSize: 100
+
+redis:
+  expire: 30
+
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1

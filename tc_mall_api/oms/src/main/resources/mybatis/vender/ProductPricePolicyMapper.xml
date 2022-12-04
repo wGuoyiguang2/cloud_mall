@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.ProductPricePolicyDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceProduct">
+		select `id`, `venderid` as `venderId`, `sku`,`price`,`ctime`, `utime` from t_vender_price_product where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceProduct">
+		select  `id`, `venderid` as `venderId`,  `sku`,`price`,`ctime`, `utime` from t_vender_price_product
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+			<if test="price != null and price != ''"> and price = #{price} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_price_product
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="sku != null and sku != ''"> and sku = #{sku} </if>
+			<if test="price != null and price != ''"> and price = #{price} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.PriceProduct"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_price_product
+		(
+		`venderid`,
+		`sku`,
+		`price`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{sku},
+		#{price},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.PriceProduct">
+		update t_vender_price_product
+		<set>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="utime != null">`utime` = #{utime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from t_vender_price_product where id = #{id}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_vender_price_product
+		<where>
+			<if test="ids != null and ids.size>0"> and id in
+				<foreach item="id" collection="ids" open="(" separator="," close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="skus != null and skus.size>0"> and sku in
+				<foreach item="sku" collection="skus" open="(" separator="," close=")">
+					#{sku}
+				</foreach>
+			</if>
+			<if test="venderId != null and venderId != ''"> and venderid = #{venderId} </if>
+			<if test="price != null and price != ''"> and price = #{price} </if>
+		</where>
+	</delete>
+
+	<select id="getBySku" resultType="com.cibnvideo.oms.tcmallcustomer.bean.PriceProduct">
+		select `id`, `venderid` as `venderId`, `sku`,`price`,`ctime`, `utime` from t_vender_price_product where venderid = #{venderId} and sku = #{sku}
+	</select>
+</mapper>

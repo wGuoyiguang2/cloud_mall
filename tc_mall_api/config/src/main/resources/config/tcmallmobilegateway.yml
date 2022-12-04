@@ -1,0 +1,6 @@
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 0.1
+

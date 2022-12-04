@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.CountyDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsync.bean.County">
+		select `countyid` as `countyId`,`cityid` as `cityId`,`provinceid` as `provinceId`,`name` as `name` from t_jd_address_countys where countyId = #{countyId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsync.bean.County">
+		select `countyid` as `countyId`,`cityid` as `cityId`,`provinceid` as `provinceId`,`name` as `name`  from t_jd_address_countys
+        <where>  
+        		<if test="countyId != null and countyId != ''"> and countyid = #{countyId} </if>
+        		 <if test="cityId != null and cityId != ''"> and cityid = #{cityId} </if>
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by countyid asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_address_countys
+		 <where>  
+		         <if test="countyId != null and countyId != ''"> and countyid = #{countyId} </if>
+		          <if test="cityId != null and cityId != ''"> and cityid = #{cityId} </if>
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+	</select>
+
+</mapper>

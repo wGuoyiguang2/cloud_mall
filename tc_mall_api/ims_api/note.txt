@@ -1,0 +1,712 @@
+一、添加地址
+1、请求地址: http://{ip}:9007/v1/address/add
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'name'        :'来哥'                    收件人姓名（必填）
+'phone'       :'13716765761'            收件人手机号（必填）
+'provinceId'  : 21,                     省id（必填）
+'cityId'      : 1898,                   市id（必填）
+'countyId'    : 1899,                   区id（必填）
+'townId'      : 26691,                  乡id（可为空）
+'detail'      :'某个村'                  详细地址（必填）
+'intro'       :'测试添加'                 地址说明（默认为""）
+'isDefault'   :1                        默认地址(非必填 0或1默认为0)
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+二、地址详情
+1、请求地址: http://{ip}:9007/v1/address/detail
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'id'          :'7'                      id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "id": 3,
+        "userId": 161561,
+        "name": "来哥",
+        "phone": "13716765761",
+        "provinceId": 21,
+        "cityId": 1898,
+        "countyId": 1899,
+        "townId": 26691,
+        "addre": "江西吉安市井冈山市茨坪镇",
+        "detail": "湾龙背村 3组",
+        "isDefault": 0,
+        "intro": "测试添加",
+        "ctime": 1531129534000,
+        "utime": 1531129534000,
+        "url": "http://www.baidu.com?hqtc=kB84xKvDPdCZvKWNHmd5CrqJz195ziPSueO0sv02oVzIuufir/FjIoOzf6VxNKuzu4e/qwfXY27VZc+XKaDXig==&id=1"
+    }
+}
+
+三、修改地址
+1、请求地址: http://{ip}:9007/v1/address/update
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'id'          :'7'                      id（必填）
+'name'        :'来哥'                    收件人姓名（必填）
+'phone'       :'13716765761'            收件人手机号（必填）
+'provinceId'  : 21,                     省id（必填）
+'cityId'      : 1898,                   市id（必填）
+'countyId'    : 1899,                   区id（必填）
+'townId'      : 26691,                  乡id（可为空 默认为0）
+'detail'      :'抚顺'                    详细地址（必填）
+'intro'       :'测试添加'                 地址说明（默认为""）
+'isDefault'   :1                        默认地址(非必填 0或1默认为0)
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+四、删除地址
+1、请求地址: http://{ip}:9007/v1/address/delete
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'id'          :'35'                      id（必填）
+5、返回值说明
+{"error":0,"msg":"ok","data":{"id":35}}
+
+五、获取地址列表
+1、请求地址: http://{ip}:9007/v1/address/list
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'useId'       :'123'                     用户id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        {
+            "id": 1,
+            "userId": 161561,
+            "name": "来哥",
+            "phone": "13716765761",
+            "provinceId": 21,
+            "cityId": 1898,
+            "countyId": 1899,
+            "townId": 26691,
+            "addre": "江西吉安市井冈山市茨坪镇",
+            "detail": "湾龙背村 3组",
+            "isDefault": 1,
+            "intro": "测试添加",
+            "ctime": 1531129525000,
+            "utime": 1531129525000
+        },
+        {
+            "id": 4,
+            "userId": 161561,
+            "name": "来哥",
+            "phone": "13716765761",
+            "provinceId": 21,
+            "cityId": 1898,
+            "countyId": 1899,
+            "townId": 26691,
+            "addre": "江西吉安市井冈山市茨坪镇",
+            "detail": "湾龙背村 3组",
+            "isDefault": 0,
+            "intro": "测试添加",
+            "ctime": 1531129535000,
+            "utime": 1531129535000
+        },
+        {
+            "id": 3,
+            "userId": 161561,
+            "name": "来哥",
+            "phone": "13716765761",
+            "provinceId": 21,
+            "cityId": 1898,
+            "countyId": 1899,
+            "townId": 26691,
+            "addre": "江西吉安市井冈山市茨坪镇",
+            "detail": "湾龙背村 3组",
+            "isDefault": 0,
+            "intro": "测试添加",
+            "ctime": 1531129534000,
+            "utime": 1531129534000
+        }
+    ]
+}
+
+六、设置为默认地址
+1、请求地址: http://{ip}:9007/v1/address/setDefault
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'id'          :'7'                      id（必填）
+'userId'      :'123'                    用户id（必填）
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+七、获取收藏列表
+1、请求地址: http://{ip}:9007/v1/favorite/list
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+venderId            客户ID
+pageNum             页码数
+pageSize            每页显示条数
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "total": 5,
+        "dataList": [
+            {
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t18232/122/1070337584/234432/500ca416/5ab9b0e6Nf977c995.jpg",
+                "state": 1,
+                "sku": 3489289,
+                "brandName": "洛克（ROCK）",
+                "category": "9987;830;13660",
+                "name": "洛克（ROCK）双口USB充电器/头+苹果数据线iPhoneX/10/8Plus/7/6s/SE/5/iPad4充电线 1米 ROCK新年红套装",
+                "jdPrice": 29.9,
+                "price": 29.9
+            },
+            {
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t3082/219/7021386287/35686/504f4033/58b01470N331d07fc.jpg",
+                "state": 1,
+                "sku": 4510116,
+                "brandName": "小米（MI）",
+                "category": "9987;830;13660",
+                "name": "小米 MI 小米USB充电器（2口）",
+                "jdPrice": 49,
+                "price": 49
+            },
+            {
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t7006/51/329987591/125196/17ae08cc/59755188N08ffd2e1.jpg",
+                "state": 1,
+                "sku": 5307588,
+                "brandName": "佳能（Canon）",
+                "category": "652;654;832",
+                "name": "佳能（Canon） EOS 6D Mark II 单反套机（EF 24-105mm f/4L IS II USM 镜头）",
+                "jdPrice": 14899,
+                "price": 14899
+            },
+            {
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t8452/64/1385288243/74327/7f6cc96e/59b857d8N332ec10b.jpg",
+                "state": 1,
+                "sku": 5475614,
+                "brandName": "Apple",
+                "category": "9987;653;655",
+                "name": "Apple iPhone 8 (A1863) 256GB 银色 移动联通电信4G手机",
+                "jdPrice": 5999,
+                "price": 5999
+            },
+            {
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t7783/189/4210042017/130069/30c1724e/5a027f63Ndaa5e8ee.jpg",
+                "state": 1,
+                "sku": 5661891,
+                "brandName": "青源堂",
+                "category": "9192;9195;9229",
+                "name": "青源堂 冬虫夏草 青海玉树高海拔虫草 4条/g精选品质 10g礼盒装",
+                "jdPrice": 2250,
+                "price": 2250
+            }
+        ]
+    }
+}
+
+八、添加收藏
+1、请求地址: http://{ip}:9007/v1/favorite/add
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+sku                 商品id（必填）
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+九、取消收藏
+1、请求地址: http://{ip}:9007/v1/favorite/delete
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+sku                 商品id（必填）
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+十、新增搜索历史记录
+1、请求地址: http://{ip}:9007/v1/searchHistory/create
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+{
+    "keyword": "冰箱",
+    "mac": "11212",
+    "ctime": "2018-09-08 10:48:34"
+}
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+十一、删除搜索历史记录
+1、请求地址: http://{ip}:9007/v1/search/history/delete
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+mac1                 mac地址
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": null
+}
+十一、查询搜索历史记录
+1、请求地址: http://{ip}:9007/v1/search/history/list
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+mac1                 mac地址
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": [
+        "电视",
+        "电视",
+        "电视",
+        "电视"
+    ]
+}
+
+十一、获取所有一级地址
+1、请求地址: http://{ip}:9007/v1/address/provincelist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'      :''                省id（可为空）
+'name'            :''                名称（可为空）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "totalRows": 34,
+        "data": [
+            {
+                "provinceId": 3,
+                "name": "天津"
+            },
+            {
+                "provinceId": 2,
+                "name": "上海"
+            },
+            {
+                "provinceId": 1,
+                "name": "北京"
+            }
+        ]
+    }
+}
+
+十二、获取指定一级地址
+1、请求地址: http://{ip}:9007/v1/address/province
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'      :''                省id（必填）
+5、返回值说明
+{
+    error: 0,
+    msg: "ok",
+    data: {
+    provinceId: 84,
+    name: "钓鱼岛"
+    }
+}
+
+十三、获取所有二级地址
+1、请求地址: http://{ip}:9007/v1/address/citylist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'     :'21',               省id（可为空）
+'cityId'         :'',                 市id（可为空）
+'name'           :''                  名称（可为空）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "totalRows": 11,
+        "data": [
+            {
+                "provinceId": 21,
+                "cityId": 1911,
+                "name": "赣州市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1898,
+                "name": "吉安市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1885,
+                "name": "抚州市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1874,
+                "name": "宜春市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1861,
+                "name": "上饶市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1857,
+                "name": "鹰潭市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1845,
+                "name": "九江市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1842,
+                "name": "新余市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1836,
+                "name": "萍乡市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1832,
+                "name": "景德镇市"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1827,
+                "name": "南昌市"
+            }
+        ]
+    }
+}
+
+十四、获取指定二级地址
+1、请求地址: http://{ip}:9007/v1/address/citylist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'cityId'         :'',                 市id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "provinceId": 21,
+        "cityId": 1898,
+        "name": "吉安市"
+    }
+}
+
+十五、获取所有三级地址
+1、请求地址: http://{ip}:9007/v1/address/countylist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'     :'',                 省id（可为空）
+'cityId'         :'1898',             市id（可为空）
+'countyId'       :'',                 区id（可为空）
+'name'           :''                  名称（可为空）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "totalRows": 13,
+        "data": [
+            {
+                "provinceId": 21,
+                "cityId": 1898,
+                "countyId": 1900,
+                "name": "吉安县"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1898,
+                "countyId": 1899,
+                "name": "井冈山市"
+            }
+        ]
+    }
+}
+
+十六、获取指定三级地址
+1、请求地址: http://{ip}:9007/v1/address/county
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'countyId'       :'1899',             区id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "provinceId": 21,
+        "cityId": 1898,
+        "countyId": 1899,
+        "name": "井冈山市"
+    }
+}
+
+十七、获取所有四级地址
+1、请求地址: http://{ip}:9007/v1/address/townlist
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'     :'',                 省id（可为空）
+'cityId'         :'1898',             市id（可为空）
+'countyId'       :'',                 区id（可为空）
+'townId'         :''                  乡id（可为空）
+'name'           :''                  名称（可为空）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "totalRows": 25,
+        "data": [
+            {
+                "provinceId": 21,
+                "cityId": 1898,
+                "countyId": 1899,
+                "townId": 26691,
+                "name": "茨坪镇"
+            },
+            {
+                "provinceId": 21,
+                "cityId": 1898,
+                "countyId": 1899,
+                "townId": 26690,
+                "name": "黄竹坳镇"
+            }
+        ]
+    }
+}
+
+十八、获取指定四级地址
+1、请求地址: http://{ip}:9007/v1/address/town
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'townId'         :'26691'              乡id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "provinceId": 21,
+        "cityId": 1898,
+        "countyId": 1899,
+        "townId": 26691,
+        "name": "茨坪镇"
+    }
+}
+
+十九、地址详情（无需登录）
+1、请求地址: http://{ip}:9007/address/detail
+2、请求方式  POST
+3、是否需要登陆 否
+4、请求参数
+'id'          :'7'                      id（必填）
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "id": 3,
+        "userId": 161561,
+        "name": "来哥",
+        "phone": "13716765761",
+        "provinceId": 21,
+        "cityId": 1898,
+        "countyId": 1899,
+        "townId": 26691,
+        "addre": "江西吉安市井冈山市茨坪镇",
+        "detail": "湾龙背村 3组",
+        "isDefault": 0,
+        "intro": "测试添加",
+        "ctime": 1531129534000,
+        "utime": 1531129534000
+    }
+}
+
+二十、获取级联地址信息（公共方法）
+1、请求地址: http://{ip}:9007/address/info
+2、请求方式  GET
+3、是否需要登陆 否
+4、请求参数
+'provinceId'   :''                       省id
+'cityId'       :''                       市id
+'countyId'     :''                       区县id
+'townId'       :'26691'                  乡镇id
+注：按照最高级地址返回信息，若都不填则返回空
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "provinceId": 21,
+        "provinceName": "江西",
+        "cityId": 1898,
+        "cityName": "吉安市",
+        "countyId": 1899,
+        "countyName": "井冈山市",
+        "townId": 26691,
+        "townName": "茨坪镇"
+    }
+}
+
+二十一、通过用户id获取发票信息
+1、请求地址: http://{ip}:9007/v1/invoice/detail
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数 无
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "name": "test2",
+        "phone": "123123",
+        "email": "ere@qq1.com",
+        "invoiceHead": "环球天成有限公司",
+        "taxnum": "",
+        "invoiceType": 2
+    }
+}
+
+二十二、获取发票二维码地址
+1、请求地址: http://{ip}:9007/v1/invoice/qrcode
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数 无
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "name": "ss",
+        "phone": "1221",
+        "email": "sdfs@qq.com",
+        "invoiceHead": "alphabeta",
+        "taxnum": "",
+        "invoiceType": 2,
+        "url": "http://www.baidu.com?hqtc=fqzNNnba7q9MwF8v2qO3ZL1hRYRBlvW1/13TVySAeNYZrpHE8MX/vpHfzQYYtj0q"
+    }
+}
+
+二十三、更新/添加用户发票信息
+1、请求地址: http://{ip}:9007/v1/invoice/modify
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+name : ss               开票人名称
+phone : 231             开票人电话
+email : sd@qq.com       开票人邮箱
+invoiceHead : sd        开票人抬头
+taxnum : 123            开票企业税号（只有企业有）
+invoiceType : 2         开票人类型（1.个人；2.企业）
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+二十四、获取新增地址二维码
+1、请求地址: http://{ip}:9007/v1/address/qrcode
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数 无
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": "http://www.baidu.com?hqtc=kB84xKvDPdCZvKWNHmd5CrqJz195ziPSueO0sv02oVzIuufir/FjIoOzf6VxNKuzu4e/qwfXY27VZc+XKaDXig=="
+}
+二十五、是否已收藏
+1、请求地址: http://{ip}:9007/v1/favorite/check
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+sku: 100401                 #商品id
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": 0           # 0代表未收藏，1代表已收藏
+}
+
+二十六、购物车中添加商品
+1、请求地址: http://{ip}:9007/v1/cart/add
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'sku'       :'500'                    商品id（必填）
+'count'                               添加数量(必填)
+5、返回值说明
+注：用户购物车最大添加数量为50种商品
+{"error":0,"msg":"ok","data":null}
+
+
+二十七、删除购物车中商品
+1、请求地址: http://{ip}:9007/v1/cart/delete
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'sku'         :5424929,5181440          商品sku（多个sku以逗号分隔）
+5、返回值说明
+{"error":0,"msg":"ok","data":null}
+
+
+二十八、更新购物车中商品数量
+1、请求地址: http://{ip}:9007/v1/cart/modify
+2、请求方式  POST
+3、是否需要登陆 是
+4、请求参数
+'sku'         :5424929                  商品sku
+'count'       : 1                       具体数量(添加 1 , 删除 -1)
+5、返回值说明s
+{"error":0,"msg":"ok","data":null}
+
+
+二十八、查询购物车商品列表
+1、请求地址: http://{ip}:9007/v1/cart/list
+2、请求方式  GET
+3、是否需要登陆 是
+4、请求参数
+'venderId'    :56                       商品sku（必填）
+'pageNum'     : 1                       页码（默认为1）
+'pageSize'    : 2                       每页显示条数 (默认为50)
+5、返回值说明
+{
+    "error": 0,
+    "msg": "ok",
+    "data": {
+        "total": 2,
+        "dataList": [
+            {
+                "sku": 2949039,
+                "name": "酷波【两个装】安卓Micro转Type-C转接头 手机数据线/充电线转换头 适用小米8SE/6华为P20荣耀9i一加6三星S9+",
+                "price": 8.4,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t8536/159/340541334/187626/ed48c113/59a65dc0Nbaf71bce.jpg",
+                "count": 15
+            },
+            {
+                "sku": 3437798,
+                "name": "Capshi Type-C数据线手机快充安卓充电器线 适用华为P10/Mate10/荣耀9/三星S9/小米6/Mix2s 锌合金黑 1.2米",
+                "price": 11.5,
+                "imagePath": "http://img13.360buyimg.com/n0/jfs/t15499/266/2642144769/156761/f63f520f/5ab367adN98e07cdf.jpg",
+                "count": 10
+            }
+        ]
+    }
+}

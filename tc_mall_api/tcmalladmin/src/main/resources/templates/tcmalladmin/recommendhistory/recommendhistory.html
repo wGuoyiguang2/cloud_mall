@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:include="include :: header">
+<meta charset="utf-8" />
+</head>
+<body>
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-12 m-b-sm">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="startTime" class="arealabel">推荐时间范围:</label>
+						<input id="startTime" name="startTime" placeholder="开始时间" class="form-control form_datetime" type="text"  />
+						-
+						<input id="endTime" name="endTime" placeholder="结束时间" class="form-control form_datetime" type="text"  />
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12 m-b-sm" shiro:hasPermission="mall:recommendhistory:edit">
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="period" class="arealabel">数据保存时效:</label>
+						<select id="period" name="period" placeholder="请选择" class="selectpicker" data-width="fit">
+							<option value="30" th:selected="${period == 30}">30天</option>
+							<option value="45" th:selected="${period == 45}">45天</option>
+							<option value="60" th:selected="${period == 60}">60天</option>
+							<option value="75" th:selected="${period == 75}">75天</option>
+							<option value="100" th:selected="${period == 100}">100天</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-12 m-b-sm">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-right">
+								<button class="btn btn-success" onclick="searcher()">查询</button>
+							</div>
+
+							<div class="columns pull-right col-md-2 nopadding">
+								<input id="searchContent" name="searchContent" type="text" class="form-control"
+									   placeholder="搜索内容" />
+							</div>
+							<div class="columns pull-right">
+								<select id="searchType" name="searchType" class="selectpicker" data-width="fit">
+									<option value="0" selected="selected">商品ID</option>
+									<option value="1">商品名称</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<table id="recommendhistorytb" data-toolbar="#toolbar"
+							   data-show-export="true" data-show-refresh="true"
+							   data-show-toggle="true" data-show-columns="true">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:include="include::footer"></div>
+	<script th:src="@{/js/appjs/recommendhistory/recommendhistorys.js}"></script>
+	<script th:inline="javascript">
+		$(".selectpicker").selectpicker({
+			noneResultsText : '未匹配',
+			noneSelectedText : '请选择'
+		});
+	</script>
+</body>
+</html>

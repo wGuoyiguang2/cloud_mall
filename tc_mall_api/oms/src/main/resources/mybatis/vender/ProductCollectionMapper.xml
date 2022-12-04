@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.oms.tcmallcustomer.dao.ProductCollectionDao">
+
+	<select id="get" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductCollection">
+		select `id`, `venderId`,`name`,`describe`,`image_path` as `imagePath`,`status`,`ctime`, `utime` from t_vender_collection where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.oms.tcmallcustomer.bean.ProductCollection">
+		select  `id`, `venderId`,`name`,`describe`,`image_path` as `imagePath`,`status`,`ctime`, `utime` from t_vender_collection
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="describe != null and describe != ''"> and describe = #{describe} </if>
+			<if test="imagePath != null and imagePath != ''"> and image_path = #{imagePath} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_vender_collection
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="venderId != null and venderId != ''"> and venderId = #{venderId} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="describe != null and describe != ''"> and describe = #{describe} </if>
+			<if test="imagePath != null and imagePath != ''"> and image_path = #{imagePath} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.ProductCollection"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_vender_collection
+		(
+		`venderId`,
+		`name`,
+		`describe`,
+		`image_path`,
+		`status`,
+		`ctime`,
+		`utime`
+		)
+		values
+		(
+		#{venderId},
+		#{name},
+		#{describe},
+		#{imagePath},
+		#{status},
+		#{ctime},
+		#{utime}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.cibnvideo.oms.tcmallcustomer.bean.ProductCollection">
+		update t_vender_collection
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="describe != null">`describe` = #{describe}, </if>
+			<if test="imagePath != null">`image_path` = #{imagePath}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="ctime != null">`ctime` = #{ctime},</if>
+			<if test="utime != null">`utime` = #{utime}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from t_vender_collection where id = #{id}
+	</delete>
+</mapper>

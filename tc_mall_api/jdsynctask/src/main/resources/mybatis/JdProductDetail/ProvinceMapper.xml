@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsynctask.dao.ProvinceDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsynctask.model.Province">
+		select `provinceid` as `provinceId`,`name` as `name` from t_jd_address_provinces where provinceid = #{provinceId}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsynctask.model.Province">
+		select `provinceid` as `provinceId`,`name` as `name` from t_jd_address_provinces
+        <where>  
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by provinceid asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_address_provinces
+		 <where>  
+		  		  <if test="provinceId != null and provinceId != ''"> and provinceid = #{provinceId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.cibnvideo.jdsynctask.model.Province">
+		insert into t_jd_address_provinces
+		(
+			`provinceid`,
+			`name`
+		)
+		values
+		(
+			#{provinceId}, 
+			#{name}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.cibnvideo.jdsynctask.model.Province">
+		update t_jd_address_provinces 
+		<set>
+			<if test="provinceId != null">`provinceid` = #{provinceId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+		</set>
+		where provinceid = #{provinceId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_jd_address_provinces where provinceid = #{provinceId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_jd_address_provinces where provinceid in
+		<foreach item="provinceId" collection="provinceIds" open="(" separator="," close=")">
+			#{provinceId}
+		</foreach>
+	</delete>
+
+</mapper>

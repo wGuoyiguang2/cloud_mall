@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: tcmallumsapi
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: tcmallconfig
+      profile: prod,db,kafka
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-peer1:8761/eureka/,http://discovery-peer2:8761/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 5000

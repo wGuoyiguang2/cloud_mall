@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cibnvideo.jdsync.dao.JdPictureOfMobileDao">
+
+	<select id="get" resultType="com.cibnvideo.jdsync.bean.PictureOfMobileResponse">
+		select `sku`,`result`,`code` from t_jd_product_picture_mobile where sku = #{sku}
+	</select>
+
+	<select id="list" resultType="com.cibnvideo.jdsync.bean.PictureOfMobileResponse">
+		select `sku`,`result`,`code`  from t_jd_product_picture_mobile
+        <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="result != null and result != ''"> and result = #{result} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sku desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit ${offset}, ${limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_jd_product_picture_mobile
+		 <where>  
+		  		  <if test="sku != null and sku != ''"> and sku = #{sku} </if>
+		  		  <if test="result != null and result != ''"> and result = #{result} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		</where>
+	</select>
+
+</mapper>
